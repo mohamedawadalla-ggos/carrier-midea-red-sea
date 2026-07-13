@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import Image from "next/image";
 import { content, type Locale } from "@/content/site";
 
 const HERO_IMAGE = "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1800&q=85";
@@ -33,9 +34,7 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
     <div className="site" dir={t.dir}>
       <header className="header">
         <a className="brand" href="#top" aria-label="Carrier Midea Red Sea home">
-          <span className="brand-marks" aria-label="Carrier and Midea official logo files pending">
-            <b className="carrier-word">CARRIER</b><i /><b className="midea-word">midea</b>
-          </span>
+          <Image className="brand-image" src="/og.png" alt="Carrier–Midea Red Sea" width={120} height={63} priority />
           <span>{locale === "ar" ? "كاريير ميديا البحر الأحمر" : "CARRIER–MIDEA RED SEA"}<small>{locale === "ar" ? "مبيعات وتركيب وصيانة" : "SALES • INSTALLATION • SERVICE"}</small></span>
         </a>
         <nav className={menuOpen ? "nav open" : "nav"} aria-label="Primary navigation">
@@ -111,7 +110,7 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
       </main>
 
       <footer>
-        <div className="footer-brand"><div className="footer-mark">CM</div><div><strong>{locale === "ar" ? "كاريير ميديا البحر الأحمر" : "CARRIER–MIDEA RED SEA"}</strong><span>{t.footerText}</span></div></div>
+        <div className="footer-brand"><Image className="footer-logo" src="/og.png" alt="Carrier–Midea Red Sea" width={120} height={63} /><div><strong>{locale === "ar" ? "كاريير ميديا البحر الأحمر" : "CARRIER–MIDEA RED SEA"}</strong><span>{t.footerText}</span></div></div>
         <div className="footer-cities">{t.cities.slice(0, 5).map(x => <span key={x}>{x}</span>)}</div>
         <p>© 2026 {t.rights}</p>
       </footer>
