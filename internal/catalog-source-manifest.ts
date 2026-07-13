@@ -1,0 +1,29 @@
+export type CatalogVerificationRecord = {
+  modelCode: string;
+  pdfSourceReference: "Carrier-Midea-Price-List-2026-06-07.pdf";
+  officialSourceUrl: string | null;
+  verificationStatus: "pdf-verified" | "client-confirmation-required";
+  clientApprovalStatus: "approved" | "pending";
+  internalVerificationNotes?: string;
+};
+
+import { productVariants } from "@/content/product-variants";
+
+export const catalogSourceManifest: CatalogVerificationRecord[] = productVariants.map((variant) => variant.modelCode === "53QHABT30DN-708F" ? {
+  modelCode: variant.modelCode,
+  pdfSourceReference: "Carrier-Midea-Price-List-2026-06-07.pdf",
+  officialSourceUrl: null,
+  verificationStatus: "client-confirmation-required",
+  clientApprovalStatus: "pending",
+  internalVerificationNotes: "Preserved exactly from the client PDF; final client confirmation required.",
+} : {
+  modelCode: variant.modelCode,
+  pdfSourceReference: "Carrier-Midea-Price-List-2026-06-07.pdf",
+  officialSourceUrl: null,
+  verificationStatus: "pdf-verified",
+  clientApprovalStatus: "approved",
+});
+
+export const catalogInternalNotes = {
+  xtremeProPdfSpelling: "The client PDF spells the public family name as Xtream Pro; approved UI spelling is XTreme Pro.",
+} as const;

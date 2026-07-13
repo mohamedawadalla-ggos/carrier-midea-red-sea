@@ -1,5 +1,11 @@
 export type Locale = "ar" | "en";
 
+export const company = {
+  name: { ar: "كاريير ميديا البحر الأحمر", en: "Carrier–Midea Red Sea" },
+  status: { ar: "الوكيل الحصري لكاريير وميديا", en: "Exclusive Dealer for Carrier and Midea" },
+  territory: { ar: "العين السخنة ومحافظة البحر الأحمر", en: "Ain Sokhna and the Red Sea Governorate" },
+} as const;
+
 export const content = {
   ar: {
     dir: "rtl" as const,

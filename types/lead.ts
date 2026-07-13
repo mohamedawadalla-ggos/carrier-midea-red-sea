@@ -1,9 +1,11 @@
 import type { Locale } from "@/content/site";
-import type { Product } from "@/types/product";
+import type { ProductFamily, ProductTypeId, ProductVariant } from "@/types/catalog";
 
 export type ProductInquiry = {
   locale: Locale;
-  product: Product;
+  family: ProductFamily;
+  variant: ProductVariant;
+  productType: ProductTypeId;
   customerName: string;
   telephone: string;
   area: string;

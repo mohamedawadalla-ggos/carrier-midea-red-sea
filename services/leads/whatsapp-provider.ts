@@ -3,10 +3,10 @@ import type { LeadProvider } from "@/services/leads/lead-provider";
 import type { ProductInquiry, ServiceRequest } from "@/types/lead";
 
 function productMessage(data: ProductInquiry): string {
-  const { product } = data;
+  const { family, variant } = data;
   return data.locale === "ar"
-    ? `استفسار عن منتج\n\nالمنتج: ${product.name.ar}\nالعلامة: ${product.brand === "carrier" ? "كاريير" : "ميديا"}\nكود الموديل: ${product.modelCode}\nالقدرة: ${product.capacityHp} حصان\nالعميل: ${data.customerName}\nالهاتف: ${data.telephone}\nالمنطقة: ${data.area}\nالتركيب مطلوب: ${data.installationRequired ? "نعم" : "لا"}\nملاحظات: ${data.notes || "لا توجد"}`
-    : `Product inquiry\n\nProduct: ${product.name.en}\nBrand: ${product.brand === "carrier" ? "Carrier" : "Midea"}\nModel code: ${product.modelCode}\nCapacity: ${product.capacityHp} HP\nCustomer: ${data.customerName}\nTelephone: ${data.telephone}\nArea: ${data.area}\nInstallation required: ${data.installationRequired ? "Yes" : "No"}\nNotes: ${data.notes || "None"}`;
+    ? `استفسار عن منتج\n\nالعميل: ${data.customerName}\nالهاتف: ${data.telephone}\nالمنطقة: ${data.area}\nالعلامة: ${family.brand === "carrier" ? "كاريير" : "ميديا"}\nنوع الجهاز: ${data.productType}\nعائلة المنتج: ${family.name.ar}\nكود الموديل: ${variant.modelCode}\nنظام التشغيل: ${variant.coolingMode === "cool-only" ? "بارد فقط" : "بارد / ساخن"}\nالتركيب مطلوب: ${data.installationRequired ? "نعم" : "لا"}\nملاحظات إضافية: ${data.notes || "لا توجد"}`
+    : `Product inquiry\n\nCustomer name: ${data.customerName}\nPhone: ${data.telephone}\nArea: ${data.area}\nBrand: ${family.brand === "carrier" ? "Carrier" : "Midea"}\nEquipment type: ${data.productType}\nProduct family: ${family.name.en}\nSelected model code: ${variant.modelCode}\nCooling mode: ${variant.coolingMode === "cool-only" ? "Cool only" : "Cool & heat"}\nInstallation required: ${data.installationRequired ? "Yes" : "No"}\nAdditional notes: ${data.notes || "None"}`;
 }
 
 function serviceMessage(data: ServiceRequest): string {
@@ -16,11 +16,11 @@ function serviceMessage(data: ServiceRequest): string {
 }
 
 export class WhatsAppLeadProvider implements LeadProvider {
-  async submitProductInquiry(data: ProductInquiry): Promise<string> {
+  async submitProductInquiry(data: ProductInquiry): Promise<string | null> {
     return createWhatsAppUrl(productMessage(data));
   }
 
-  async submitServiceRequest(data: ServiceRequest): Promise<string> {
+  async submitServiceRequest(data: ServiceRequest): Promise<string | null> {
     return createWhatsAppUrl(serviceMessage(data));
   }
 }

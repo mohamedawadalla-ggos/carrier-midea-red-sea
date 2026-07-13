@@ -1,53 +1,32 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
-import Image from "next/image";
+import { FormEvent } from "react";
 import { content, type Locale } from "@/content/site";
+import { SiteHeader } from "@/components/layout/SiteHeader";
+import { SiteFooter } from "@/components/layout/SiteFooter";
+import { FeaturedProductFamilies } from "@/components/home/FeaturedProductFamilies";
+import { FacebookFollowSection } from "@/components/home/FacebookFollowSection";
+import { leadProvider } from "@/services/leads/whatsapp-provider";
+import { siteConfig } from "@/lib/site-config";
+import { openPreparedLink } from "@/lib/whatsapp";
 
-const HERO_IMAGE = "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1800&q=85";
+const HERO_IMAGE = "/products/families/carrier/xcool-inverter.png";
 
 export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
-  const [locale, setLocale] = useState<Locale>(initialLocale);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const locale = initialLocale;
   const t = content[locale];
 
-  useEffect(() => {
-    document.documentElement.lang = locale;
-    document.documentElement.dir = t.dir;
-  }, [locale, t.dir]);
-
-  function changeLocale(next: Locale) {
-    setLocale(next);
-    window.history.replaceState({}, "", `/${next}`);
-  }
-
-  function submitLead(event: FormEvent<HTMLFormElement>) {
+  async function submitLead(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const message = locale === "ar"
-      ? `طلب جديد من الموقع\n\nالعميل: ${data.get("name")}\nالهاتف: ${data.get("phone")}\nالمنطقة: ${data.get("area")}\nالطلب: ${data.get("need")}\nالتفاصيل: ${data.get("details")}`
-      : `New website request\n\nCustomer: ${data.get("name")}\nPhone: ${data.get("phone")}\nArea: ${data.get("area")}\nRequest: ${data.get("need")}\nDetails: ${data.get("details")}`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+    await openPreparedLink(leadProvider.submitServiceRequest({ locale, customerName: String(data.get("name") ?? ""), telephone: String(data.get("phone") ?? ""), area: String(data.get("area") ?? ""), service: String(data.get("need") ?? ""), notes: String(data.get("details") ?? "") }));
   }
 
   return (
     <div className="site" dir={t.dir}>
-      <header className="header">
-        <a className="brand" href="#top" aria-label="Carrier Midea Red Sea home">
-          <Image className="brand-image" src="/og.png" alt="Carrier–Midea Red Sea" width={120} height={63} priority />
-          <span>{locale === "ar" ? "كاريير ميديا البحر الأحمر" : "CARRIER–MIDEA RED SEA"}<small>{locale === "ar" ? "مبيعات وتركيب وصيانة" : "SALES • INSTALLATION • SERVICE"}</small></span>
-        </a>
-        <nav className={menuOpen ? "nav open" : "nav"} aria-label="Primary navigation">
-          {t.nav.map((item, index) => <a key={item} href={index === 0 ? "#top" : index === 1 ? "#solutions" : index === 2 ? "#services" : index === 3 ? "#coverage" : "#contact"} onClick={() => setMenuOpen(false)}>{item}</a>)}
-        </nav>
-        <div className="header-actions">
-          <button className="lang" onClick={() => changeLocale(locale === "ar" ? "en" : "ar")}>{locale === "ar" ? "EN" : "عربي"}</button>
-          <a className="header-cta" href="#contact">{t.service}</a>
-          <button className="menu" aria-label="Toggle navigation" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}><span /><span /></button>
-        </div>
-      </header>
+      <SiteHeader locale={locale} />
 
-      <main id="top">
+      <main id="main-content">
         <section className="hero">
           <div className="hero-image" style={{ backgroundImage: `linear-gradient(90deg, rgba(3,23,45,.98) 0%, rgba(3,23,45,.82) 48%, rgba(3,23,45,.12) 100%), url(${HERO_IMAGE})` }} />
           <div className="hero-orb orb-one" /><div className="hero-orb orb-two" />
@@ -84,6 +63,8 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
           </div>
         </section>
 
+        <FeaturedProductFamilies locale={locale} />
+
         <section className="services-section" id="services">
           <div className="section services-inner">
             <div className="services-intro"><p className="kicker light">{t.servicesKicker}</p><h2>{t.servicesTitle}</h2><p>{t.servicesSub}</p><a className="text-link" href="#contact">{t.service} <span>↗</span></a></div>
@@ -96,25 +77,24 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
           <div className="map-art" aria-label="Stylized Red Sea service map"><div className="sea-shape"><span>RED SEA</span></div>{t.cities.map((city, i) => <i key={city} style={{ top: `${9 + i * 12}%`, left: `${39 + (i % 2) * 20}%` }}><b />{city}</i>)}</div>
         </section>
 
+        <FacebookFollowSection locale={locale} />
+
         <section className="quote-section" id="contact">
-          <div className="quote-copy"><p className="kicker light">{t.quoteKicker}</p><h2>{t.quoteTitle}</h2><p>{t.quoteText}</p><div className="contact-chips"><a href="tel:+20">☎ {t.call}</a><a href="https://www.facebook.com/share/14hpez3ACkd/" target="_blank" rel="noreferrer">f Facebook</a></div></div>
+          <div className="quote-copy"><p className="kicker light">{t.quoteKicker}</p><h2>{t.quoteTitle}</h2><p>{t.quoteText}</p><div className="contact-chips">{siteConfig.phoneTel && <a href={`tel:${siteConfig.phoneTel}`}>☎ {siteConfig.phoneDisplay || t.call}</a>}{siteConfig.email && <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>}</div></div>
           <form className="lead-form" onSubmit={submitLead}>
             <label>{t.name}<input name="name" required placeholder={t.placeholderName} /></label>
             <label>{t.phone}<input name="phone" required inputMode="tel" placeholder={t.placeholderPhone} /></label>
             <label>{t.area}<input name="area" required placeholder={t.placeholderArea} /></label>
             <label>{t.need}<select name="need">{t.needOptions.map(x => <option key={x}>{x}</option>)}</select></label>
             <label className="full">{t.details}<textarea name="details" rows={3} placeholder={t.details} /></label>
-            <button className="full" type="submit">{t.send}<span>↗</span></button>
+            <button className="full" type="submit" disabled={!siteConfig.whatsappNumber}>{t.send}<span>↗</span></button>
+            {!siteConfig.whatsappNumber && <p className="form-unavailable full" role="status">{locale === "ar" ? "خدمة واتساب غير متاحة حالياً." : "WhatsApp is currently unavailable."}{siteConfig.phoneTel && <> <a href={`tel:${siteConfig.phoneTel}`}>{siteConfig.phoneDisplay || siteConfig.phoneTel}</a></>}{siteConfig.email && <> <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></>}</p>}
           </form>
         </section>
       </main>
 
-      <footer>
-        <div className="footer-brand"><Image className="footer-logo" src="/og.png" alt="Carrier–Midea Red Sea" width={120} height={63} /><div><strong>{locale === "ar" ? "كاريير ميديا البحر الأحمر" : "CARRIER–MIDEA RED SEA"}</strong><span>{t.footerText}</span></div></div>
-        <div className="footer-cities">{t.cities.slice(0, 5).map(x => <span key={x}>{x}</span>)}</div>
-        <p>© 2026 {t.rights}</p>
-      </footer>
-      <a className="floating-wa" href="#contact" aria-label="WhatsApp"><span>◉</span></a>
+      <SiteFooter locale={locale} />
+      {siteConfig.whatsappNumber && <a className="floating-wa" href="#contact" aria-label="WhatsApp"><span>◉</span></a>}
     </div>
   );
 }

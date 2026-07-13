@@ -9,7 +9,7 @@ export type SocialEventName =
 declare global {
   interface Window {
     dataLayer?: Array<Record<string, unknown>>;
-    fbq?: (command: string, event: string, name: string) => void;
+    fbq?: (command: string, event: string, parameters?: Record<string, unknown>) => void;
   }
 }
 
@@ -27,6 +27,6 @@ export function trackSocialClick(event: SocialEventName): void {
   window.dataLayer?.push({ event });
 
   if (siteConfig.metaPixelId && hasMarketingConsent() && window.fbq) {
-    window.fbq("trackCustom", "FacebookFollowClick", event);
+    window.fbq("trackCustom", "FacebookFollowClick", { source: event });
   }
 }

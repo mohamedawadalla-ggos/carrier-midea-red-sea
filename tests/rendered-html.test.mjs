@@ -13,7 +13,7 @@ async function render(path = "/") {
 }
 
 test("server-renders the branded Arabic experience", async () => {
-  const response = await render("/ar");
+  const response = await render("/ar/");
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
   const html = await response.text();
@@ -21,14 +21,16 @@ test("server-renders the branded Arabic experience", async () => {
   assert.match(html, /كاريير ميديا البحر الأحمر/);
   assert.match(html, /راحة استثنائية/);
   assert.match(html, /<form/);
+  assert.match(html, /<html[^>]+lang="ar"[^>]+dir="rtl"/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape/);
 });
 
 test("server-renders the English experience", async () => {
-  const response = await render("/en");
+  const response = await render("/en/");
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /Exceptional comfort/);
   assert.match(html, /Request service/);
   assert.match(html, /Send via WhatsApp/);
+  assert.match(html, /<html[^>]+lang="en"[^>]+dir="ltr"/);
 });

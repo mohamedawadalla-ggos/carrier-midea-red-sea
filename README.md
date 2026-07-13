@@ -1,4 +1,18 @@
-# vinext-starter
+# Carrier–Midea Red Sea
+
+Production-oriented bilingual sales and lead-generation website for Carrier–Midea Red Sea.
+
+## Public configuration
+
+Copy `.env.example` to `.env.local` and add the approved public business values. Keep `.env.local` uncommitted. WhatsApp must contain digits only with the Egypt country code (`20`); telephone links use international `+20` format. Empty optional values hide their related interface elements. Rebuild after changing public environment variables.
+
+## Manufacturer asset authorization
+
+Product media is tracked with its source and authorization state. The client must confirm final authorization for every Carrier and Midea manufacturer asset before production launch. Until approval is recorded, the interface displays designed product-image placeholders and does not hotlink external media.
+
+## Product data
+
+Product specifications are typed and content-driven. Prices, discounts, stock, and availability are deliberately excluded. Warranty, energy classifications, model selection, exclusive-dealer wording, and final product imagery require Nael’s approval before publication.
 
 A clean full-stack starter running on
 [vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
