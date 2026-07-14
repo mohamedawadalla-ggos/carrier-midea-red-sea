@@ -1,0 +1,338 @@
+{
+  "brand": "Carrier–Midea Red Sea / كاريير ميديا البحر الأحمر",
+  "source": "C:\\Users\\Mohamed Awadalla\\Documents\\Projects\\Red sea AC\\logo exclusive.png",
+  "sourceSha256": "fd1f85d34464d681ba45e5333b57f66d5a0589e7fb3107e72cd748311d5a92bf",
+  "method": "Deterministic crops, non-white ink extraction for light backgrounds, downscaling, and color-mode conversion only",
+  "limitations": [
+    "The supplied master is raster, not an editable vector file.",
+    "Full-color transparent files are for white or very light backgrounds; use reversed-white files on dark backgrounds.",
+    "CMYK conversion is generic and must be press-proofed; no official CMYK or Pantone values were supplied.",
+    "No generated file should be enlarged beyond its effective 300 ppi print size without approval."
+  ],
+  "files": [
+    {
+      "path": "assets/brand/source/carrier-midea-red-sea-approved-master.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "fd1f85d34464d681ba45e5333b57f66d5a0589e7fb3107e72cd748311d5a92bf",
+      "purpose": "Untouched client-approved raster master"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-full-white.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 1208,
+      "height": 1014,
+      "sha256": "5e94e74e2cb371cc193b7878d8285fb608ff267bd5b4378e91a77504f2ebe740",
+      "purpose": "full lockup, white treatment"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-full-transparent.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1208,
+      "height": 1014,
+      "sha256": "3b80425ca34407efd13e715e1f89294bcf0744eeb96fcbe3236532ae226b84af",
+      "purpose": "full lockup, transparent treatment"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-full-grayscale.png",
+      "format": "PNG",
+      "mode": "L",
+      "width": 1208,
+      "height": 1014,
+      "sha256": "c7e703e6a0f60e2e7d506663576e28556eceec3efcb81fdcb1f21f6addc3c1cf",
+      "purpose": "full lockup, grayscale treatment"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-full-black.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1208,
+      "height": 1014,
+      "sha256": "b3d3a161ab19a72315363754100115eb1fc2ef916e55dc417f9e8cef6a43873d",
+      "purpose": "full lockup, black treatment"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-full-reversed-white.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1208,
+      "height": 1014,
+      "sha256": "105758543282cf7d072cd23e7224f059979d9ea262a931bd7acc25f610c2a7bb",
+      "purpose": "full lockup, reversed-white treatment"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-full-white.jpg",
+      "format": "JPEG",
+      "mode": "RGB",
+      "width": 1208,
+      "height": 1014,
+      "sha256": "b7186022ddf73dc9dd58f71bdf22ba4c70c2869f723c3a0260fda901b7e63c02",
+      "purpose": "full lockup, high-quality RGB JPEG"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-signature-white.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 1208,
+      "height": 698,
+      "sha256": "2ee27cbac5e4d1120ec6f5486c758584f77ea85d89decd576dd738df181b7c2d",
+      "purpose": "signature lockup, white treatment"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-signature-transparent.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1208,
+      "height": 698,
+      "sha256": "9e563cd616b62c49efc1f8859ae6e4ed0e7cf2475f74e10e6683d90ca92bf6ac",
+      "purpose": "signature lockup, transparent treatment"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-signature-grayscale.png",
+      "format": "PNG",
+      "mode": "L",
+      "width": 1208,
+      "height": 698,
+      "sha256": "73a07be489163fc39dcc7c4e88dd538b771822ad05a4b5a1df587c079aad74b6",
+      "purpose": "signature lockup, grayscale treatment"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-signature-black.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1208,
+      "height": 698,
+      "sha256": "299aef4f33247d80330756bc1ca0359b64fd88d68b2d3d2539dcd360e13d2b08",
+      "purpose": "signature lockup, black treatment"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-signature-reversed-white.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1208,
+      "height": 698,
+      "sha256": "aa5019358947560305b70c89dd2dff0fb2eae5e44fd05190eb229f59fe78074b",
+      "purpose": "signature lockup, reversed-white treatment"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-signature-white.jpg",
+      "format": "JPEG",
+      "mode": "RGB",
+      "width": 1208,
+      "height": 698,
+      "sha256": "bf1a8eeea82428c74c2490ef6db7b057dd48beafd91da803b72c9a98bc142d1a",
+      "purpose": "signature lockup, high-quality RGB JPEG"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-manufacturer-horizontal-white.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 1176,
+      "height": 268,
+      "sha256": "4295fbad621f247d4236dc0861de468fbf792e3b181ecb2ed68a856c8ab0e023",
+      "purpose": "manufacturer-horizontal lockup, white treatment"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-manufacturer-horizontal-transparent.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1176,
+      "height": 268,
+      "sha256": "b9fc20dd86af1f1d512d7797ad6981db902238ac8ba97d78d803186d4d7d7631",
+      "purpose": "manufacturer-horizontal lockup, transparent treatment"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-manufacturer-horizontal-grayscale.png",
+      "format": "PNG",
+      "mode": "L",
+      "width": 1176,
+      "height": 268,
+      "sha256": "6e2d97b2537278b4d92e04c84864fcdbbd75069117f615b0bdbbe3c401e2a911",
+      "purpose": "manufacturer-horizontal lockup, grayscale treatment"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-manufacturer-horizontal-black.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1176,
+      "height": 268,
+      "sha256": "dda0fa049b87c257b38494e7807c4002ba85ad226bbdf50de9950a7955c2d488",
+      "purpose": "manufacturer-horizontal lockup, black treatment"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-manufacturer-horizontal-reversed-white.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1176,
+      "height": 268,
+      "sha256": "c89d3921cbc53a097a4bace9e2b0d69e1c525d73330a142e52210d5ade5d9814",
+      "purpose": "manufacturer-horizontal lockup, reversed-white treatment"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-manufacturer-horizontal-white.jpg",
+      "format": "JPEG",
+      "mode": "RGB",
+      "width": 1176,
+      "height": 268,
+      "sha256": "649913a2e55f397bedd70fbedced5c39ed94a7e5e86cd0a06fadd8546aa53a89",
+      "purpose": "manufacturer-horizontal lockup, high-quality RGB JPEG"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-business-wordmark-white.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 1180,
+      "height": 388,
+      "sha256": "5e78f898342c83efda338faf072eef7b3bb4e15d23eab3619cc4ff4dbf519874",
+      "purpose": "business-wordmark lockup, white treatment"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-business-wordmark-transparent.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1180,
+      "height": 388,
+      "sha256": "c53dd1eaa41665314801056eff6d05071d3ab12deff162a555b4f906f1362db0",
+      "purpose": "business-wordmark lockup, transparent treatment"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-business-wordmark-grayscale.png",
+      "format": "PNG",
+      "mode": "L",
+      "width": 1180,
+      "height": 388,
+      "sha256": "3ca23fe0a9dfe376cbc61094f8e61398cf9b31a285d7d9f0f9fbe0c2888b2651",
+      "purpose": "business-wordmark lockup, grayscale treatment"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-business-wordmark-black.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1180,
+      "height": 388,
+      "sha256": "650272a0ba70dde3e2943eb44f79cc6c67711b5dcbc98a6ee4bef565352167bb",
+      "purpose": "business-wordmark lockup, black treatment"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-business-wordmark-reversed-white.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1180,
+      "height": 388,
+      "sha256": "ec44d81a66a8d2f5514860116fa686faac4674fe25f847c1f26b3fda11fcf69d",
+      "purpose": "business-wordmark lockup, reversed-white treatment"
+    },
+    {
+      "path": "assets/brand/digital/carrier-midea-red-sea-business-wordmark-white.jpg",
+      "format": "JPEG",
+      "mode": "RGB",
+      "width": 1180,
+      "height": 388,
+      "sha256": "99e782016d7391d500073b2875872ea1ef33c995da4c15748388bdece1191f8f",
+      "purpose": "business-wordmark lockup, high-quality RGB JPEG"
+    },
+    {
+      "path": "assets/brand/print/carrier-midea-red-sea-full-cmyk-300dpi.tif",
+      "format": "TIFF",
+      "mode": "CMYK",
+      "width": 1208,
+      "height": 1014,
+      "sha256": "fddffcba36add7d527651611f637f143c7161d18214de82716217715cbd0e914",
+      "purpose": "Convenience CMYK print TIFF; proof before production"
+    },
+    {
+      "path": "assets/brand/print/carrier-midea-red-sea-full-grayscale-300dpi.tif",
+      "format": "TIFF",
+      "mode": "L",
+      "width": 1208,
+      "height": 1014,
+      "sha256": "43303024d6cd5311cea1001b86c35a6a2eca8c1d2c65c1e19e4505e60b563839",
+      "purpose": "Grayscale print TIFF"
+    },
+    {
+      "path": "assets/brand/print/carrier-midea-red-sea-full-rgb-300dpi.pdf",
+      "format": "PDF",
+      "mode": "RGB raster",
+      "width": 1208,
+      "height": 1014,
+      "sha256": "ca632bb330cabdec71823f8e7bd24f94613ad046a605956cd8c83c056c90fb61",
+      "purpose": "Report and office-print PDF at 300 ppi effective size"
+    },
+    {
+      "path": "public/brand/logo-full.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 900,
+      "height": 755,
+      "sha256": "a0495f0e3239df8522b060d40c36291770c7774b44342df74b961f4ce882f329",
+      "purpose": "Optimized local website derivative"
+    },
+    {
+      "path": "public/brand/logo-full-white.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 900,
+      "height": 755,
+      "sha256": "13fe36dca3b613dd831f6dceecafea545dda9906c8850ea4e921e167ded4df72",
+      "purpose": "Optimized local website derivative"
+    },
+    {
+      "path": "public/brand/logo-signature.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 900,
+      "height": 520,
+      "sha256": "714c7d74449a61ed851c1100bcbcfbfe9e3b25bc8fc30fb9d78dcab462f5356b",
+      "purpose": "Optimized local website derivative"
+    },
+    {
+      "path": "public/brand/logo-manufacturers.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 720,
+      "height": 164,
+      "sha256": "6b099e239f8be58dbe6e15befd4213bf4538a38a6fcb96fcd241ddf9d1f46b0a",
+      "purpose": "Optimized local website derivative"
+    },
+    {
+      "path": "public/brand/logo-manufacturers-white.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 720,
+      "height": 164,
+      "sha256": "1033ed21ad4ed3a1d599415f927357c09b12c604fd8cd15d4be7a958a74383cd",
+      "purpose": "Optimized local website derivative"
+    },
+    {
+      "path": "public/brand/logo-business-wordmark.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 720,
+      "height": 237,
+      "sha256": "ed0d08f7de36775e6666dc6d0712ed40e81a888d64bf76ca87a1a2e78bf301b7",
+      "purpose": "Optimized local website derivative"
+    },
+    {
+      "path": "public/brand/logo-signature-reversed.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 900,
+      "height": 520,
+      "sha256": "5386ec0545eb110f6aa93e4b8c73e9ebf440332700f9e5443f28aeec0c90c961",
+      "purpose": "Optimized local website derivative"
+    },
+    {
+      "path": "assets/brand/previews/carrier-midea-red-sea-logo-contact-sheet.png",
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 1360,
+      "height": 1800,
+      "sha256": "0f5d34631174578959dd40f195c938fe213feafb7a06e37bc1660c50c0c25aaa",
+      "purpose": "Visual QA contact sheet"
+    }
+  ]
+}

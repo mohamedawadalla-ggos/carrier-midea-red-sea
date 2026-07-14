@@ -4,6 +4,24 @@ Only manufacturer or authorized-distributor media approved for this catalog may 
 
 ## Site brand and geographic assets
 
+### Approved Carrier–Midea Red Sea logo system
+
+- Client-approved source: `C:\Users\Mohamed Awadalla\Documents\Projects\Red sea AC\logo exclusive.png`
+- Archived unchanged master: `assets/brand/source/carrier-midea-red-sea-approved-master.png`
+- Source SHA-256: `FD1F85D34464D681BA45E5333B57F66D5A0589E7FB3107E72CD748311D5A92BF`
+- Source dimensions: 1254×1254 RGB PNG with an opaque white background
+- Digital derivatives: `assets/brand/digital/`
+- Print derivatives: `assets/brand/print/`
+- Website derivatives: `public/brand/`
+- Visual contact sheet: `assets/brand/previews/carrier-midea-red-sea-logo-contact-sheet.png`
+- Machine-readable record: `assets/brand/manifest.json`
+- Usage instructions: `docs/BRAND_ASSET_GUIDE.md`
+- Reproducible generator: `scripts/generate-brand-assets.py`
+- External downloads: none
+- Transformation: deterministic cropping, removal of the original white matte for light-background PNGs, downscaling, grayscale/one-color conversion, and generic CMYK conversion only
+- Authorization: supplied by the client as the approved logo on 2026-07-14
+- Important limitation: no official vector, Pantone, or CMYK master was supplied; raster derivatives must not be represented as native vector artwork
+
 ### Header wordmark
 
 - Local path: `public/brand-wordmark.png`
@@ -13,6 +31,7 @@ Only manufacturer or authorized-distributor media approved for this catalog may 
 - Purpose: primary header wordmark on a matching navy brand plate
 - Alterations: none beyond cropping; original typography, colors, proportions, and internal artwork are preserved
 - Generated: 2026-07-14
+- Status: retained as a legacy supporting asset; references to “the logo” now mean the approved logo system above
 
 ### Red Sea service coverage map
 

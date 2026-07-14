@@ -8,7 +8,7 @@ export function FacebookFollowSection({ locale }: { locale: Locale }) {
   const ar = locale === "ar";
   return <section className="facebook-section">
     <div className="facebook-brand-visual">
-      <img src="/og.png" alt={ar ? "الهوية البصرية لكاريير ميديا البحر الأحمر" : "Carrier–Midea Red Sea brand artwork"} width={1729} height={910} />
+      <img src="/brand/logo-full-white.png" alt={ar ? "الشعار المعتمد لكاريير ميديا البحر الأحمر" : "Approved Carrier–Midea Red Sea logo"} width={900} height={755} />
       <div className="facebook-brand-caption"><span>Carrier–Midea Red Sea</span><strong>{ar ? "عروض ونصائح وتحديثات محلية" : "Local offers, advice and updates"}</strong></div>
     </div>
     <div className="facebook-copy">
