@@ -9,6 +9,7 @@ export type ProductTypeId =
 export type MarketSegment = "residential" | "commercial" | "projects";
 export type TechnologyId = "inverter" | "fixed-speed";
 export type CoolingMode = "cool-only" | "heat-pump";
+export type SupportedHorsepower = 1.5 | 2.25 | 3 | 4 | 5 | 6 | 7.5;
 
 export interface LocalizedText { ar: string; en: string }
 
@@ -33,7 +34,7 @@ export interface ProductVariant {
   id: string;
   familyId: string;
   modelCode: string;
-  capacityHp: number | null;
+  capacityHp: SupportedHorsepower;
   capacityBtu: number | null;
   coolingMode: CoolingMode;
   energyClass: string | null;

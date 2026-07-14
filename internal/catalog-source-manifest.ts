@@ -27,3 +27,15 @@ export const catalogSourceManifest: CatalogVerificationRecord[] = productVariant
 export const catalogInternalNotes = {
   xtremeProPdfSpelling: "The client PDF spells the public family name as Xtream Pro; approved UI spelling is XTreme Pro.",
 } as const;
+
+export const catalogCapacityVerification = {
+  capacityCodeMapping: { 12: 1.5, 18: 2.25, 24: 3, 30: 4, 36: 5, 48: 6, 60: 7.5 },
+  implementationDate: "2026-07-14",
+  mappingApprovalStatus: "approved",
+  source: "Client-approved capacity-code mapping",
+  pendingModelVerification: {
+    modelCode: "53QHABT30DN-708F",
+    status: "client-confirmation-required",
+    note: "The model-code verification remains pending; its approved capacity code 30 maps to 4 HP.",
+  },
+} as const;

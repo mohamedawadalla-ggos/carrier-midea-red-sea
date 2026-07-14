@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -7,7 +8,8 @@ import test from "node:test";
 const root = fileURLToPath(new URL("../", import.meta.url));
 const familySource = await readFile(new URL("../content/product-families.ts", import.meta.url), "utf8");
 const variantSource = await readFile(new URL("../content/product-variants.ts", import.meta.url), "utf8");
-const models = [...variantSource.matchAll(/"((?:53|M1)[A-Z0-9-]+)"/g)].map((match) => match[1]);
+const { productVariants } = await import(new URL("../content/product-variants.ts", import.meta.url));
+const models = productVariants.map((variant) => variant.modelCode);
 const families = [...familySource.matchAll(/id: "((?:carrier|midea)-[^"]+)", slug: "([^"]+)"[\s\S]*?productType: "([^"]+)"/g)].map((match) => ({ id: match[1], slug: match[2], type: match[3], brand: match[1].split("-")[0] }));
 
 async function getWorker() { const url = new URL("../dist/server/index.js", import.meta.url); url.searchParams.set("catalog", `${process.pid}-${Date.now()}`); return (await import(url.href)).default; }
@@ -22,10 +24,17 @@ test("catalog reconciles exactly to the approved family and variant counts", () 
   assert.equal(new Set(families.map((family) => family.id)).size, families.length);
   assert.equal(new Set(families.map((family) => family.slug)).size, families.length);
   const familyIds = new Set(families.map((family) => family.id));
-  for (const id of [...variantSource.matchAll(/makeVariants\("([^"]+)"/g)].map((match) => match[1])) assert.ok(familyIds.has(id), id);
+  for (const variant of productVariants) assert.ok(familyIds.has(variant.familyId), variant.familyId);
   const counts = Object.fromEntries(["wall-mounted-split", "concealed-ducted", "ceiling-cassette", "floor-standing"].map((type) => [type, 0]));
-  for (const family of families) counts[family.type] += (variantSource.match(new RegExp(`makeVariants\\(\\"${family.id}\\", \\[([^\\]]+)\\]`))?.[1].match(/"/g)?.length ?? 0) / 2;
+  const familyTypes = new Map(families.map((family) => [family.id, family.type]));
+  for (const variant of productVariants) counts[familyTypes.get(variant.familyId)] += 1;
   assert.deepEqual(counts, { "wall-mounted-split": 44, "concealed-ducted": 12, "ceiling-cassette": 2, "floor-standing": 3 });
+  const assignmentHash = createHash("sha256").update(productVariants.map((variant) => `${variant.familyId}:${variant.modelCode}`).join("\n")).digest("hex");
+  assert.equal(assignmentHash, "808b97a6b78014c731c939e01bb6e6c50602c4f099a253e66b5aa4d8097e5f70");
+  const horsepowerCounts = Object.fromEntries([1.5, 2.25, 3, 4, 5, 6, 7.5].map((horsepower) => [horsepower, productVariants.filter((variant) => variant.capacityHp === horsepower).length]));
+  assert.deepEqual(horsepowerCounts, { 1.5: 13, 2.25: 14, 3: 14, 4: 5, 5: 8, 6: 3, 7.5: 4 });
+  assert.ok(productVariants.every((variant) => variant.capacityHp !== null));
+  assert.deepEqual([...new Set(productVariants.map((variant) => variant.capacityHp))].sort((a, b) => a - b), [1.5, 2.25, 3, 4, 5, 6, 7.5]);
   assert.match(variantSource, /priceMode: "request-quote"/);
   assert.doesNotMatch(familySource + variantSource, /dealerPrice|publicGuidePrice|sourceDocument|sourceUrl|internalVerificationNotes/);
 });
