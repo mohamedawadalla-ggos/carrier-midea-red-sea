@@ -6,11 +6,11 @@ import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { productFamilies } from "@/content/product-families";
 import { productVariants } from "@/content/product-variants";
-import { absoluteUrl } from "@/lib/site-config";
 import { isLocale, locales } from "@/lib/i18n";
+import { localizedAlternates } from "@/lib/seo";
 
 export function generateStaticParams() { return locales.map((locale) => ({ locale })); }
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> { const { locale } = await params; const ar = locale === "ar"; return { title: ar ? "كتالوج التكييفات | كاريير ميديا البحر الأحمر" : "Air Conditioner Catalog | Carrier–Midea Red Sea", description: ar ? "تصفح عائلات تكييفات كاريير وميديا واطلب السعر الحالي." : "Browse Carrier and Midea product families and request the current price.", alternates: { canonical: absoluteUrl(`/${locale}/products`) } }; }
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> { const { locale } = await params; if (!isLocale(locale)) return {}; const ar = locale === "ar"; return { title: ar ? "كتالوج التكييفات | كاريير ميديا البحر الأحمر" : "Air Conditioner Catalog | Carrier–Midea Red Sea", description: ar ? "تصفح عائلات تكييفات كاريير وميديا واطلب السعر الحالي." : "Browse Carrier and Midea product families and request the current price.", alternates: localizedAlternates(locale, "/products") }; }
 
 export default async function ProductsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params; if (!isLocale(locale)) notFound(); const ar = locale === "ar";

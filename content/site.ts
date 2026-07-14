@@ -4,6 +4,21 @@ export const company = {
   name: { ar: "كاريير ميديا البحر الأحمر", en: "Carrier–Midea Red Sea" },
   status: { ar: "الوكيل الحصري لكاريير وميديا", en: "Exclusive Dealer for Carrier and Midea" },
   territory: { ar: "العين السخنة ومحافظة البحر الأحمر", en: "Ain Sokhna and the Red Sea Governorate" },
+  address: {
+    ar: {
+      formatted: "طريق النصر، أمام بنك سي أي بي (CIB)، الغردقة، البحر الأحمر، مصر",
+      streetAddress: "طريق النصر، أمام بنك سي أي بي (CIB)",
+      addressLocality: "الغردقة",
+      addressRegion: "البحر الأحمر",
+    },
+    en: {
+      formatted: "El Nasr Road, opposite CIB Bank, Hurghada, Red Sea, Egypt",
+      streetAddress: "El Nasr Road, opposite CIB Bank",
+      addressLocality: "Hurghada",
+      addressRegion: "Red Sea",
+    },
+    addressCountry: "EG",
+  },
 } as const;
 
 export const content = {

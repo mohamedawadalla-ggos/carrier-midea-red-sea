@@ -8,10 +8,10 @@ import { productTypes } from "@/content/catalog-types";
 import { productVariants } from "@/content/product-variants";
 import { getFamilyById, getProductType, isProductType, legacyProductRoutes } from "@/lib/catalog";
 import { isLocale } from "@/lib/i18n";
-import { absoluteUrl } from "@/lib/site-config";
+import { localizedAlternates } from "@/lib/seo";
 
 export function generateStaticParams() { return [...productTypes.map((type) => ({ productType: type.id })), ...Object.keys(legacyProductRoutes).map((productType) => ({ productType }))]; }
-export async function generateMetadata({ params }: { params: Promise<{ locale: string; productType: string }> }): Promise<Metadata> { const { locale, productType } = await params; const type = getProductType(productType); const legacy = legacyProductRoutes[productType]; const family = legacy && getFamilyById(legacy.familyId); if (!isLocale(locale) || (!type && !family)) return {}; const title = type?.name[locale] ?? family?.name[locale] ?? ""; return { title: `${title} | Carrier–Midea Red Sea`, description: type?.description[locale] ?? family?.description[locale], alternates: { canonical: absoluteUrl(type ? `/${locale}/products/${type.id}` : `/${locale}/products/${family!.productType}/${family!.slug}`) } }; }
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; productType: string }> }): Promise<Metadata> { const { locale, productType } = await params; const type = getProductType(productType); const legacy = legacyProductRoutes[productType]; const family = legacy && getFamilyById(legacy.familyId); if (!isLocale(locale) || (!type && !family)) return {}; const title = type?.name[locale] ?? family?.name[locale] ?? ""; const suffix = type ? `/products/${type.id}` : `/products/${family!.productType}/${family!.slug}`; return { title: `${title} | Carrier–Midea Red Sea`, description: type?.description[locale] ?? family?.description[locale], alternates: localizedAlternates(locale, suffix) }; }
 
 export default async function ProductTypeOrLegacyPage({ params }: { params: Promise<{ locale: string; productType: string }> }) {
   const { locale, productType } = await params; if (!isLocale(locale)) notFound(); const ar = locale === "ar";
