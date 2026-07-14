@@ -1,536 +1,242 @@
-# CoolPet Smart AC Advisor — Technical Sizing Approval
+# CoolPet Smart AC Advisor — Approved Technical Sizing Matrix
 
-**Document status:** Draft for HVAC technical review
+**Status:** Approved for deterministic implementation
 
-**Purpose:** Approval of deterministic sizing rules before software implementation
+**Approved by:** Nael
 
-**No sizing value in this document is approved until the sign-off section is completed.**
+**Implementation record date:** 14 July 2026
 
-## Review instructions
+**Version:** 1.0
 
-For every proposed principle or technical value, the reviewer must record one of the following outcomes:
-
-- **Approved** — accept the proposal exactly as written.
-- **Rejected** — do not use the proposal.
-- **Revised value** — replace the proposal with the value entered by the reviewer.
-- **Technical notes** — explain assumptions, exceptions, formulas, or evidence required for implementation.
-
-Blank fields are intentionally unresolved. They must not be inferred, calculated from product model codes, or populated by the implementation team without written technical approval.
+This document records the client-approved V1 sizing assumptions. The assistant is a deterministic preliminary sizing tool, not a generative AI chatbot, an engineering load-calculation replacement, or a guaranteed final capacity selection.
 
 ## 1. Product positioning
 
-### Approved product name
-
 - **English:** CoolPet Smart AC Advisor
 - **Arabic:** مساعد كول بيت الذكي لاختيار التكييف
+- Calculations occur locally in the browser.
+- No answers are stored or transmitted until the visitor explicitly chooses WhatsApp.
+- Product horsepower comes from the catalog's explicit `capacityHp`; it is never parsed from model codes.
 
-### Positioning for approval
+## 2. Approved base calculation
 
-CoolPet Smart AC Advisor is a **deterministic preliminary sizing assistant**. It uses an approved, fixed calculation method and the information entered by the visitor to produce a preliminary recommendation.
-
-It must not be described as:
-
-- A generative AI chatbot.
-- A replacement for an engineering cooling-load calculation.
-- A guaranteed final capacity selection.
-
-| Review item | Approved | Rejected | Revised wording | Technical notes |
-| --- | --- | --- | --- | --- |
-| English product name | ☐ | ☐ |  |  |
-| Arabic product name | ☐ | ☐ |  |  |
-| Deterministic preliminary-sizing positioning | ☐ | ☐ |  |  |
-| Prohibited claims and descriptions | ☐ | ☐ |  |  |
-
-## 2. General sizing principles for approval
-
-The percentages and BTU values below are proposals only.
-
-| # | Proposed principle or value | Approved | Rejected | Revised value | Technical notes |
-| --- | --- | --- | --- | --- | --- |
-| 1 | Calculations occur locally in the visitor's browser. | ☐ | ☐ |  |  |
-| 2 | Room area alone is not sufficient for the preliminary recommendation. | ☐ | ☐ |  |  |
-| 3 | Room volume and ceiling height affect the result. | ☐ | ☐ |  |  |
-| 4 | Sunlight, floor position, glazing, insulation, occupancy, and room use affect the result. | ☐ | ☐ |  |  |
-| 5 | All seven supported Red Sea and Gulf of Suez locations initially use one hot coastal climate profile. | ☐ | ☐ |  |  |
-| 6 | V1 does not invent or apply separate city multipliers. | ☐ | ☐ |  |  |
-| 7 | High sunlight adjustment proposal: **+10%**. | ☐ | ☐ |  |  |
-| 8 | Heavy shade/low sunlight adjustment proposal: **-10%**. | ☐ | ☐ |  |  |
-| 9 | Occupancy baseline proposal: **2 people**. | ☐ | ☐ |  |  |
-| 10 | Additional occupancy proposal: **+600 BTU per person above the baseline**. | ☐ | ☐ |  |  |
-| 11 | Kitchens and restaurants require technical inspection. | ☐ | ☐ |  |  |
-| 12 | Large open-plan and unusual commercial applications require technical inspection. | ☐ | ☐ |  |  |
-| 13 | Results near an HP threshold recommend technical inspection. | ☐ | ☐ |  |  |
-| 14 | Loads below or above the approved matrix are not clamped to 1.5 HP or 7.5 HP. | ☐ | ☐ |  |  |
-
-### Initial service locations using the shared climate profile
-
-1. Ain Sokhna / العين السخنة
-2. Ras Ghareb / رأس غارب
-3. El Gouna / الجونة
-4. Hurghada / الغردقة
-5. Safaga / سفاجا
-6. Quseir / القصير
-7. Marsa Alam / مرسى علم
-
-| Shared-location decision | Approved | Rejected | Revised decision | Technical notes |
-| --- | --- | --- | --- | --- |
-| These seven locations use one hot coastal profile in V1. | ☐ | ☐ |  |  |
-| “Other” location uses the shared profile only with an inspection recommendation. | ☐ | ☐ |  |  |
-
-## 3. Required matrix decisions
-
-### A. Base calculation
-
-| Decision | Proposed or approved value | Approved | Rejected | Revised value | Units/formula | Technical notes |
-| --- | --- | --- | --- | --- | --- | --- |
-| Base BTU per square metre | **To be supplied** | ☐ | ☐ |  | BTU/m² |  |
-| Reference ceiling height | **To be supplied** | ☐ | ☐ |  | metres |  |
-| Minimum valid room length | **To be supplied** | ☐ | ☐ |  | metres |  |
-| Minimum valid room width | **To be supplied** | ☐ | ☐ |  | metres |  |
-| Maximum valid room length | **To be supplied** | ☐ | ☐ |  | metres |  |
-| Maximum valid room width | **To be supplied** | ☐ | ☐ |  | metres |  |
-| Minimum valid room area | **To be supplied** | ☐ | ☐ |  | m² |  |
-| Maximum automatic-recommendation area | **To be supplied** | ☐ | ☐ |  | m² |  |
-| Base-load calculation formula | **To be supplied** | ☐ | ☐ |  | formula |  |
-
-### B. Ceiling and volume adjustment
-
-The approved method must use area, volume, and ceiling height without applying the same height effect twice.
-
-| Decision | Proposed or approved value | Approved | Rejected | Revised value | Technical notes |
-| --- | --- | --- | --- | --- | --- |
-| Reference ceiling height | **To be supplied** | ☐ | ☐ |  |  |
-| Adjustment method: formula or bands | **To be supplied** | ☐ | ☐ |  | Include complete formula or every band. |
-| Adjustment below reference height | **To be supplied** | ☐ | ☐ |  |  |
-| Adjustment above reference height | **To be supplied** | ☐ | ☐ |  |  |
-| Maximum ceiling height for automatic recommendation | **To be supplied** | ☐ | ☐ |  | Metres. |
-| Height above the limit requires inspection | **To be supplied** | ☐ | ☐ |  | Yes/No. |
-
-#### Ceiling-height bands, if a banded method is approved
-
-| Minimum height | Maximum height | Adjustment | Automatic recommendation allowed | Inspection rule | Technical notes |
-| --- | --- | --- | --- | --- | --- |
-|  |  |  |  |  |  |
-|  |  |  |  |  |  |
-|  |  |  |  |  |  |
-|  |  |  |  |  |  |
-
-### C. Climate
-
-| Decision | Proposed value | Approved | Rejected | Revised value | Technical notes |
-| --- | --- | --- | --- | --- | --- |
-| One multiplier for all seven service locations | Hot coastal multiplier: **To be supplied** | ☐ | ☐ |  |  |
-| Separate city multipliers in V1 | No | ☐ | ☐ |  |  |
-| Separate city multipliers in a later version | Review after field evidence is available | ☐ | ☐ |  | Define evidence and review date. |
-| Treatment of “other” locations | Inspection recommendation proposed | ☐ | ☐ |  |  |
-
-### D. Sunlight
-
-| Condition | Proposed adjustment | Approved | Rejected | Revised value | Technical definition and notes |
-| --- | --- | --- | --- | --- | --- |
-| Low / heavy shade | **-10%** | ☐ | ☐ |  | Define shade/orientation criteria. |
-| Normal | **0%** | ☐ | ☐ |  | Define normal exposure. |
-| High | **+10%** | ☐ | ☐ |  | Define hours/orientation criteria. |
-
-### E. Floor condition
-
-| Condition | Proposed adjustment | Approved | Rejected | Revised value | Automatic recommendation allowed | Inspection rule | Technical notes |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Normal floor | **To be supplied** | ☐ | ☐ |  |  |  |  |
-| Top floor below insulated roof | **To be supplied** | ☐ | ☐ |  |  |  |  |
-| Direct roof exposure | **To be supplied** | ☐ | ☐ |  |  |  |  |
-
-### F. Glazing
-
-| Condition | Proposed adjustment | Approved | Rejected | Revised value | Automatic recommendation allowed | Inspection rule | Technical definition and notes |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Small windows | **To be supplied** | ☐ | ☐ |  |  |  | Define glass area or ratio. |
-| Normal windows | **To be supplied** | ☐ | ☐ |  |  |  | Define glass area or ratio. |
-| Large glazing/storefront | **To be supplied** | ☐ | ☐ |  |  |  | Define mandatory-inspection threshold. |
-
-### G. Insulation
-
-| Condition | Proposed adjustment | Approved | Rejected | Revised value | Automatic recommendation allowed | Inspection rule | Technical definition and notes |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Good | **To be supplied** | ☐ | ☐ |  |  |  | Define construction criteria. |
-| Average | **To be supplied** | ☐ | ☐ |  |  |  | Define construction criteria. |
-| Poor | **To be supplied** | ☐ | ☐ |  |  |  | Define inspection requirement. |
-| Unknown | Inspection recommendation proposed | ☐ | ☐ |  |  |  |  |
-
-### H. Occupancy
-
-| Decision | Proposed value | Approved | Rejected | Revised value | Technical notes |
-| --- | --- | --- | --- | --- | --- |
-| Included occupants | **2 people** | ☐ | ☐ |  |  |
-| Load per additional occupant | **+600 BTU** | ☐ | ☐ |  | State whether this varies by room use/activity. |
-| Maximum occupancy for automatic recommendation | **To be supplied** | ☐ | ☐ |  |  |
-| Occupancy above the limit | Inspection required proposed | ☐ | ☐ |  |  |
-
-### I. Room use
-
-Enter an adjustment as a percentage, multiplier, fixed BTU value, or an explicitly documented combination.
-
-| Room type | Adjustment value/formula | Automatic recommendation allowed | Inspection recommended | Inspection mandatory | Approved | Rejected | Revised value | Technical notes |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Bedroom |  |  |  |  | ☐ | ☐ |  |  |
-| Living room |  |  |  |  | ☐ | ☐ |  |  |
-| Hotel room |  |  |  |  | ☐ | ☐ |  |  |
-| Office |  |  |  |  | ☐ | ☐ |  |  |
-| Shop/showroom |  |  |  |  | ☐ | ☐ |  |  |
-| Clinic |  |  |  |  | ☐ | ☐ |  |  |
-| Restaurant |  | No proposed |  | Yes proposed | ☐ | ☐ |  | Include kitchens and heat-generating equipment. |
-| Open-plan space |  |  |  | Large spaces: Yes proposed | ☐ | ☐ |  | Define “large.” |
-| Other |  | No proposed |  | Yes proposed | ☐ | ☐ |  |  |
-
-## 4. HP and BTU approval bands
-
-The catalog's existing `capacityHp` values confirm which products are categorized as 1.5, 2.25, 3, 4, 5, 6, or 7.5 HP. They do **not** automatically define a room-sizing matrix, nominal BTU values, or safe load boundaries.
-
-Do not populate or implement a final threshold until every applicable field below is technically approved.
-
-| HP | Nominal BTU | Minimum adjusted load | Maximum adjusted load | Boundary tolerance | Show adjacent HP? | Inspection rule | Approved | Rejected | Revised value / technical notes |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1.5 HP |  |  |  |  |  |  | ☐ | ☐ |  |
-| 2.25 HP |  |  |  |  |  |  | ☐ | ☐ |  |
-| 3 HP |  |  |  |  |  |  | ☐ | ☐ |  |
-| 4 HP |  |  |  |  |  |  | ☐ | ☐ |  |
-| 5 HP |  |  |  |  |  |  | ☐ | ☐ |  |
-| 6 HP |  |  |  |  |  |  | ☐ | ☐ |  |
-| 7.5 HP |  |  |  |  |  |  | ☐ | ☐ |  |
-
-### Band-wide decisions
-
-| Decision | Approved value | Approved | Rejected | Revised value | Technical notes |
-| --- | --- | --- | --- | --- | --- |
-| Mathematical definition of “near a boundary” |  | ☐ | ☐ |  | Percentage and/or BTU value. |
-| Whether boundary tolerance is symmetrical |  | ☐ | ☐ |  |  |
-| Lower-bound behavior | No clamping proposed | ☐ | ☐ |  |  |
-| Upper-bound behavior | No clamping proposed | ☐ | ☐ |  |  |
-| Adjacent-capacity display wording | “Alternative capacity” proposed | ☐ | ☐ |  |  |
-
-## 5. Technical-inspection rules
-
-For each case, choose one outcome: automatic recommendation allowed, inspection recommended, or inspection mandatory.
-
-| Condition | Automatic recommendation allowed | Inspection recommended | Inspection mandatory | Approved | Rejected | Revised rule | Technical notes |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Adjusted load below supported minimum |  |  | Proposed | ☐ | ☐ |  | Do not clamp to 1.5 HP. |
-| Adjusted load above supported maximum |  |  | Proposed | ☐ | ☐ |  | Do not clamp to 7.5 HP. |
-| Ceiling above approved limit |  |  | Proposed | ☐ | ☐ |  |  |
-| Restaurant or kitchen |  |  | Proposed | ☐ | ☐ |  |  |
-| Large open-plan space |  |  | Proposed | ☐ | ☐ |  | Define size threshold. |
-| Connected rooms |  |  | Proposed | ☐ | ☐ |  |  |
-| Irregular room shape |  | Proposed |  | ☐ | ☐ |  | Define mandatory cases. |
-| Large glass frontage |  |  | Proposed | ☐ | ☐ |  | Define glass threshold. |
-| Poor insulation |  | Proposed |  | ☐ | ☐ |  |  |
-| Unknown insulation |  | Proposed |  | ☐ | ☐ |  |  |
-| Unusually high occupancy |  |  | Proposed | ☐ | ☐ |  | Define occupancy threshold. |
-| Unknown room type |  |  | Proposed | ☐ | ☐ |  |  |
-| Result close to an HP boundary |  | Proposed |  | ☐ | ☐ |  | Use approved boundary tolerance. |
-| Commercial or project application |  | Proposed |  | ☐ | ☐ |  | Define mandatory cases. |
-| Conflicting customer preferences |  | Proposed |  | ☐ | ☐ |  | Example: required mode unavailable at calculated HP. |
-| Location outside supported service area |  | Proposed |  | ☐ | ☐ |  |  |
-
-### Additional inspection rule requested by reviewer
-
-| Condition | Automatic recommendation allowed | Inspection recommended | Inspection mandatory | Technical notes |
-| --- | --- | --- | --- | --- |
-|  |  |  |  |  |
-|  |  |  |  |  |
-|  |  |  |  |  |
-
-## 6. Representative test scenarios
-
-The HVAC reviewer must complete the blank fields. **Expected HP must not be calculated or inferred by the implementation team.** Add dimensional or technical context in the notes where the title alone is insufficient.
-
-### Scenario 1 — Small bedroom
-
-| Field | Technical input or expected result |
+| Decision | Approved value |
 | --- | --- |
-| Location |  |
-| Length (m) |  |
-| Width (m) |  |
-| Ceiling height (m) |  |
-| Area (m²) |  |
-| Room type | Bedroom |
-| Sunlight |  |
-| Floor condition |  |
-| Glazing |  |
-| Insulation |  |
-| Occupants |  |
-| Expected HP according to Nael | **To be completed by Nael** |
-| Inspection required (Yes/No) |  |
-| Technical notes |  |
+| Area | length × width |
+| Volume | area × ceiling height |
+| Base load | area × 600 BTU/m² |
+| Reference ceiling | 2.7m |
+| Climate profile | One V1 hot-coastal profile for all seven service locations |
+| Separate city multipliers | No |
 
-### Scenario 2 — Medium bedroom
+The 600 BTU/m² baseline represents the approved shared hot-coastal profile; V1 applies no additional city-specific factor. Volume is reported, while ceiling height is applied once through the approved bands below. It must not be double-counted.
 
-| Field | Technical input or expected result |
+## 3. Approved input limits
+
+| Input | Approved limit |
 | --- | --- |
-| Location |  |
-| Length (m) |  |
-| Width (m) |  |
-| Ceiling height (m) |  |
-| Area (m²) |  |
-| Room type | Bedroom |
-| Sunlight |  |
-| Floor condition |  |
-| Glazing |  |
-| Insulation |  |
-| Occupants |  |
-| Expected HP according to Nael | **To be completed by Nael** |
-| Inspection required (Yes/No) |  |
-| Technical notes |  |
+| Length | minimum 2m; maximum 12m for direct calculation |
+| Width | minimum 2m; maximum 12m for direct calculation |
+| Ceiling | minimum 2.4m; maximum 3.6m for automatic calculation |
+| Occupants | 1–12 for direct calculation |
+| Normal automatic area | up to 60m² |
+| Preliminary area with mandatory inspection | above 60m² through 100m² |
+| No automatic HP | above 100m² |
 
-### Scenario 3 — Large top-floor bedroom
+## 4. Approved adjustment matrix
 
-| Field | Technical input or expected result |
+### Ceiling height
+
+| Height | Multiplier | Inspection |
+| --- | ---: | --- |
+| Up to 2.7m | 1.00 | Standard |
+| Above 2.7m through 3.0m | 1.10 | Standard |
+| Above 3.0m through 3.3m | 1.20 | Standard |
+| Above 3.3m through 3.6m | 1.30 | Recommended |
+| Above 3.6m | No automatic calculation | Required |
+
+### Sunlight
+
+| Condition | Multiplier |
+| --- | ---: |
+| Low/heavily shaded | 0.90 |
+| Normal | 1.00 |
+| High/direct strong sunlight | 1.10 |
+
+### Floor and roof
+
+| Condition | Multiplier | Inspection |
+| --- | ---: | --- |
+| Normal floor | 1.00 | Standard |
+| Top floor with insulated roof | 1.10 | Recommended when material to the result |
+| Exposed roof with poor insulation | 1.20 | Required |
+
+### Glazing
+
+| Condition | Multiplier | Inspection |
+| --- | ---: | --- |
+| Small windows | 0.95 | Standard |
+| Normal windows | 1.00 | Standard |
+| Large glazing | 1.15 | Recommended |
+| Full storefront glazing | 1.15 minimum preliminary factor | Required |
+
+Full storefront glazing reuses the approved large-glazing factor only to provide a conservative preliminary breakdown; it never produces an unqualified final recommendation.
+
+### Insulation
+
+| Condition | Multiplier | Inspection |
+| --- | ---: | --- |
+| Good | 0.90 | Standard |
+| Average | 1.00 | Standard |
+| Poor | 1.15 | Adjustment reason shown |
+| Unknown | 1.10 | Recommended; reason required |
+
+### Occupancy
+
+| Decision | Approved value |
 | --- | --- |
-| Location |  |
-| Length (m) |  |
-| Width (m) |  |
-| Ceiling height (m) |  |
-| Area (m²) |  |
-| Room type | Bedroom |
-| Sunlight |  |
-| Floor condition | Top floor |
-| Glazing |  |
-| Insulation |  |
-| Occupants |  |
-| Expected HP according to Nael | **To be completed by Nael** |
-| Inspection required (Yes/No) |  |
-| Technical notes |  |
+| Included occupants | 2 |
+| Additional load | +600 BTU per person above 2 |
+| Above 8 occupants | Inspection recommended |
+| Above 12 occupants | Inspection required; outside direct-input range |
 
-### Scenario 4 — Small living room
+### Room use
 
-| Field | Technical input or expected result |
+| Room type | Multiplier | Automatic status |
+| --- | ---: | --- |
+| Bedroom | 1.00 | Allowed |
+| Hotel room | 1.00 | Allowed |
+| Living room | 1.05 | Allowed |
+| Office | 1.10 | Allowed |
+| Clinic | 1.10 | Allowed |
+| Shop/showroom | 1.15 | Allowed, subject to installation type |
+| Restaurant/commercial kitchen | No additional approved multiplier | Inspection required; no unqualified result |
+| Open-plan | No additional approved multiplier | Preliminary result plus mandatory inspection |
+| Other | No additional approved multiplier | Inspection recommended or required according to other inputs |
+
+## 5. Approved HP bands
+
+| Adjusted load | Primary recommendation |
+| --- | ---: |
+| Up to 12,000 BTU | 1.5 HP |
+| Above 12,000 through 18,000 BTU | 2.25 HP |
+| Above 18,000 through 24,000 BTU | 3 HP |
+| Above 24,000 through 30,000 BTU | 4 HP |
+| Above 30,000 through 36,000 BTU | 5 HP |
+| Above 36,000 through 48,000 BTU | 6 HP |
+| Above 48,000 through 60,000 BTU | 7.5 HP |
+| Above 60,000 BTU | No forced HP; inspection required |
+
+- Boundary tolerance is 5% of each HP boundary.
+- Near a boundary, show the current recommendation and the adjacent higher HP when available.
+- Near-boundary results recommend professional inspection.
+- 1.5 HP is the smallest available catalog capacity; smaller loads must include an oversizing-confirmation warning.
+- Loads outside the matrix must never be clamped to 1.5 HP or 7.5 HP.
+
+## 6. Four resolved implementation decisions
+
+1. **Floor input:** the earlier `topFloor` boolean is replaced by `normal-floor`, `top-floor-insulated`, and `roof-exposed-poor-insulation`.
+2. **Climate:** all seven current locations share one approved hot-coastal profile in V1; no city multipliers are invented.
+3. **Out-of-range behavior:** above 100m² or outside the direct measurement ranges returns inspection-required state without a forced HP; above 60,000 BTU never clamps to 7.5 HP.
+4. **System selection:** every available suitable product type may be surfaced, grouped into direct room options and options requiring site inspection.
+
+## 7. Approved installation and system-type behavior
+
+| Room/use | Product-type behavior |
 | --- | --- |
-| Location |  |
-| Length (m) |  |
-| Width (m) |  |
-| Ceiling height (m) |  |
-| Area (m²) |  |
-| Room type | Living room |
-| Sunlight |  |
-| Floor condition |  |
-| Glazing |  |
-| Insulation |  |
-| Occupants |  |
-| Expected HP according to Nael | **To be completed by Nael** |
-| Inspection required (Yes/No) |  |
-| Technical notes |  |
+| Bedroom and hotel room | Wall-mounted is the direct primary option. |
+| Living room, small office, and clinic | Wall-mounted is direct; other types appear only when the installation preference supports them. |
+| Shop/showroom | Wall-mounted, cassette, floor-standing, and ducted may be shown when matching. |
+| Restaurant, large open-plan, and project-like application | Potential commercial systems may be shown only with mandatory inspection. |
 
-### Scenario 5 — Large sunny living room
+- Concealed ducted, ceiling cassette, and floor-standing selections always require technical inspection in V1.
+- Cassette results do not assert ceiling suitability.
+- Ducted results do not assert project suitability without assessment.
+- “Unsure — show all suitable systems” evaluates every matching catalog family and groups results by product type.
+- Results clearly distinguish direct room options from inspection-required options.
 
-| Field | Technical input or expected result |
+## 8. Mandatory and recommended inspection rules
+
+### Required
+
+- Restaurant or commercial kitchen.
+- Multiple connected rooms.
+- Large open-plan spaces.
+- Area above 60m².
+- Ceiling above 3.6m.
+- Full glass storefront.
+- Exposed roof with poor insulation.
+- More than 12 occupants.
+- Unusually high equipment or lighting load.
+- Adjusted load above 60,000 BTU.
+- Irregular room geometry.
+- Ducted, cassette, or floor-standing final selection.
+- Unclear or conflicting inputs.
+
+### Recommended
+
+- Result within 5% of an HP boundary.
+- Unknown insulation.
+- More than 8 occupants.
+- Ceiling above 3.3m.
+- Large glazing.
+- Top-floor or roof exposure materially changes the load.
+
+## 9. Approved 30m² regression scenarios
+
+### Scenario A — Sunny top-floor living room
+
+Approved normal inputs: 30m², 2.7m ceiling, 2 occupants, normal glazing, average insulation, top-floor insulated roof, strong sunlight.
+
+| Calculation stage | Value |
+| --- | ---: |
+| Base load | 30 × 600 = 18,000 BTU |
+| Ceiling | × 1.00 |
+| Sunlight | × 1.10 |
+| Floor | × 1.10 |
+| Glazing | × 1.00 |
+| Insulation | × 1.00 |
+| Living-room use | × 1.05 |
+| Occupancy | +0 BTU |
+| Adjusted load | 22,869 BTU |
+| Approved primary result | **3 HP** |
+
+### Scenario B — Large-glazing shop/showroom
+
+Approved normal inputs: 30m², 2.7m ceiling, 2 occupants, normal floor, normal sunlight, large glazing, average insulation.
+
+| Calculation stage | Value |
+| --- | ---: |
+| Base load | 30 × 600 = 18,000 BTU |
+| Ceiling | × 1.00 |
+| Sunlight | × 1.00 |
+| Floor | × 1.00 |
+| Large glazing | × 1.15 |
+| Insulation | × 1.00 |
+| Shop/showroom use | × 1.15 |
+| Occupancy | +0 BTU |
+| Adjusted load | 23,805 BTU |
+| Approved primary result | **3 HP** |
+
+The multipliers are not altered to force either result; both follow the approved matrix directly.
+
+## 10. Approved disclaimer
+
+### English
+
+> This is a preliminary recommendation based on the information provided and is not a final engineering load calculation. The required capacity should be confirmed through a professional site inspection.
+
+### Arabic
+
+> هذه توصية مبدئية بناءً على البيانات المدخلة، ولا تعتبر حساب أحمال هندسيًا نهائيًا. يجب تأكيد القدرة المناسبة بعد المعاينة الفنية للموقع.
+
+## 11. Implementation approval
+
+| Sign-off field | Approved value |
 | --- | --- |
-| Location |  |
-| Length (m) |  |
-| Width (m) |  |
-| Ceiling height (m) |  |
-| Area (m²) |  |
-| Room type | Living room |
-| Sunlight | High |
-| Floor condition |  |
-| Glazing |  |
-| Insulation |  |
-| Occupants |  |
-| Expected HP according to Nael | **To be completed by Nael** |
-| Inspection required (Yes/No) |  |
-| Technical notes |  |
-
-### Scenario 6 — Hotel room
-
-| Field | Technical input or expected result |
-| --- | --- |
-| Location |  |
-| Length (m) |  |
-| Width (m) |  |
-| Ceiling height (m) |  |
-| Area (m²) |  |
-| Room type | Hotel room |
-| Sunlight |  |
-| Floor condition |  |
-| Glazing |  |
-| Insulation |  |
-| Occupants |  |
-| Expected HP according to Nael | **To be completed by Nael** |
-| Inspection required (Yes/No) |  |
-| Technical notes |  |
-
-### Scenario 7 — Small office
-
-| Field | Technical input or expected result |
-| --- | --- |
-| Location |  |
-| Length (m) |  |
-| Width (m) |  |
-| Ceiling height (m) |  |
-| Area (m²) |  |
-| Room type | Office |
-| Sunlight |  |
-| Floor condition |  |
-| Glazing |  |
-| Insulation |  |
-| Occupants |  |
-| Expected HP according to Nael | **To be completed by Nael** |
-| Inspection required (Yes/No) |  |
-| Technical notes |  |
-
-### Scenario 8 — Office with multiple occupants
-
-| Field | Technical input or expected result |
-| --- | --- |
-| Location |  |
-| Length (m) |  |
-| Width (m) |  |
-| Ceiling height (m) |  |
-| Area (m²) |  |
-| Room type | Office |
-| Sunlight |  |
-| Floor condition |  |
-| Glazing |  |
-| Insulation |  |
-| Occupants |  |
-| Expected HP according to Nael | **To be completed by Nael** |
-| Inspection required (Yes/No) |  |
-| Technical notes |  |
-
-### Scenario 9 — Clinic room
-
-| Field | Technical input or expected result |
-| --- | --- |
-| Location |  |
-| Length (m) |  |
-| Width (m) |  |
-| Ceiling height (m) |  |
-| Area (m²) |  |
-| Room type | Clinic |
-| Sunlight |  |
-| Floor condition |  |
-| Glazing |  |
-| Insulation |  |
-| Occupants |  |
-| Expected HP according to Nael | **To be completed by Nael** |
-| Inspection required (Yes/No) |  |
-| Technical notes |  |
-
-### Scenario 10 — Shop with large glazing
-
-| Field | Technical input or expected result |
-| --- | --- |
-| Location |  |
-| Length (m) |  |
-| Width (m) |  |
-| Ceiling height (m) |  |
-| Area (m²) |  |
-| Room type | Shop/showroom |
-| Sunlight |  |
-| Floor condition |  |
-| Glazing | Large glazing/storefront |
-| Insulation |  |
-| Occupants |  |
-| Expected HP according to Nael | **To be completed by Nael** |
-| Inspection required (Yes/No) |  |
-| Technical notes |  |
-
-### Scenario 11 — Restaurant
-
-| Field | Technical input or expected result |
-| --- | --- |
-| Location |  |
-| Length (m) |  |
-| Width (m) |  |
-| Ceiling height (m) |  |
-| Area (m²) |  |
-| Room type | Restaurant |
-| Sunlight |  |
-| Floor condition |  |
-| Glazing |  |
-| Insulation |  |
-| Occupants |  |
-| Expected HP according to Nael | **To be completed by Nael** |
-| Inspection required (Yes/No) |  |
-| Technical notes | Include cooking equipment, exhaust, operating hours, and heat sources. |
-
-### Scenario 12 — Large open-plan space
-
-| Field | Technical input or expected result |
-| --- | --- |
-| Location |  |
-| Length (m) |  |
-| Width (m) |  |
-| Ceiling height (m) |  |
-| Area (m²) |  |
-| Room type | Open-plan space |
-| Sunlight |  |
-| Floor condition |  |
-| Glazing |  |
-| Insulation |  |
-| Occupants |  |
-| Expected HP according to Nael | **To be completed by Nael** |
-| Inspection required (Yes/No) |  |
-| Technical notes | Record connected zones, openings, partitions, and unusual geometry. |
-
-### Additional reviewer scenario
-
-| Field | Technical input or expected result |
-| --- | --- |
-| Scenario name |  |
-| Location |  |
-| Length (m) |  |
-| Width (m) |  |
-| Ceiling height (m) |  |
-| Area (m²) |  |
-| Room type |  |
-| Sunlight |  |
-| Floor condition |  |
-| Glazing |  |
-| Insulation |  |
-| Occupants |  |
-| Expected HP according to Nael | **To be completed by Nael** |
-| Inspection required (Yes/No) |  |
-| Technical notes |  |
-
-## 7. Disclaimer approval
-
-### English proposal
-
-> This is a preliminary recommendation based on the information provided. Final capacity should be confirmed through a professional site inspection.
-
-| Approved | Rejected | Revised English wording | Technical/legal notes |
-| --- | --- | --- | --- |
-| ☐ | ☐ |  |  |
-
-### Arabic proposal
-
-> هذه توصية مبدئية بناءً على البيانات المدخلة، ويجب تأكيد القدرة المناسبة بعد المعاينة الفنية للموقع.
-
-| Approved | Rejected | Revised Arabic wording | Technical/legal notes |
-| --- | --- | --- | --- |
-| ☐ | ☐ |  |  |
-
-## 8. Technical sign-off
-
-Completion of this section confirms that the approved or revised values in this document may be converted into typed application configuration and deterministic tests. Blank technical values are not approved for implementation.
-
-| Sign-off field | Response |
-| --- | --- |
-| Approved by |  |
-| Technical role |  |
-| Approval date |  |
-| Version |  |
-| Notes |  |
-| Approved for implementation | ☐ Yes &nbsp;&nbsp; ☐ No |
-
-### Implementation handoff checklist
-
-| Requirement | Confirmed |
-| --- | --- |
-| Every base-calculation value is approved. | ☐ |
-| Every adjustment and formula is approved. | ☐ |
-| Every HP/BTU band is approved. | ☐ |
-| Every inspection rule is approved. | ☐ |
-| All twelve representative scenarios have expected outcomes. | ☐ |
-| English disclaimer is approved. | ☐ |
-| Arabic disclaimer is approved. | ☐ |
-| Document is approved for implementation. | ☐ |
+| Approved by | Nael |
+| Approval status | Approved |
+| Approved for implementation | Yes |
+| Persistence | None |
+| APIs | No AI or recommendation API |
+| Data transmission | Only after explicit WhatsApp action |
