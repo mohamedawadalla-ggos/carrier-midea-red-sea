@@ -46,6 +46,18 @@ Only manufacturer or authorized-distributor media approved for this catalog may 
 - Runtime behavior: served locally with bilingual HTML labels; no external map tiles or hotlinks
 - Usage note: indicative service coverage map only; not intended for navigation or evidence of completed projects
 
+### Homepage hero background
+
+- Local path: `public/hero/carrier-midea-red-sea-hero.webp`
+- Source: original abstract artwork created with the built-in OpenAI image-generation tool; no external image source or download
+- Generated: 2026-07-14
+- Output dimensions: 1672×941 WebP
+- Output size: 75,688 bytes
+- Treatment: premium deep navy and cooling-blue abstract wave and airflow composition, with brighter visual energy on the left and darker negative space on the right
+- Runtime behavior: shown in its original orientation for Arabic and mirrored for English so the dark area remains behind locale-specific copy; mobile uses a separately verified crop position
+- Exclusions: no text, logos, watermarks, people, projects, maps, buildings, or identifiable products
+- Prompt constraints: original abstract coastal/cooling character; restrained gradients; no literal location, product model, or third-party imagery
+
 | Family | Local path | Official source page | Original image URL | Match | Authorization | Nael approval | Download date | Dimensions |
 |---|---|---|---|---|---|---|---|---|
 | Carrier XCOOL Inverter | `public/products/families/carrier/xcool-inverter.png` | https://miraco.com.eg/en/53kheft18dn8-708f | https://mcprod.miraco.com.eg/media/catalog/product/cache/8ddeeed85c51e5e61315f40dbec60ae7/1/-/1-5_left1.png | Exact family/variant | Approved | Approved manifest | 2026-07-13 | 1920×1080, transparent PNG |

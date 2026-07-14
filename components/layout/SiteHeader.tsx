@@ -23,7 +23,7 @@ export function SiteHeader({ locale, currentPath = "" }: { locale: Locale; curre
   return (
     <><a className="skip-link" href="#main-content">{locale === "ar" ? "انتقل إلى المحتوى" : "Skip to content"}</a><header className="header">
       <a className="brand" href={`/${locale}`} aria-label="Carrier Midea Red Sea home">
-        <img className="brand-image" src="/brand/logo-manufacturers-white.png" alt="Carrier and Midea" width={720} height={164} />
+        <img className="brand-image" src="/brand/logo-manufacturers.png" alt="Carrier and Midea" width={720} height={164} />
         <span>{company.name[locale]}<small>{locale === "ar" ? "مبيعات وتركيب وصيانة" : "SALES • INSTALLATION • SERVICE"}</small></span>
       </a>
       <nav className={menuOpen ? "nav open" : "nav"} aria-label={locale === "ar" ? "التنقل الرئيسي" : "Primary navigation"}>

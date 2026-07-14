@@ -11,7 +11,7 @@ import { leadProvider } from "@/services/leads/whatsapp-provider";
 import { siteConfig } from "@/lib/site-config";
 import { openPreparedLink } from "@/lib/whatsapp";
 
-const HERO_IMAGE = "/products/families/carrier/xcool-inverter.png";
+const HERO_IMAGE = "/hero/carrier-midea-red-sea-hero.webp";
 
 export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
   const locale = initialLocale;
@@ -29,7 +29,7 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
 
       <main id="main-content">
         <section className="hero">
-          <div className="hero-image" style={{ backgroundImage: `linear-gradient(90deg, rgba(3,23,45,.98) 0%, rgba(3,23,45,.82) 48%, rgba(3,23,45,.12) 100%), url(${HERO_IMAGE})` }} />
+          <div className="hero-image" style={{ backgroundImage: `url(${HERO_IMAGE})` }} />
           <div className="hero-orb orb-one" /><div className="hero-orb orb-two" />
           <div className="hero-content">
             <p className="eyebrow"><span />{t.eyebrow}</p>
