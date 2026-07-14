@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element -- static export uses the approved local wordmark crop. */
 "use client";
 
 import { useState } from "react";
@@ -7,10 +8,10 @@ import { FacebookLink } from "@/components/social/FacebookLink";
 
 const nav = {
   ar: [
-    ["الرئيسية", ""], ["التكييفات", "/products"], ["خدماتنا", "#services"], ["مشروعاتنا", "#coverage"], ["عن الشركة", "#contact"],
+    ["الرئيسية", ""], ["التكييفات", "/products"], ["خدماتنا", "#services"], ["نطاق خدماتنا", "#coverage"], ["عن الشركة", "#contact"],
   ],
   en: [
-    ["Home", ""], ["Products", "/products"], ["Services", "#services"], ["Projects", "#coverage"], ["About", "#contact"],
+    ["Home", ""], ["Products", "/products"], ["Services", "#services"], ["Our Service Coverage", "#coverage"], ["About", "#contact"],
   ],
 } as const;
 
@@ -22,14 +23,15 @@ export function SiteHeader({ locale, currentPath = "" }: { locale: Locale; curre
   return (
     <><a className="skip-link" href="#main-content">{locale === "ar" ? "انتقل إلى المحتوى" : "Skip to content"}</a><header className="header">
       <a className="brand" href={`/${locale}`} aria-label="Carrier Midea Red Sea home">
-        <span className="brand-image" role="img" aria-label="Carrier–Midea Red Sea" />
+        <img className="brand-image" src="/brand-wordmark.png" alt="Carrier–Midea Red Sea" width={750} height={470} />
         <span>{company.name[locale]}<small>{locale === "ar" ? "مبيعات وتركيب وصيانة" : "SALES • INSTALLATION • SERVICE"}</small></span>
       </a>
       <nav className={menuOpen ? "nav open" : "nav"} aria-label={locale === "ar" ? "التنقل الرئيسي" : "Primary navigation"}>
         {nav[locale].map(([label, path]) => <a key={label} aria-current={path === currentPath ? "page" : undefined} href={localize(path)} onClick={() => setMenuOpen(false)}>{label}</a>)}
+        <FacebookLink className="nav-facebook" href={siteConfig.facebookPageUrl} event="facebook_header_click"><span className="facebook-icon" aria-hidden="true">f</span>{locale === "ar" ? "تابعنا على فيسبوك" : "Follow us on Facebook"}</FacebookLink>
       </nav>
       <div className="header-actions">
-        <FacebookLink className="header-facebook" href={siteConfig.facebookPageUrl} event="facebook_header_click"><span aria-hidden="true">f</span><span className="sr-only">Facebook</span></FacebookLink>
+        <FacebookLink className="header-facebook" href={siteConfig.facebookPageUrl} event="facebook_header_click"><span className="facebook-icon" aria-hidden="true">f</span><span>{locale === "ar" ? "تابعنا على فيسبوك" : "Follow us on Facebook"}</span></FacebookLink>
         <a className="lang" href={`/${otherLocale}${currentPath}`}>{locale === "ar" ? "EN" : "عربي"}</a>
         <a className="header-cta" href={`/${locale}#contact`}>{locale === "ar" ? "اطلب خدمة" : "Request service"}</a>
         <button className="menu" type="button" aria-label={locale === "ar" ? "فتح القائمة" : "Toggle navigation"} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}><span /><span /></button>

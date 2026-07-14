@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { FeaturedProductFamilies } from "@/components/home/FeaturedProductFamilies";
 import { FacebookFollowSection } from "@/components/home/FacebookFollowSection";
+import { ServiceAreaMap } from "@/components/home/ServiceAreaMap";
 import { leadProvider } from "@/services/leads/whatsapp-provider";
 import { siteConfig } from "@/lib/site-config";
 import { openPreparedLink } from "@/lib/whatsapp";
@@ -23,7 +24,7 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
   }
 
   return (
-    <div className="site" dir={t.dir}>
+    <div className="site home-site" dir={t.dir}>
       <SiteHeader locale={locale} />
 
       <main id="main-content">
@@ -73,8 +74,8 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
         </section>
 
         <section className="section territory" id="coverage">
-          <div className="territory-copy"><p className="kicker">{t.territoryKicker}</p><h2>{t.territoryTitle}</h2><p>{t.territoryText}</p><div className="cities">{t.cities.map(city => <span key={city}>● {city}</span>)}</div></div>
-          <div className="map-art" aria-label="Stylized Red Sea service map"><div className="sea-shape"><span>RED SEA</span></div>{t.cities.map((city, i) => <i key={city} style={{ top: `${9 + i * 12}%`, left: `${39 + (i % 2) * 20}%` }}><b />{city}</i>)}</div>
+          <div className="territory-copy"><p className="kicker">{locale === "ar" ? "نطاق خدماتنا" : "OUR SERVICE COVERAGE"}</p><h2>{locale === "ar" ? "نغطي خليج السويس وساحل البحر الأحمر" : "Coverage across the Gulf of Suez and Red Sea"}</h2><p>{locale === "ar" ? "تغطي خدمات البيع والتركيب والصيانة مواقع مختارة على امتداد خليج السويس وساحل البحر الأحمر، بمواعيد منظمة واستجابة واضحة." : "Our sales, installation and maintenance services cover selected locations along the Gulf of Suez and Red Sea coast, with organized scheduling and clear response times."}</p><div className="cities">{t.cities.map(city => <span key={city}>● {city}</span>)}</div></div>
+          <ServiceAreaMap locale={locale} />
         </section>
 
         <FacebookFollowSection locale={locale} />

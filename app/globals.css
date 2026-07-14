@@ -140,3 +140,96 @@ footer{background:#021323;color:white;padding:52px max(5vw,24px) 26px;display:gr
   .brand-image{width:95px;height:50px}
   .brand>span:last-child{max-width:70px;font-size:8.5px}
 }
+
+/* Second visual refinement: brand, social, surfaces, and service coverage */
+:root{--surface-page:#e8f0f4;--surface-alt:#dce8ee;--surface-card:#f9fcfd;--surface-stage:#dceaf0;--heading:#041d35;--body-slate:#3c5668;--facebook:#1877f2}
+body{background:var(--surface-page);color:var(--heading)}
+.header{height:112px;padding-inline:clamp(16px,3vw,48px);gap:clamp(14px,1.8vw,28px);background:rgba(250,253,254,.98)}
+.brand{gap:11px;min-width:0;padding:6px 12px 6px 7px;background:var(--navy);border:1px solid #174663;border-radius:9px;box-shadow:0 8px 24px rgba(3,23,45,.16)}
+.brand-image{width:164px;height:86px;display:block;flex:0 0 auto;object-fit:contain;background:transparent;border-radius:5px;box-shadow:none}
+.brand>span:last-child{max-width:155px;color:#fff;border-color:rgba(255,255,255,.22);font-size:12px;line-height:1.25}
+.brand small{color:#a9c7d8;font-size:7.5px;line-height:1.35}
+.header-facebook,.nav-facebook{align-items:center;gap:8px;background:var(--facebook);color:#fff;border:1px solid #0e63d1;border-radius:5px;font-size:11px;font-weight:800;box-shadow:0 7px 18px rgba(24,119,242,.2)}
+.header-facebook{width:auto;height:auto;display:flex;padding:10px 12px;font-family:inherit}
+.header-facebook:hover,.nav-facebook:hover{background:#0f69dc;border-color:#0f69dc}
+.facebook-icon{width:20px;height:20px;display:inline-grid;place-items:center;flex:0 0 auto;border-radius:50%;background:#fff;color:var(--facebook);font:800 15px/1 Arial,sans-serif}
+.nav-facebook{display:none;padding:11px 14px}
+.hero{margin-top:112px}
+.catalog-main,.product-detail-main{padding-top:112px}
+
+.home-site main{background:var(--surface-page)}
+.home-site .trust-strip{background:var(--surface-card);border-color:#cbd9e1}
+.home-site .solutions{width:min(1240px,calc(100% - 44px));margin-block:72px;padding:84px clamp(24px,4vw,54px);background:var(--surface-alt);border:1px solid #c7d7df;border-radius:12px}
+.home-site .section-heading h2,.home-site .territory h2{color:var(--heading)}
+.home-site .section-heading>p:last-child,.home-site .territory-copy>p{color:var(--body-slate)}
+.home-site :where(.sales-card,.product-card,.category-card){border-color:#c8d8e1;box-shadow:0 14px 34px rgba(6,43,68,.09)}
+.home-site .featured-products{padding-block:95px;background:transparent}
+.home-site .territory{width:min(1240px,calc(100% - 44px));margin-block:84px;padding:clamp(38px,5vw,68px);grid-template-columns:.78fr 1.22fr;gap:clamp(35px,6vw,78px);background:var(--surface-card);border:1px solid #c6d7e0;border-radius:14px;box-shadow:0 18px 48px rgba(6,43,68,.09)}
+.home-site .cities span{background:#edf5f8;border-color:#c4d7e1;color:#28475a}
+
+.service-area-map{margin:0;min-width:0}
+.coverage-map-canvas{position:relative;width:min(100%,590px);aspect-ratio:720/760;margin:auto;overflow:hidden;border:1px solid #aac3cd;border-radius:14px;background:#d9edf3;box-shadow:0 16px 36px rgba(7,49,73,.12)}
+.coverage-map-canvas>img{width:100%;height:100%;display:block;object-fit:contain}
+.coverage-map-region{position:absolute;inset:18px 18px auto auto;padding:7px 10px;border:1px solid rgba(5,61,91,.15);border-radius:3px;background:rgba(250,253,254,.86);color:#31586e;font-size:8px;font-weight:800;letter-spacing:.14em}
+.site[dir="rtl"] .coverage-map-region{inset:18px auto auto 18px;letter-spacing:0}
+.coverage-markers{position:absolute;inset:0;margin:0;padding:0;list-style:none;pointer-events:none}
+.coverage-marker{position:absolute;z-index:2;transform:translate(11px,-50%);white-space:nowrap}
+.coverage-marker span{display:block;padding:5px 7px;border:1px solid #b8cdd7;border-radius:3px;background:rgba(255,255,255,.94);color:#0b3048;font-size:8.5px;font-weight:800;box-shadow:0 4px 12px rgba(4,39,60,.1)}
+.coverage-marker.marker-el-gouna{transform:translate(11px,-115%)}
+.coverage-marker.marker-hurghada{transform:translate(11px,12%)}
+.service-area-map figcaption{margin-top:12px;color:#637b89;font-size:9px;line-height:1.6;text-align:center}
+
+.facebook-section{background:#062b50;padding:clamp(75px,8vw,110px) max(7vw,25px);gap:clamp(45px,7vw,95px)}
+.facebook-brand-visual{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.18);border-radius:10px;background:#03172d;box-shadow:0 22px 55px rgba(0,0,0,.24)}
+.facebook-brand-visual>img{width:100%;height:auto;display:block;object-fit:cover}
+.facebook-brand-caption{position:absolute;inset:auto 16px 16px;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 14px;border:1px solid rgba(255,255,255,.18);border-radius:5px;background:rgba(3,23,45,.86);backdrop-filter:blur(8px)}
+.facebook-brand-caption span{color:#72d5f2;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.13em}
+.facebook-brand-caption strong{font-size:10px;text-align:end}
+.facebook-copy h2{color:#fff}
+.facebook-follow-button{width:min(330px,100%);justify-content:flex-start;gap:10px;background:var(--facebook);font-size:12px;box-shadow:0 10px 24px rgba(24,119,242,.24)}
+.facebook-follow-button>span:last-child{margin-inline-start:auto}
+
+.catalog-site{background:var(--surface-page);color:var(--heading)}
+.catalog-site .catalog-main,.catalog-site .product-detail-main{background:var(--surface-page)}
+.catalog-site .catalog-content{padding-top:54px}
+.catalog-site .product-filters{background:var(--surface-card);border-color:#bacfd9;box-shadow:0 10px 26px rgba(6,43,68,.08)}
+.catalog-site :where(.product-card,.category-card){border-color:#bfd1db;box-shadow:0 12px 30px rgba(6,43,68,.09)}
+.catalog-site .product-stage{background:var(--surface-stage);border-bottom:1px solid #c6d8e1}
+.catalog-site .product-card-body{background:#fff}
+.catalog-site .product-count,.catalog-site .catalog-disclaimer{color:#526c7c}
+
+@media(max-width:1320px){
+  .nav{display:none;position:absolute;top:112px;left:0;right:0;background:var(--surface-card);padding:25px;flex-direction:column;box-shadow:0 20px 30px rgba(0,0,0,.08)}
+  .nav.open{display:flex}
+  .menu{display:block}
+  .header-cta,.header-facebook{display:none}
+  .nav-facebook{display:flex}
+}
+@media(max-width:1050px){
+  .home-site .territory{grid-template-columns:1fr}
+  .service-area-map{width:min(100%,620px);margin:auto}
+}
+@media(max-width:700px){
+  .header{height:86px;padding-inline:10px;gap:6px}
+  .brand{gap:7px;padding:4px 7px 4px 5px;border-radius:7px}
+  .brand-image{width:104px;height:60px}
+  .brand>span:last-child{display:block;max-width:74px;padding-inline-start:7px;font-size:8.5px;line-height:1.18}
+  .brand small{display:none}
+  .nav{top:86px}
+  .hero{margin-top:86px}
+  .catalog-main,.product-detail-main{padding-top:86px}
+  .home-site .solutions{width:calc(100% - 28px);margin-block:48px;padding:62px 20px}
+  .home-site .territory{width:calc(100% - 28px);margin-block:54px;padding:24px 18px;gap:30px}
+  .coverage-map-region{inset:10px 10px auto auto;font-size:7px}
+  .site[dir="rtl"] .coverage-map-region{inset:10px auto auto 10px}
+  .coverage-marker span{padding:3px 5px;font-size:7px}
+  .coverage-marker{transform:translate(8px,-50%)}
+  .coverage-marker.marker-el-gouna{transform:translate(8px,-120%)}
+  .coverage-marker.marker-hurghada{transform:translate(8px,15%)}
+  .facebook-brand-caption{position:static;border-width:1px 0 0;border-radius:0;background:#03172d}
+  .facebook-brand-caption strong{font-size:9px}
+}
+@media(max-width:390px){
+  .brand-image{width:96px;height:56px}
+  .brand>span:last-child{max-width:66px;font-size:8px}
+}
