@@ -1,12 +1,15 @@
 "use client";
 
 import { FormEvent } from "react";
+import Link from "next/link";
 import { content, type Locale } from "@/content/site";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { FeaturedProductFamilies } from "@/components/home/FeaturedProductFamilies";
 import { FacebookFollowSection } from "@/components/home/FacebookFollowSection";
 import { ServiceAreaMap } from "@/components/home/ServiceAreaMap";
+import { AdvisorCheckpoint } from "@/components/home/AdvisorCheckpoint";
+import { OfferBanner } from "@/components/offers/OfferBanner";
 import { leadProvider } from "@/services/leads/whatsapp-provider";
 import { siteConfig } from "@/lib/site-config";
 import { openPreparedLink } from "@/lib/whatsapp";
@@ -32,11 +35,12 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
           <div className="hero-image" style={{ backgroundImage: `url(${HERO_IMAGE})` }} />
           <div className="hero-orb orb-one" /><div className="hero-orb orb-two" />
           <div className="hero-content">
+            <OfferBanner locale={locale} />
             <p className="eyebrow"><span />{t.eyebrow}</p>
             <h1>{t.titleA}<br /><em>{t.titleB}</em></h1>
             <p className="hero-copy">{t.intro}</p>
             <div className="hero-actions">
-              <a className="btn primary" href="#solutions">{t.buy}<span>↗</span></a>
+              <Link className="btn primary" href={`/${locale}/products`} prefetch={false}>{t.buy}<span>↗</span></Link>
               <a className="btn glass" href="#contact">{t.service}<span>↗</span></a>
             </div>
           </div>
@@ -65,6 +69,8 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
         </section>
 
         <FeaturedProductFamilies locale={locale} />
+
+        <AdvisorCheckpoint locale={locale} />
 
         <section className="services-section" id="services">
           <div className="section services-inner">

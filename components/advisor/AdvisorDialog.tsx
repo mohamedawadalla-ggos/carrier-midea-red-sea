@@ -26,7 +26,7 @@ export function AdvisorDialog({ locale, open, titleId, children, onClose }: { lo
     return () => document.removeEventListener("keydown", handleEscape);
   }, [onClose, open]);
 
-  return <dialog ref={dialogRef} className="coolpet-dialog" aria-labelledby={titleId} onCancel={onClose} onClose={onClose}>
+  return <dialog ref={dialogRef} className="coolpet-dialog" aria-labelledby={titleId} onCancel={onClose} onClose={() => { if (open) onClose(); }}>
     <button className="coolpet-close" type="button" onClick={onClose} aria-label={t.close}>×</button>
     {children}
   </dialog>;

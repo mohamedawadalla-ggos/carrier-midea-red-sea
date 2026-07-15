@@ -7,6 +7,8 @@ const sources = Object.fromEntries(await Promise.all([
   "../components/advisor/AdvisorDialog.tsx",
   "../components/advisor/AdvisorQuestionFlow.tsx",
   "../components/advisor/AdvisorResults.tsx",
+  "../components/home/AdvisorCheckpoint.tsx",
+  "../lib/ac-advisor-access.ts",
   "../app/(default)/layout.tsx",
   "../app/[locale]/layout.tsx",
 ].map(async (path) => [path, await readFile(new URL(path, import.meta.url), "utf8")])));
@@ -22,6 +24,10 @@ test("dialog, keyboard, progress, validation, and catalog links retain accessibl
   assert.match(sources["../components/advisor/AdvisorDialog.tsx"], /event\.key !== "Escape"/);
   assert.match(sources["../components/advisor/AdvisorDialog.tsx"], /removeEventListener\("keydown", handleEscape\)/);
   assert.match(sources["../components/advisor/CoolPetAdvisor.tsx"], /aria-haspopup="dialog"/);
+  assert.match(sources["../components/advisor/CoolPetAdvisor.tsx"], /OPEN_COOLPET_ADVISOR_EVENT/);
+  assert.match(sources["../components/advisor/CoolPetAdvisor.tsx"], /externalOpenerRef/);
+  assert.match(sources["../components/home/AdvisorCheckpoint.tsx"], /aria-haspopup="dialog"/);
+  assert.match(sources["../components/home/AdvisorCheckpoint.tsx"], /openCoolPetAdvisor\(event\.currentTarget\)/);
   assert.match(sources["../components/advisor/CoolPetAdvisor.tsx"], /<progress/);
   assert.match(sources["../components/advisor/AdvisorQuestionFlow.tsx"], /role="alert"/);
   assert.match(sources["../components/advisor/AdvisorResults.tsx"], /<a href=\{`\/\$\{locale\}\/products\//);

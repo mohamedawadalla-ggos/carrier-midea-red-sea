@@ -1,9 +1,10 @@
 import { createWhatsAppUrl } from "@/lib/whatsapp";
 import { formatHorsepower } from "@/lib/catalog-filtering";
 import { buildAdvisorWhatsAppMessage } from "@/lib/ac-advisor-message";
+import { buildRequestCartMessage } from "@/lib/request-cart";
 import { advisorOptions, advisorReasonCopy } from "@/content/ac-advisor-copy";
 import type { LeadProvider } from "@/services/leads/lead-provider";
-import type { AcAdvisorInquiry, ProductInquiry, ServiceRequest } from "@/types/lead";
+import type { AcAdvisorInquiry, ProductInquiry, RequestCartInquiry, ServiceRequest } from "@/types/lead";
 
 function productMessage(data: ProductInquiry): string {
   const { family, variant } = data;
@@ -19,6 +20,8 @@ function serviceMessage(data: ServiceRequest): string {
     : `New service request\n\nCustomer: ${data.customerName}\nTelephone: ${data.telephone}\nArea: ${data.area}\nService: ${data.service}\nDetails: ${data.notes}`;
 }
 
+export const requestCartMessage = buildRequestCartMessage;
+
 export class WhatsAppLeadProvider implements LeadProvider {
   async submitProductInquiry(data: ProductInquiry): Promise<string | null> {
     return createWhatsAppUrl(productMessage(data));
@@ -30,6 +33,10 @@ export class WhatsAppLeadProvider implements LeadProvider {
 
   async submitAcAdvisorInquiry(data: AcAdvisorInquiry): Promise<string | null> {
     return createWhatsAppUrl(buildAdvisorWhatsAppMessage(data, { options: advisorOptions, reasonCopy: advisorReasonCopy, formatHorsepower }));
+  }
+
+  async submitRequestCart(data: RequestCartInquiry): Promise<string | null> {
+    return createWhatsAppUrl(buildRequestCartMessage(data));
   }
 }
 

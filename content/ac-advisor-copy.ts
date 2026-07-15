@@ -112,6 +112,10 @@ export const advisorCopy = {
     disclaimer: "هذه توصية مبدئية بناءً على البيانات المدخلة، ولا تعتبر حساب أحمال هندسيًا نهائيًا. يجب تأكيد القدرة المناسبة بعد المعاينة الفنية للموقع.",
     privacy: "لا يتم حفظ الإجابات. تُرسل البيانات فقط عند اختيار فتح واتساب.",
     unavailable: "خدمة واتساب غير متاحة حاليًا.",
+    checkpointKicker: "مساعد اختيار التكييف",
+    checkpointTitle: "مش عارف تختار التكييف المناسب؟",
+    checkpointCopy: "أدخل بيانات الغرفة وسيقترح مساعد كول بيت القدرة والخيارات المناسبة.",
+    checkpointCta: "ابدأ مع مساعد كول بيت",
   },
   en: {
     launcher: "CoolPet Smart Advisor",
@@ -162,5 +166,9 @@ export const advisorCopy = {
     disclaimer: "This is a preliminary recommendation based on the information provided and is not a final engineering load calculation. The required capacity should be confirmed through a professional site inspection.",
     privacy: "Answers are not stored. Data is sent only when you choose to open WhatsApp.",
     unavailable: "WhatsApp is currently unavailable.",
+    checkpointKicker: "AC selection advisor",
+    checkpointTitle: "Not sure which AC is right for you?",
+    checkpointCopy: "Enter your room details and CoolPet will suggest a preliminary capacity and suitable options.",
+    checkpointCta: "Start with CoolPet",
   },
 } as const satisfies Record<Locale, Record<string, string | readonly string[]>>;

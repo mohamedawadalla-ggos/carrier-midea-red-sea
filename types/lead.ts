@@ -1,6 +1,7 @@
 import type { Locale } from "@/content/site";
 import type { ProductFamily, ProductTypeId, ProductVariant } from "@/types/catalog";
 import type { AcSizingInput, AcSizingResult } from "@/types/ac-advisor";
+import type { ResolvedRequestCartItem } from "@/types/request-cart";
 
 export type ProductInquiry = {
   locale: Locale;
@@ -20,6 +21,16 @@ export type ServiceRequest = {
   telephone: string;
   area: string;
   service: string;
+  notes: string;
+};
+
+export type RequestCartInquiry = {
+  locale: Locale;
+  items: ResolvedRequestCartItem[];
+  customerName: string;
+  telephone: string;
+  area: string;
+  installationRequired: boolean;
   notes: string;
 };
 

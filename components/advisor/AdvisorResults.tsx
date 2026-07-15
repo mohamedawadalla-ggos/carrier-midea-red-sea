@@ -39,7 +39,7 @@ export function AdvisorResults({ locale, result, matches, catalogUrl, customerNa
       <h4>{type?.name[locale] ?? typeId}</h4>
       {group.map((match) => <article className="coolpet-match" key={match.family.id}>
         <div><strong>{match.family.name[locale]}</strong><span>{match.family.brand === "carrier" ? "Carrier" : "Midea"} · {match.family.technology === "inverter" ? "Inverter" : locale === "ar" ? "ثابت السرعة" : "Fixed speed"}</span></div>
-        <p>{t.modelCodes}: {match.variants.map((variant) => variant.modelCode).join(", ")}</p>
+        <p>{match.variants.length} {locale === "ar" ? "خيارات مطابقة" : "matching options"}</p>
         {match.reasons.map((reason) => <small key={reason.en}>{reason[locale]}</small>)}
         <a href={`/${locale}/products/${match.family.productType}/${match.family.slug}`}>{locale === "ar" ? "عرض العائلة" : "View family"}</a>
       </article>)}
@@ -67,7 +67,7 @@ export function AdvisorResults({ locale, result, matches, catalogUrl, customerNa
     {matches.inspectionRequired.length > 0 && <div className="coolpet-match-section inspection"><h3>{t.inspectionOptions}</h3>{renderGroups(matches.inspectionRequired)}</div>}
     {result.recommendedHp && allMatches.length === 0 && <p className="coolpet-no-matches">{t.noMatches}</p>}
 
-    {allMatches.length > 0 && <label className="coolpet-product-select">{t.selectProduct}<select value={selectedVariantId} onChange={(event) => onSelectedVariantChange(event.target.value)}><option value="">{t.noProduct}</option>{allMatches.flatMap((match) => match.variants.map((variant) => <option key={variant.id} value={variant.id}>{match.family.name[locale]} — {variant.modelCode}</option>))}</select></label>}
+    {allMatches.length > 0 && <label className="coolpet-product-select">{t.selectProduct}<select value={selectedVariantId} onChange={(event) => onSelectedVariantChange(event.target.value)}><option value="">{t.noProduct}</option>{allMatches.flatMap((match) => match.variants.map((variant) => <option key={variant.id} value={variant.id}>{match.family.name[locale]} — {formatHorsepower(locale, variant.capacityHp)} — {variant.coolingMode === "cool-only" ? (locale === "ar" ? "بارد فقط" : "Cool only") : (locale === "ar" ? "بارد / ساخن" : "Cool & heat")}</option>))}</select></label>}
     <label className="coolpet-customer-name">{t.customerName}<input value={customerName} autoComplete="name" onChange={(event) => onCustomerNameChange(event.target.value)} /></label>
 
     <p className="coolpet-disclaimer">{t.disclaimer}</p>

@@ -7,6 +7,9 @@ import test from "node:test";
 const root = fileURLToPath(new URL("../", import.meta.url));
 const categoryCard = await readFile(new URL("../components/products/ProductCategoryCard.tsx", import.meta.url), "utf8");
 const familyCard = await readFile(new URL("../components/products/ProductFamilyCard.tsx", import.meta.url), "utf8");
+const variantCard = await readFile(new URL("../components/products/ProductVariantCard.tsx", import.meta.url), "utf8");
+const featuredFamilies = await readFile(new URL("../components/home/FeaturedProductFamilies.tsx", import.meta.url), "utf8");
+const home = await readFile(new URL("../components/SiteExperience.tsx", import.meta.url), "utf8");
 const familySource = await readFile(new URL("../content/product-families.ts", import.meta.url), "utf8");
 const catalogComponentSources = await Promise.all((await readdir(new URL("../components/products/", import.meta.url))).filter((name) => name.endsWith(".tsx")).map((name) => readFile(new URL(`../components/products/${name}`, import.meta.url), "utf8")));
 const productTypes = ["wall-mounted-split", "concealed-ducted", "ceiling-cassette", "floor-standing"];
@@ -19,11 +22,15 @@ function linkTags(source) {
 test("catalog Next links disable automatic static-export prefetching", () => {
   const categoryLinks = linkTags(categoryCard);
   const familyLinks = linkTags(familyCard);
+  const variantLinks = linkTags(variantCard);
+  const homeLinks = [...linkTags(featuredFamilies), ...linkTags(home)];
   assert.equal(categoryLinks.length, 1);
   assert.equal(familyLinks.length, 2);
-  for (const link of [...categoryLinks, ...familyLinks]) {
+  assert.equal(variantLinks.length, 2);
+  assert.equal(homeLinks.length, 2);
+  for (const link of [...categoryLinks, ...familyLinks, ...variantLinks, ...homeLinks]) {
     assert.match(link, /prefetch=\{false\}/);
-    assert.match(link, /href=\{`\/\$\{locale\}\/products\//);
+    assert.match(link, /href=/);
   }
 });
 

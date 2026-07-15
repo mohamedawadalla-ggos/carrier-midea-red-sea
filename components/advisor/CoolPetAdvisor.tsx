@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AdvisorDialog } from "@/components/advisor/AdvisorDialog";
 import { AdvisorQuestionFlow } from "@/components/advisor/AdvisorQuestionFlow";
 import { AdvisorResults } from "@/components/advisor/AdvisorResults";
@@ -11,6 +11,7 @@ import { productFamilies } from "@/content/product-families";
 import { productVariants } from "@/content/product-variants";
 import type { Locale } from "@/content/site";
 import { buildAdvisorCatalogUrl, matchAdvisorCatalog } from "@/lib/ac-advisor-matching";
+import { OPEN_COOLPET_ADVISOR_EVENT, type OpenCoolPetAdvisorDetail } from "@/lib/ac-advisor-access";
 import { calculateAcSizing } from "@/lib/ac-sizing";
 import { siteConfig } from "@/lib/site-config";
 import { openPreparedLink } from "@/lib/whatsapp";
@@ -53,6 +54,7 @@ function validateMeasurements(locale: Locale, input: AcSizingInput): string[] {
 export function CoolPetAdvisor({ locale }: { locale: Locale }) {
   const t = advisorCopy[locale];
   const launcherRef = useRef<HTMLButtonElement>(null);
+  const externalOpenerRef = useRef<HTMLElement | null>(null);
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState(0);
   const [input, setInput] = useState<AcSizingInput>(() => initialInput(locale));
@@ -70,6 +72,15 @@ export function CoolPetAdvisor({ locale }: { locale: Locale }) {
 
   const mascotState: CoolPetState = !open ? "idle" : result ? (result.inspectionLevel === "required" ? "site-inspection-needed" : "recommendation-ready") : step === 0 ? "greeting" : step < 3 ? "measuring" : "thinking";
 
+  useEffect(() => {
+    const handleOpen = (event: Event): void => {
+      externalOpenerRef.current = (event as CustomEvent<OpenCoolPetAdvisorDetail>).detail?.opener ?? null;
+      setOpen(true);
+    };
+    window.addEventListener(OPEN_COOLPET_ADVISOR_EVENT, handleOpen);
+    return () => window.removeEventListener(OPEN_COOLPET_ADVISOR_EVENT, handleOpen);
+  }, []);
+
   function reset(): void {
     setStep(0);
     setInput(initialInput(locale));
@@ -81,9 +92,11 @@ export function CoolPetAdvisor({ locale }: { locale: Locale }) {
   }
 
   function close(): void {
+    const focusTarget = externalOpenerRef.current ?? launcherRef.current;
+    externalOpenerRef.current = null;
     setOpen(false);
     reset();
-    window.setTimeout(() => launcherRef.current?.focus(), 0);
+    window.setTimeout(() => focusTarget?.focus(), 0);
   }
 
   function advance(): void {
