@@ -9,6 +9,7 @@ import { FeaturedProductFamilies } from "@/components/home/FeaturedProductFamili
 import { FacebookFollowSection } from "@/components/home/FacebookFollowSection";
 import { ServiceAreaMap } from "@/components/home/ServiceAreaMap";
 import { AdvisorCheckpoint } from "@/components/home/AdvisorCheckpoint";
+import { HeroProductShowcase } from "@/components/home/HeroProductShowcase";
 import { OfferBanner } from "@/components/offers/OfferBanner";
 import { leadProvider } from "@/services/leads/whatsapp-provider";
 import { siteConfig } from "@/lib/site-config";
@@ -34,6 +35,7 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
         <section className="hero">
           <div className="hero-image" style={{ backgroundImage: `url(${HERO_IMAGE})` }} />
           <div className="hero-orb orb-one" /><div className="hero-orb orb-two" />
+          <HeroProductShowcase locale={locale} />
           <div className="hero-content">
             <OfferBanner locale={locale} />
             <p className="eyebrow"><span />{t.eyebrow}</p>
@@ -52,6 +54,8 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
           {t.trust.map((item, i) => <div key={item}><span>{["◷", "◇", "✓", "◎"][i]}</span>{item}</div>)}
         </section>
 
+        <FeaturedProductFamilies locale={locale} />
+
         <section className="section solutions" id="solutions">
           <div className="section-heading"><p className="kicker">{locale === "ar" ? "حلولنا" : "OUR SOLUTIONS"}</p><h2>{t.pathTitle}</h2><p>{t.pathSub}</p></div>
           <div className="path-grid">
@@ -67,8 +71,6 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
             </article>
           </div>
         </section>
-
-        <FeaturedProductFamilies locale={locale} />
 
         <AdvisorCheckpoint locale={locale} />
 
