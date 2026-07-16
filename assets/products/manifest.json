@@ -1,0 +1,1574 @@
+{
+  "schemaVersion": 1,
+  "status": "ten-approved-catalog-assets-local-test-only",
+  "method": "Deterministic source-alpha or conservative edge-connected white matte, family-specific Lanczos sizing, fixed gradient canvas, alpha-derived shadow, and outside-panel Matte Extension with exact inside-panel pixel verification; no generative or content-aware editing",
+  "batchPreview": {
+    "status": "approved-nine-family-batch",
+    "scope": "Nine existing family images excluding the approved XCOOL pilot and three missing families",
+    "background": {
+      "type": "vertical-linear-gradient",
+      "start": "#E6F1F7",
+      "end": "#F7FAFC"
+    },
+    "families": [
+      "carrier-optimax-inverter",
+      "carrier-optimax-pro",
+      "carrier-classicool-inverter",
+      "carrier-classicool-pro",
+      "carrier-decor-inverter",
+      "carrier-elegant-inverter",
+      "midea-ai-ecomaster-inverter",
+      "midea-mission-inverter",
+      "midea-xtreme-pro"
+    ],
+    "generalContactSheet": {
+      "path": "assets/products/previews/catalog-batch-preview.png",
+      "purpose": "General contact sheet for nine-family batch preview",
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 3420,
+      "height": 3300,
+      "bytes": 1944097,
+      "sha256": "abef2e929d947a70b0f631d636c25343d93b43d9656f9cee28b676eed9c63fd7"
+    },
+    "activation": "Approved canonical masters are encoded directly to stable production catalog paths"
+  },
+  "revisionPreview": {
+    "status": "approved-six-family-revision",
+    "scope": "Six requested revisions only; three visually approved batch images remain unchanged",
+    "families": [
+      "carrier-classicool-pro",
+      "carrier-optimax-pro",
+      "carrier-decor-inverter",
+      "carrier-elegant-inverter",
+      "midea-ai-ecomaster-inverter",
+      "midea-mission-inverter"
+    ],
+    "background": {
+      "type": "vertical-linear-gradient",
+      "start": "#E6F1F7",
+      "end": "#F7FAFC"
+    },
+    "generalContactSheet": {
+      "path": "assets/products/previews/catalog-revision-preview.png",
+      "purpose": "General before/after contact sheet for six-family revision preview",
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 3420,
+      "height": 2350,
+      "bytes": 739558,
+      "sha256": "ff6dde102fc7a9b76db8577985e524ee60aed9ba7e3e73dc08544e7d1e8545c5"
+    },
+    "records": [
+      {
+        "familyId": "carrier-classicool-pro",
+        "brand": "carrier",
+        "slug": "classicool-pro",
+        "status": "approved-revision-derivative",
+        "strategy": "approved-scale-revision",
+        "transform": {
+          "strategy": "approved-scale-revision",
+          "deviceType": "concealed-ducted",
+          "sourceSize": [
+            910,
+            336
+          ],
+          "sourceCrop": [
+            0,
+            1,
+            910,
+            336
+          ],
+          "scale": 1.0,
+          "objectSize": [
+            1074,
+            395
+          ],
+          "placement": [
+            263,
+            390
+          ],
+          "canvasSize": [
+            1600,
+            1200
+          ],
+          "background": {
+            "type": "vertical-linear-gradient",
+            "start": "#E6F1F7",
+            "end": "#F7FAFC"
+          },
+          "matteThreshold": 246,
+          "contrastAdjustment": 1.0,
+          "sharpening": "None",
+          "compositePreserved": false,
+          "revisionScaleMultiplier": 1.18,
+          "resampling": "Lanczos"
+        },
+        "files": {
+          "canonicalMasterPng": {
+            "path": "assets/products/derivatives/catalog/carrier/classicool-pro.png",
+            "purpose": "Approved canonical high-quality catalog master PNG",
+            "format": "PNG",
+            "mode": "RGB",
+            "width": 1600,
+            "height": 1200,
+            "bytes": 498751,
+            "sha256": "1599b515a7dc7d20d0fda717847f219d62427ce6ea6230bf2d27a5e0b28cc016"
+          }
+        },
+        "cardChecks": {
+          "desktop": {
+            "stageCssPixels": [
+              380,
+              220
+            ],
+            "imagePaddingCssPixels": 28
+          },
+          "mobile390Viewport": {
+            "stageCssPixels": [
+              336,
+              205
+            ],
+            "imagePaddingCssPixels": 28
+          }
+        },
+        "activation": "Canonical master is encoded directly to its stable production catalog path"
+      },
+      {
+        "familyId": "carrier-optimax-pro",
+        "brand": "carrier",
+        "slug": "optimax-pro",
+        "status": "approved-revision-derivative",
+        "strategy": "approved-scale-revision",
+        "transform": {
+          "strategy": "approved-scale-revision",
+          "deviceType": "wall-mounted-composite",
+          "sourceSize": [
+            357,
+            343
+          ],
+          "sourceCrop": [
+            25,
+            21,
+            342,
+            316
+          ],
+          "scale": 1.25,
+          "objectSize": [
+            614,
+            572
+          ],
+          "placement": [
+            493,
+            304
+          ],
+          "canvasSize": [
+            1600,
+            1200
+          ],
+          "background": {
+            "type": "vertical-linear-gradient",
+            "start": "#E6F1F7",
+            "end": "#F7FAFC"
+          },
+          "matteThreshold": 248,
+          "contrastAdjustment": 1.02,
+          "sharpening": "None",
+          "compositePreserved": true,
+          "revisionScaleMultiplier": 1.55,
+          "resampling": "Lanczos"
+        },
+        "files": {
+          "canonicalMasterPng": {
+            "path": "assets/products/derivatives/catalog/carrier/optimax-pro.png",
+            "purpose": "Approved canonical high-quality catalog master PNG",
+            "format": "PNG",
+            "mode": "RGB",
+            "width": 1600,
+            "height": 1200,
+            "bytes": 251006,
+            "sha256": "f512ed11bd2c6104c2f0cd0ae8d33f81967dbe7a2fd8091fe2828116815686f3"
+          }
+        },
+        "cardChecks": {
+          "desktop": {
+            "stageCssPixels": [
+              380,
+              220
+            ],
+            "imagePaddingCssPixels": 28
+          },
+          "mobile390Viewport": {
+            "stageCssPixels": [
+              336,
+              205
+            ],
+            "imagePaddingCssPixels": 28
+          }
+        },
+        "activation": "Canonical master is encoded directly to its stable production catalog path"
+      },
+      {
+        "familyId": "carrier-decor-inverter",
+        "brand": "carrier",
+        "slug": "decor-inverter",
+        "status": "approved-revision-derivative",
+        "strategy": "matte-extension",
+        "transform": {
+          "strategy": "matte-extension",
+          "deviceType": "ceiling-cassette",
+          "sourceSize": [
+            1201,
+            1200
+          ],
+          "sourceCrop": [
+            0,
+            0,
+            1201,
+            1200
+          ],
+          "scale": 0.774355,
+          "objectSize": [
+            930,
+            929
+          ],
+          "placement": [
+            335,
+            135
+          ],
+          "canvasSize": [
+            1600,
+            1200
+          ],
+          "background": {
+            "type": "vertical-linear-gradient",
+            "start": "#E6F1F7",
+            "end": "#F7FAFC"
+          },
+          "matteThreshold": null,
+          "contrastAdjustment": 1.0,
+          "sharpening": "None",
+          "compositePreserved": false,
+          "matteExtension": {
+            "scope": "Outside source panel only",
+            "edgeMedianColor": "#FFFFFF",
+            "transitionPixels": 260,
+            "panelShadow": "None",
+            "featherInsidePanel": "None"
+          },
+          "panelPixelIntegrity": {
+            "beforeSha256": "68c503fc3866e82a6228819df75dc41598c99cd3eb12c1607f37aac8ba4ce9cf",
+            "afterSha256": "68c503fc3866e82a6228819df75dc41598c99cd3eb12c1607f37aac8ba4ce9cf",
+            "resizedSourcePanelSha256": "68c503fc3866e82a6228819df75dc41598c99cd3eb12c1607f37aac8ba4ce9cf",
+            "exactMatch": true
+          }
+        },
+        "files": {
+          "canonicalMasterPng": {
+            "path": "assets/products/derivatives/catalog/carrier/decor-inverter.png",
+            "purpose": "Approved canonical high-quality catalog master PNG",
+            "format": "PNG",
+            "mode": "RGB",
+            "width": 1600,
+            "height": 1200,
+            "bytes": 809369,
+            "sha256": "cfdb0b66cc69000bcf658ef70c1629887a2fdf32f112c381e1997143f7cb6100"
+          }
+        },
+        "cardChecks": {
+          "desktop": {
+            "stageCssPixels": [
+              380,
+              220
+            ],
+            "imagePaddingCssPixels": 28
+          },
+          "mobile390Viewport": {
+            "stageCssPixels": [
+              336,
+              205
+            ],
+            "imagePaddingCssPixels": 28
+          }
+        },
+        "activation": "Canonical master is encoded directly to its stable production catalog path"
+      },
+      {
+        "familyId": "carrier-elegant-inverter",
+        "brand": "carrier",
+        "slug": "elegant-inverter",
+        "status": "approved-revision-derivative",
+        "strategy": "matte-extension",
+        "transform": {
+          "strategy": "matte-extension",
+          "deviceType": "floor-standing",
+          "sourceSize": [
+            422,
+            1200
+          ],
+          "sourceCrop": [
+            0,
+            0,
+            422,
+            1200
+          ],
+          "scale": 0.866667,
+          "objectSize": [
+            366,
+            1040
+          ],
+          "placement": [
+            617,
+            80
+          ],
+          "canvasSize": [
+            1600,
+            1200
+          ],
+          "background": {
+            "type": "vertical-linear-gradient",
+            "start": "#E6F1F7",
+            "end": "#F7FAFC"
+          },
+          "matteThreshold": null,
+          "contrastAdjustment": 1.02,
+          "sharpening": "None",
+          "compositePreserved": false,
+          "matteExtension": {
+            "scope": "Outside source panel only",
+            "edgeMedianColor": "#FEFEFE",
+            "transitionPixels": 260,
+            "panelShadow": "None",
+            "featherInsidePanel": "None"
+          },
+          "panelPixelIntegrity": {
+            "beforeSha256": "8a135aad18fbcc15fb7ec9191035b0a2baab985e329e5aabea70bb7ab32c3f9b",
+            "afterSha256": "8a135aad18fbcc15fb7ec9191035b0a2baab985e329e5aabea70bb7ab32c3f9b",
+            "resizedSourcePanelSha256": "8a135aad18fbcc15fb7ec9191035b0a2baab985e329e5aabea70bb7ab32c3f9b",
+            "exactMatch": true
+          }
+        },
+        "files": {
+          "canonicalMasterPng": {
+            "path": "assets/products/derivatives/catalog/carrier/elegant-inverter.png",
+            "purpose": "Approved canonical high-quality catalog master PNG",
+            "format": "PNG",
+            "mode": "RGB",
+            "width": 1600,
+            "height": 1200,
+            "bytes": 218977,
+            "sha256": "0082e463730dfc37ca4c7bd3dd5df2009e08f0e080db1963500c4dc69efba169"
+          }
+        },
+        "cardChecks": {
+          "desktop": {
+            "stageCssPixels": [
+              380,
+              220
+            ],
+            "imagePaddingCssPixels": 28
+          },
+          "mobile390Viewport": {
+            "stageCssPixels": [
+              336,
+              205
+            ],
+            "imagePaddingCssPixels": 28
+          }
+        },
+        "activation": "Canonical master is encoded directly to its stable production catalog path"
+      },
+      {
+        "familyId": "midea-ai-ecomaster-inverter",
+        "brand": "midea",
+        "slug": "ai-ecomaster-inverter",
+        "status": "approved-revision-derivative",
+        "strategy": "matte-extension",
+        "transform": {
+          "strategy": "matte-extension",
+          "deviceType": "wall-mounted",
+          "sourceSize": [
+            1920,
+            888
+          ],
+          "sourceCrop": [
+            0,
+            0,
+            1920,
+            888
+          ],
+          "scale": 0.6875,
+          "objectSize": [
+            1320,
+            610
+          ],
+          "placement": [
+            140,
+            283
+          ],
+          "canvasSize": [
+            1600,
+            1200
+          ],
+          "background": {
+            "type": "vertical-linear-gradient",
+            "start": "#E6F1F7",
+            "end": "#F7FAFC"
+          },
+          "matteThreshold": null,
+          "contrastAdjustment": 1.0,
+          "sharpening": "None",
+          "compositePreserved": false,
+          "matteExtension": {
+            "scope": "Outside source panel only",
+            "edgeMedianColor": "#FFFFFF",
+            "transitionPixels": 260,
+            "panelShadow": "None",
+            "featherInsidePanel": "None"
+          },
+          "panelPixelIntegrity": {
+            "beforeSha256": "41a1907905035d35003a10e9f6cba97a759ab55254fddb3f168e396614896d35",
+            "afterSha256": "41a1907905035d35003a10e9f6cba97a759ab55254fddb3f168e396614896d35",
+            "resizedSourcePanelSha256": "41a1907905035d35003a10e9f6cba97a759ab55254fddb3f168e396614896d35",
+            "exactMatch": true
+          }
+        },
+        "files": {
+          "canonicalMasterPng": {
+            "path": "assets/products/derivatives/catalog/midea/ai-ecomaster-inverter.png",
+            "purpose": "Approved canonical high-quality catalog master PNG",
+            "format": "PNG",
+            "mode": "RGB",
+            "width": 1600,
+            "height": 1200,
+            "bytes": 244196,
+            "sha256": "1a73400c4cdb632a6b9070b35be699fb41cd0f5b5fdeaf763cbe441542cbd773"
+          }
+        },
+        "cardChecks": {
+          "desktop": {
+            "stageCssPixels": [
+              380,
+              220
+            ],
+            "imagePaddingCssPixels": 28
+          },
+          "mobile390Viewport": {
+            "stageCssPixels": [
+              336,
+              205
+            ],
+            "imagePaddingCssPixels": 28
+          }
+        },
+        "activation": "Canonical master is encoded directly to its stable production catalog path"
+      },
+      {
+        "familyId": "midea-mission-inverter",
+        "brand": "midea",
+        "slug": "mission-inverter",
+        "status": "approved-revision-derivative",
+        "strategy": "matte-extension",
+        "transform": {
+          "strategy": "matte-extension",
+          "deviceType": "wall-mounted-composite",
+          "sourceSize": [
+            1319,
+            1200
+          ],
+          "sourceCrop": [
+            0,
+            0,
+            1319,
+            1200
+          ],
+          "scale": 0.849128,
+          "objectSize": [
+            1120,
+            1019
+          ],
+          "placement": [
+            240,
+            90
+          ],
+          "canvasSize": [
+            1600,
+            1200
+          ],
+          "background": {
+            "type": "vertical-linear-gradient",
+            "start": "#E6F1F7",
+            "end": "#F7FAFC"
+          },
+          "matteThreshold": null,
+          "contrastAdjustment": 1.0,
+          "sharpening": "None",
+          "compositePreserved": true,
+          "matteExtension": {
+            "scope": "Outside source panel only",
+            "edgeMedianColor": "#FBFDFD",
+            "transitionPixels": 260,
+            "panelShadow": "None",
+            "featherInsidePanel": "None"
+          },
+          "panelPixelIntegrity": {
+            "beforeSha256": "2ffcc8546e34a02985f575708abf5ab9796688efd830d6bb35201c8fe05aacf4",
+            "afterSha256": "2ffcc8546e34a02985f575708abf5ab9796688efd830d6bb35201c8fe05aacf4",
+            "resizedSourcePanelSha256": "2ffcc8546e34a02985f575708abf5ab9796688efd830d6bb35201c8fe05aacf4",
+            "exactMatch": true
+          }
+        },
+        "files": {
+          "canonicalMasterPng": {
+            "path": "assets/products/derivatives/catalog/midea/mission-inverter.png",
+            "purpose": "Approved canonical high-quality catalog master PNG",
+            "format": "PNG",
+            "mode": "RGB",
+            "width": 1600,
+            "height": 1200,
+            "bytes": 675246,
+            "sha256": "bd14c2be8cba0861a7d73584732b5557151ad407a91f5e535242f81b561eccb2"
+          }
+        },
+        "cardChecks": {
+          "desktop": {
+            "stageCssPixels": [
+              380,
+              220
+            ],
+            "imagePaddingCssPixels": 28
+          },
+          "mobile390Viewport": {
+            "stageCssPixels": [
+              336,
+              205
+            ],
+            "imagePaddingCssPixels": 28
+          }
+        },
+        "activation": "Canonical master is encoded directly to its stable production catalog path"
+      }
+    ],
+    "activation": "Approved canonical masters are encoded directly to stable production catalog paths"
+  },
+  "catalogActivation": {
+    "status": "local-test-only",
+    "approvedAt": "2026-07-16",
+    "method": "Deterministic WebP encoding directly from the ten approved canonical master PNGs",
+    "livePathRule": "/products/catalog/<brand>/<slug>.webp",
+    "previewPathReferencesAllowedInLiveContent": false,
+    "assets": [
+      {
+        "familyId": "carrier-xcool-inverter",
+        "approvedSource": "assets/products/derivatives/catalog/carrier/xcool-inverter.png",
+        "approvedSourceSha256": "42c6ff3650cf29bd06a822ce2553d03c8797d8287474949b6ba89d49da8c98ff",
+        "productionPath": "public/products/catalog/carrier/xcool-inverter.webp",
+        "livePath": "/products/catalog/carrier/xcool-inverter.webp",
+        "bytes": 17838,
+        "sha256": "2c3c12bf67d419548b1690bc59aca5c6189e7b273b94dfa8a8d098544a7555d2",
+        "encoding": {
+          "format": "WEBP",
+          "quality": 86,
+          "method": 6,
+          "exact": true
+        }
+      },
+      {
+        "familyId": "carrier-optimax-inverter",
+        "approvedSource": "assets/products/derivatives/catalog/carrier/optimax-inverter.png",
+        "approvedSourceSha256": "c1ed5bc81c40989468d3a36c7ab041647509432eb1f712e80966d456db77a07e",
+        "productionPath": "public/products/catalog/carrier/optimax-inverter.webp",
+        "livePath": "/products/catalog/carrier/optimax-inverter.webp",
+        "bytes": 12992,
+        "sha256": "4927cd1fcb77c1aa4c3e6dbc678228195aae9a2582ab0feab85346c486af5941",
+        "encoding": {
+          "format": "WEBP",
+          "quality": 86,
+          "method": 6,
+          "exact": true
+        }
+      },
+      {
+        "familyId": "carrier-optimax-pro",
+        "approvedSource": "assets/products/derivatives/catalog/carrier/optimax-pro.png",
+        "approvedSourceSha256": "f512ed11bd2c6104c2f0cd0ae8d33f81967dbe7a2fd8091fe2828116815686f3",
+        "productionPath": "public/products/catalog/carrier/optimax-pro.webp",
+        "livePath": "/products/catalog/carrier/optimax-pro.webp",
+        "bytes": 27066,
+        "sha256": "005347b580c323fddda4c2d6ab27f79404fc9935f36b48bf082eceb6ee80bebd",
+        "encoding": {
+          "format": "WEBP",
+          "quality": 86,
+          "method": 6,
+          "exact": true
+        }
+      },
+      {
+        "familyId": "carrier-classicool-inverter",
+        "approvedSource": "assets/products/derivatives/catalog/carrier/classicool-inverter.png",
+        "approvedSourceSha256": "bae7305e4cfd0a81fa38e6b218c1de7613e8c5408e7c25fdadf4ec2733221271",
+        "productionPath": "public/products/catalog/carrier/classicool-inverter.webp",
+        "livePath": "/products/catalog/carrier/classicool-inverter.webp",
+        "bytes": 83536,
+        "sha256": "c673532f36212a698741eacb5780ff13dfe38c549f1b5691d940c530ad752485",
+        "encoding": {
+          "format": "WEBP",
+          "quality": 86,
+          "method": 6,
+          "exact": true
+        }
+      },
+      {
+        "familyId": "carrier-classicool-pro",
+        "approvedSource": "assets/products/derivatives/catalog/carrier/classicool-pro.png",
+        "approvedSourceSha256": "1599b515a7dc7d20d0fda717847f219d62427ce6ea6230bf2d27a5e0b28cc016",
+        "productionPath": "public/products/catalog/carrier/classicool-pro.webp",
+        "livePath": "/products/catalog/carrier/classicool-pro.webp",
+        "bytes": 52502,
+        "sha256": "d2071e4b37c2e6f19e57e08e1351311db799695a332213ba08bbbca6e8ca9f7d",
+        "encoding": {
+          "format": "WEBP",
+          "quality": 86,
+          "method": 6,
+          "exact": true
+        }
+      },
+      {
+        "familyId": "carrier-decor-inverter",
+        "approvedSource": "assets/products/derivatives/catalog/carrier/decor-inverter.png",
+        "approvedSourceSha256": "cfdb0b66cc69000bcf658ef70c1629887a2fdf32f112c381e1997143f7cb6100",
+        "productionPath": "public/products/catalog/carrier/decor-inverter.webp",
+        "livePath": "/products/catalog/carrier/decor-inverter.webp",
+        "bytes": 135418,
+        "sha256": "d01e61f00f959ef6c7afc660ef5304d551cb437c59c1ff5807e58e84a7b03cb3",
+        "encoding": {
+          "format": "WEBP",
+          "quality": 86,
+          "method": 6,
+          "exact": true
+        }
+      },
+      {
+        "familyId": "carrier-elegant-inverter",
+        "approvedSource": "assets/products/derivatives/catalog/carrier/elegant-inverter.png",
+        "approvedSourceSha256": "0082e463730dfc37ca4c7bd3dd5df2009e08f0e080db1963500c4dc69efba169",
+        "productionPath": "public/products/catalog/carrier/elegant-inverter.webp",
+        "livePath": "/products/catalog/carrier/elegant-inverter.webp",
+        "bytes": 20296,
+        "sha256": "20bdf1d95b67824feda370ed7de3ad9d12cb871297137c1e0cfafa03f367c83b",
+        "encoding": {
+          "format": "WEBP",
+          "quality": 86,
+          "method": 6,
+          "exact": true
+        }
+      },
+      {
+        "familyId": "midea-ai-ecomaster-inverter",
+        "approvedSource": "assets/products/derivatives/catalog/midea/ai-ecomaster-inverter.png",
+        "approvedSourceSha256": "1a73400c4cdb632a6b9070b35be699fb41cd0f5b5fdeaf763cbe441542cbd773",
+        "productionPath": "public/products/catalog/midea/ai-ecomaster-inverter.webp",
+        "livePath": "/products/catalog/midea/ai-ecomaster-inverter.webp",
+        "bytes": 21758,
+        "sha256": "746422b19ba7bfeedbd67381c0581f970c3e324059e0996c07d5fde131baec38",
+        "encoding": {
+          "format": "WEBP",
+          "quality": 86,
+          "method": 6,
+          "exact": true
+        }
+      },
+      {
+        "familyId": "midea-mission-inverter",
+        "approvedSource": "assets/products/derivatives/catalog/midea/mission-inverter.png",
+        "approvedSourceSha256": "bd14c2be8cba0861a7d73584732b5557151ad407a91f5e535242f81b561eccb2",
+        "productionPath": "public/products/catalog/midea/mission-inverter.webp",
+        "livePath": "/products/catalog/midea/mission-inverter.webp",
+        "bytes": 79782,
+        "sha256": "44956493acc297c04be9db023590793a38d7567b2f40b40ce1a46180020ece16",
+        "encoding": {
+          "format": "WEBP",
+          "quality": 86,
+          "method": 6,
+          "exact": true
+        }
+      },
+      {
+        "familyId": "midea-xtreme-pro",
+        "approvedSource": "assets/products/derivatives/catalog/midea/xtreme-pro.png",
+        "approvedSourceSha256": "3e03e73ff9f0a550f51f22cbefb9a01f82ce35bc31233faf2dd476e8a8832183",
+        "productionPath": "public/products/catalog/midea/xtreme-pro.webp",
+        "livePath": "/products/catalog/midea/xtreme-pro.webp",
+        "bytes": 18446,
+        "sha256": "7c119073836504f941703036239cc67cf20adf8e9499a7c277f870ad5f65afe5",
+        "encoding": {
+          "format": "WEBP",
+          "quality": 86,
+          "method": 6,
+          "exact": true
+        }
+      }
+    ]
+  },
+  "assets": [
+    {
+      "familyId": "carrier-xcool-inverter",
+      "brand": "carrier",
+      "slug": "xcool-inverter",
+      "source": {
+        "localPath": "public/products/families/carrier/xcool-inverter.png",
+        "officialPage": "https://miraco.com.eg/en/53kheft18dn8-708f",
+        "originalImageUrl": "https://mcprod.miraco.com.eg/media/catalog/product/cache/8ddeeed85c51e5e61315f40dbec60ae7/1/-/1-5_left1.png",
+        "match": "Exact family/variant",
+        "authorization": "Approved",
+        "naelApproval": "Approved manifest",
+        "sha256": "e0af1ff12af2e656a20accbec24751af1b8f772b1e838f879ab7433a76bfc3b1"
+      },
+      "transform": {
+        "sourceCrop": [
+          567,
+          400,
+          1447,
+          764
+        ],
+        "scale": 1.25,
+        "objectSize": [
+          1100,
+          455
+        ],
+        "placement": [
+          250,
+          354
+        ],
+        "canvasSize": [
+          1600,
+          1200
+        ],
+        "background": "#f5f7f8",
+        "shadow": {
+          "color": "#0c2536",
+          "offsetY": 24,
+          "blurRadius": 22,
+          "maximumAlpha": 42
+        }
+      },
+      "pilotOptions": {
+        "status": "option-2-approved-for-local-visual-test",
+        "selectedOption": {
+          "id": "blue-milk-gradient",
+          "approval": "Client-approved catalog direction on 2026-07-15",
+          "background": {
+            "type": "vertical-linear-gradient",
+            "start": "#E6F1F7",
+            "end": "#F7FAFC"
+          },
+          "localTestPath": "/products/catalog/carrier/xcool-inverter.webp",
+          "publicationStatus": "Local visual test only; not published or generalized"
+        },
+        "sharedProduct": {
+          "sourceCrop": [
+            567,
+            400,
+            1447,
+            764
+          ],
+          "scale": 1.25,
+          "objectSize": [
+            1100,
+            455
+          ],
+          "placement": [
+            250,
+            354
+          ],
+          "canvasSize": [
+            1600,
+            1200
+          ],
+          "productLayerSha256": "41d316a1112b9b811b63733eb8af6dbb50a32312623f84a50958f902c35bf685",
+          "alphaMaskSha256": "8433e10b036374f874fa3878b39d4b3d16898197bc4b1b54a3c90ccb0c8a9e31",
+          "shadow": {
+            "color": "#08263D",
+            "offsetY": 28,
+            "blurRadius": 24,
+            "maximumAlpha": 50
+          },
+          "productPixelTreatment": "None; source crop and deterministic Lanczos resize only",
+          "layoutPreviewScale": 1.1
+        },
+        "options": [
+          {
+            "id": "solid-blue-milk",
+            "intendedUse": "historical-comparison-only-generated-in-memory",
+            "background": {
+              "type": "solid",
+              "color": "#EAF3F8"
+            }
+          },
+          {
+            "id": "blue-milk-gradient",
+            "intendedUse": "approved-catalog-master",
+            "background": {
+              "type": "vertical-linear-gradient",
+              "start": "#E6F1F7",
+              "end": "#F7FAFC"
+            },
+            "canonicalMasterPng": {
+              "path": "assets/products/derivatives/catalog/carrier/xcool-inverter.png",
+              "purpose": "Approved canonical high-quality catalog master PNG",
+              "format": "PNG",
+              "mode": "RGB",
+              "width": 1600,
+              "height": 1200,
+              "bytes": 236418,
+              "sha256": "42c6ff3650cf29bd06a822ce2553d03c8797d8287474949b6ba89d49da8c98ff"
+            }
+          },
+          {
+            "id": "promotional-blue",
+            "intendedUse": "historical-advertising-comparison-only-generated-in-memory",
+            "background": {
+              "type": "deterministic-gradient-and-abstract-waves",
+              "start": "#063767",
+              "end": "#1687BD",
+              "externalReferenceCopied": false
+            }
+          }
+        ],
+        "contactSheet": {
+          "path": "assets/products/previews/carrier/xcool-inverter-background-options.png",
+          "purpose": "Background options contact sheet for visual approval",
+          "format": "PNG",
+          "mode": "RGB",
+          "width": 3600,
+          "height": 3150,
+          "bytes": 768185,
+          "sha256": "c17fe0e8f4974c656cbafd8ff3beb75397987572dc0c5d8e5e8848cabd6c98ca"
+        },
+        "detailInspection": {
+          "zoom": "200%",
+          "regions": [
+            "Carrier logo",
+            "display and XCOOL mark",
+            "air vanes"
+          ]
+        },
+        "activation": "Local visual test only via content/product-families.ts; no deployment or catalog-wide rollout"
+      },
+      "files": [
+        {
+          "path": "assets/products/input-baseline/carrier/xcool-inverter.png",
+          "purpose": "Untouched input baseline copy of the current approved local file",
+          "format": "PNG",
+          "mode": "RGBA",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 178072,
+          "sha256": "e0af1ff12af2e656a20accbec24751af1b8f772b1e838f879ab7433a76bfc3b1"
+        },
+        {
+          "path": "assets/products/derivatives/catalog/carrier/xcool-inverter.png",
+          "purpose": "Approved canonical high-quality catalog master PNG",
+          "format": "PNG",
+          "mode": "RGB",
+          "width": 1600,
+          "height": 1200,
+          "bytes": 236418,
+          "sha256": "42c6ff3650cf29bd06a822ce2553d03c8797d8287474949b6ba89d49da8c98ff"
+        },
+        {
+          "path": "assets/products/previews/carrier/xcool-inverter-contact-sheet.png",
+          "purpose": "Pilot contact sheet for visual approval",
+          "format": "PNG",
+          "mode": "RGB",
+          "width": 2400,
+          "height": 2380,
+          "bytes": 343516,
+          "sha256": "2e2fa7bae650d554fe04e6a3bc1e513b8aff1ec55930c91066f9187117d56b6a"
+        }
+      ],
+      "limitations": [
+        "Option 2 is referenced locally for XCOOL visual testing only; it has not been deployed or generalized.",
+        "The input baseline is the current approved local file, not a documented original master or independent proof of manufacturer licensing."
+      ]
+    },
+    {
+      "familyId": "carrier-optimax-inverter",
+      "brand": "carrier",
+      "slug": "optimax-inverter",
+      "status": "approved-batch-derivative",
+      "source": {
+        "localPath": "public/products/families/carrier/optimax-inverter.png",
+        "officialPage": "https://miraco.com.eg/en/53qhabt36dn-708f-seer",
+        "originalImageUrl": "https://mcprod.miraco.com.eg/media/catalog/product/cache/8ddeeed85c51e5e61315f40dbec60ae7/o/p/optimax_inverter_4hp_1_1_1.png",
+        "match": "Exact family/variant",
+        "authorization": "Approved",
+        "naelApproval": "Approved manifest",
+        "sha256": "fe5e03b2c12eabeaf6d5d473c52ea475a919114f3309d3596725851fe96c74fe"
+      },
+      "transform": {
+        "strategy": "source-alpha",
+        "deviceType": "wall-mounted",
+        "sourceSize": [
+          1920,
+          540
+        ],
+        "sourceCrop": [
+          0,
+          0,
+          1920,
+          540
+        ],
+        "scale": 0.6875,
+        "objectSize": [
+          1320,
+          371
+        ],
+        "placement": [
+          140,
+          396
+        ],
+        "canvasSize": [
+          1600,
+          1200
+        ],
+        "background": {
+          "type": "vertical-linear-gradient",
+          "start": "#E6F1F7",
+          "end": "#F7FAFC"
+        },
+        "matteThreshold": null,
+        "contrastAdjustment": 1.0,
+        "sharpening": "None",
+        "compositePreserved": false
+      },
+      "files": {
+        "inputBaseline": {
+          "path": "assets/products/input-baseline/carrier/optimax-inverter.png",
+          "purpose": "Untouched input baseline copy",
+          "format": "PNG",
+          "mode": "RGBA",
+          "width": 1920,
+          "height": 540,
+          "bytes": 314393,
+          "sha256": "fe5e03b2c12eabeaf6d5d473c52ea475a919114f3309d3596725851fe96c74fe"
+        },
+        "canonicalMasterPng": {
+          "path": "assets/products/derivatives/catalog/carrier/optimax-inverter.png",
+          "purpose": "Approved canonical high-quality catalog master PNG",
+          "format": "PNG",
+          "mode": "RGB",
+          "width": 1600,
+          "height": 1200,
+          "bytes": 174623,
+          "sha256": "c1ed5bc81c40989468d3a36c7ab041647509432eb1f712e80966d456db77a07e"
+        }
+      },
+      "detailInspection": {
+        "zoom": "200%",
+        "regions": [
+          "LOGO",
+          "DISPLAY / MARK",
+          "VANES / EDGE"
+        ]
+      },
+      "activation": "Canonical master retained for production encoding"
+    },
+    {
+      "familyId": "carrier-optimax-pro",
+      "brand": "carrier",
+      "slug": "optimax-pro",
+      "status": "approved-batch-derivative",
+      "source": {
+        "localPath": "public/products/families/carrier/optimax-pro.png",
+        "officialPage": "https://miraco.com.eg/ar/en/53khct18n",
+        "originalImageUrl": "https://mcprod.miraco.com.eg/media/catalog/product/cache/8ddeeed85c51e5e61315f40dbec60ae7/s/y/system_copy_1.png",
+        "match": "Exact family/variant",
+        "authorization": "Approved",
+        "naelApproval": "Approved manifest",
+        "sha256": "a30c4423b4ca123aebd245bd3902f8cacc3789fabeacab7738bbcec938b39666"
+      },
+      "transform": {
+        "strategy": "edge-connected-white-matte",
+        "deviceType": "wall-mounted-composite",
+        "sourceSize": [
+          357,
+          343
+        ],
+        "sourceCrop": [
+          25,
+          21,
+          342,
+          316
+        ],
+        "scale": 1.25,
+        "objectSize": [
+          396,
+          369
+        ],
+        "placement": [
+          602,
+          405
+        ],
+        "canvasSize": [
+          1600,
+          1200
+        ],
+        "background": {
+          "type": "vertical-linear-gradient",
+          "start": "#E6F1F7",
+          "end": "#F7FAFC"
+        },
+        "matteThreshold": 248,
+        "contrastAdjustment": 1.02,
+        "sharpening": "None",
+        "compositePreserved": true
+      },
+      "files": {
+        "inputBaseline": {
+          "path": "assets/products/input-baseline/carrier/optimax-pro.png",
+          "purpose": "Untouched input baseline copy",
+          "format": "PNG",
+          "mode": "RGB",
+          "width": 357,
+          "height": 343,
+          "bytes": 76297,
+          "sha256": "a30c4423b4ca123aebd245bd3902f8cacc3789fabeacab7738bbcec938b39666"
+        }
+      },
+      "detailInspection": {
+        "zoom": "200%",
+        "regions": [
+          "INDOOR LOGO / EDGE",
+          "OUTDOOR BADGE",
+          "FAN / OUTER EDGE"
+        ]
+      },
+      "activation": "Superseded by an approved revision record; batch image retained in memory for audit sheet only"
+    },
+    {
+      "familyId": "carrier-classicool-inverter",
+      "brand": "carrier",
+      "slug": "classicool-inverter",
+      "status": "approved-batch-derivative",
+      "source": {
+        "localPath": "public/products/families/carrier/classicool-inverter.webp",
+        "officialPage": "https://miraco.com.eg/en/classicool-inverter",
+        "originalImageUrl": "https://mcprod.miraco.com.eg/media/catalog/product/cache/8ddeeed85c51e5e61315f40dbec60ae7/d/u/ducted_msp_hsp.jpg",
+        "match": "Exact family/variant",
+        "authorization": "Approved",
+        "naelApproval": "Approved manifest",
+        "sha256": "9f44ff6f1391b0938dc44126eb1ec436f4bc8b912b0c80d1d6a355f0f9a55329"
+      },
+      "transform": {
+        "strategy": "edge-connected-white-matte",
+        "deviceType": "concealed-ducted-composite",
+        "sourceSize": [
+          1210,
+          756
+        ],
+        "sourceCrop": [
+          0,
+          0,
+          1202,
+          742
+        ],
+        "scale": 1.0,
+        "objectSize": [
+          1202,
+          742
+        ],
+        "placement": [
+          199,
+          229
+        ],
+        "canvasSize": [
+          1600,
+          1200
+        ],
+        "background": {
+          "type": "vertical-linear-gradient",
+          "start": "#E6F1F7",
+          "end": "#F7FAFC"
+        },
+        "matteThreshold": 246,
+        "contrastAdjustment": 1.0,
+        "sharpening": "None",
+        "compositePreserved": true
+      },
+      "files": {
+        "inputBaseline": {
+          "path": "assets/products/input-baseline/carrier/classicool-inverter.webp",
+          "purpose": "Untouched input baseline copy",
+          "format": "WEBP",
+          "mode": "RGB",
+          "width": 1210,
+          "height": 756,
+          "bytes": 96248,
+          "sha256": "9f44ff6f1391b0938dc44126eb1ec436f4bc8b912b0c80d1d6a355f0f9a55329"
+        },
+        "canonicalMasterPng": {
+          "path": "assets/products/derivatives/catalog/carrier/classicool-inverter.png",
+          "purpose": "Approved canonical high-quality catalog master PNG",
+          "format": "PNG",
+          "mode": "RGB",
+          "width": 1600,
+          "height": 1200,
+          "bytes": 694068,
+          "sha256": "bae7305e4cfd0a81fa38e6b218c1de7613e8c5408e7c25fdadf4ec2733221271"
+        }
+      },
+      "detailInspection": {
+        "zoom": "200%",
+        "regions": [
+          "LOGO",
+          "COIL / OPENING",
+          "CONNECTION / EDGE"
+        ]
+      },
+      "activation": "Canonical master retained for production encoding"
+    },
+    {
+      "familyId": "carrier-classicool-pro",
+      "brand": "carrier",
+      "slug": "classicool-pro",
+      "status": "approved-batch-derivative",
+      "source": {
+        "localPath": "public/products/families/carrier/classicool-pro.webp",
+        "officialPage": "https://miraco.com.eg/en/classicool-pro",
+        "originalImageUrl": "https://mcprod.miraco.com.eg/media/catalog/product/cache/8ddeeed85c51e5e61315f40dbec60ae7/d/u/ducted_a6_1.jpg",
+        "match": "Exact family/variant",
+        "authorization": "Approved",
+        "naelApproval": "Approved manifest",
+        "sha256": "4391af5374a8a2209005222a8a24cd87121e5f53cbfab4f7ec8f1bcd9617e21d"
+      },
+      "transform": {
+        "strategy": "edge-connected-white-matte",
+        "deviceType": "concealed-ducted",
+        "sourceSize": [
+          910,
+          336
+        ],
+        "sourceCrop": [
+          0,
+          1,
+          910,
+          336
+        ],
+        "scale": 1.0,
+        "objectSize": [
+          910,
+          335
+        ],
+        "placement": [
+          345,
+          420
+        ],
+        "canvasSize": [
+          1600,
+          1200
+        ],
+        "background": {
+          "type": "vertical-linear-gradient",
+          "start": "#E6F1F7",
+          "end": "#F7FAFC"
+        },
+        "matteThreshold": 246,
+        "contrastAdjustment": 1.0,
+        "sharpening": "None",
+        "compositePreserved": false
+      },
+      "files": {
+        "inputBaseline": {
+          "path": "assets/products/input-baseline/carrier/classicool-pro.webp",
+          "purpose": "Untouched input baseline copy",
+          "format": "WEBP",
+          "mode": "RGB",
+          "width": 910,
+          "height": 336,
+          "bytes": 49736,
+          "sha256": "4391af5374a8a2209005222a8a24cd87121e5f53cbfab4f7ec8f1bcd9617e21d"
+        }
+      },
+      "detailInspection": {
+        "zoom": "200%",
+        "regions": [
+          "LOGO",
+          "COIL / OPENING",
+          "CONNECTION / EDGE"
+        ]
+      },
+      "activation": "Superseded by an approved revision record; batch image retained in memory for audit sheet only"
+    },
+    {
+      "familyId": "carrier-decor-inverter",
+      "brand": "carrier",
+      "slug": "decor-inverter",
+      "status": "approved-batch-derivative",
+      "source": {
+        "localPath": "public/products/families/carrier/decor-inverter.webp",
+        "officialPage": "https://miraco.com.eg/decor-inverter-heat-pump-53qcdt-dn",
+        "originalImageUrl": "https://mcprod.miraco.com.eg/media/catalog/product/cache/8ddeeed85c51e5e61315f40dbec60ae7/p/a/panel_d_cor_inverter_with_green_speed_intelligence_-_photo.jpg",
+        "match": "Exact family/variant",
+        "authorization": "Approved",
+        "naelApproval": "Approved manifest",
+        "sha256": "28665ed4c08c96299dc208723a1947f5e344e2a057745dc42778ceec5df55c0e"
+      },
+      "transform": {
+        "strategy": "conservative-opaque-panel",
+        "deviceType": "ceiling-cassette",
+        "sourceSize": [
+          1201,
+          1200
+        ],
+        "sourceCrop": [
+          0,
+          0,
+          1201,
+          1200
+        ],
+        "scale": 0.774355,
+        "objectSize": [
+          930,
+          929
+        ],
+        "placement": [
+          335,
+          135
+        ],
+        "canvasSize": [
+          1600,
+          1200
+        ],
+        "background": {
+          "type": "vertical-linear-gradient",
+          "start": "#E6F1F7",
+          "end": "#F7FAFC"
+        },
+        "matteThreshold": null,
+        "contrastAdjustment": 1.0,
+        "sharpening": "None",
+        "compositePreserved": false
+      },
+      "files": {
+        "inputBaseline": {
+          "path": "assets/products/input-baseline/carrier/decor-inverter.webp",
+          "purpose": "Untouched input baseline copy",
+          "format": "WEBP",
+          "mode": "RGB",
+          "width": 1201,
+          "height": 1200,
+          "bytes": 230578,
+          "sha256": "28665ed4c08c96299dc208723a1947f5e344e2a057745dc42778ceec5df55c0e"
+        }
+      },
+      "detailInspection": {
+        "zoom": "200%",
+        "regions": [
+          "LOGO / LABEL",
+          "GRILLE / VANE",
+          "OUTER EDGE"
+        ]
+      },
+      "activation": "Superseded by an approved revision record; batch image retained in memory for audit sheet only"
+    },
+    {
+      "familyId": "carrier-elegant-inverter",
+      "brand": "carrier",
+      "slug": "elegant-inverter",
+      "status": "approved-batch-derivative",
+      "source": {
+        "localPath": "public/products/families/carrier/elegant-inverter.webp",
+        "officialPage": "https://miraco.com.eg/53qfgdt60dn-708-skd-seer",
+        "originalImageUrl": "https://mcprod.miraco.com.eg/media/catalog/product/cache/8ddeeed85c51e5e61315f40dbec60ae7/4/2/42qfgdt60dn.jpg",
+        "match": "Exact family/variant",
+        "authorization": "Approved",
+        "naelApproval": "Approved manifest",
+        "sha256": "611f5e04636cb24bcbca5c6d9b547fd4701404733661fa6e475f52dbaf4bbe63"
+      },
+      "transform": {
+        "strategy": "conservative-opaque-panel-low-resolution",
+        "deviceType": "floor-standing",
+        "sourceSize": [
+          422,
+          1200
+        ],
+        "sourceCrop": [
+          0,
+          0,
+          422,
+          1200
+        ],
+        "scale": 0.866667,
+        "objectSize": [
+          366,
+          1040
+        ],
+        "placement": [
+          617,
+          80
+        ],
+        "canvasSize": [
+          1600,
+          1200
+        ],
+        "background": {
+          "type": "vertical-linear-gradient",
+          "start": "#E6F1F7",
+          "end": "#F7FAFC"
+        },
+        "matteThreshold": null,
+        "contrastAdjustment": 1.02,
+        "sharpening": "None",
+        "compositePreserved": false
+      },
+      "files": {
+        "inputBaseline": {
+          "path": "assets/products/input-baseline/carrier/elegant-inverter.webp",
+          "purpose": "Untouched input baseline copy",
+          "format": "WEBP",
+          "mode": "RGB",
+          "width": 422,
+          "height": 1200,
+          "bytes": 24902,
+          "sha256": "611f5e04636cb24bcbca5c6d9b547fd4701404733661fa6e475f52dbaf4bbe63"
+        }
+      },
+      "detailInspection": {
+        "zoom": "200%",
+        "regions": [
+          "VANES",
+          "LOGO / DISPLAY",
+          "BODY EDGE"
+        ]
+      },
+      "activation": "Superseded by an approved revision record; batch image retained in memory for audit sheet only"
+    },
+    {
+      "familyId": "midea-ai-ecomaster-inverter",
+      "brand": "midea",
+      "slug": "ai-ecomaster-inverter",
+      "status": "approved-batch-derivative",
+      "source": {
+        "localPath": "public/products/families/midea/ai-ecomaster-inverter.webp",
+        "officialPage": "https://miraco.com.eg/m1seft-18crdn8f-q8-ai-ecomaster-seer",
+        "originalImageUrl": "https://mcprod.miraco.com.eg/media/catalog/product/cache/8ddeeed85c51e5e61315f40dbec60ae7/1/8/18.jpg",
+        "match": "Exact family/variant",
+        "authorization": "Approved",
+        "naelApproval": "Approved manifest",
+        "sha256": "b6bfc47e9e2b5736170233f37329c2ee7670011c8e77e6351aa2b68625b638b6"
+      },
+      "transform": {
+        "strategy": "conservative-opaque-panel",
+        "deviceType": "wall-mounted",
+        "sourceSize": [
+          1920,
+          888
+        ],
+        "sourceCrop": [
+          0,
+          0,
+          1920,
+          888
+        ],
+        "scale": 0.6875,
+        "objectSize": [
+          1320,
+          610
+        ],
+        "placement": [
+          140,
+          283
+        ],
+        "canvasSize": [
+          1600,
+          1200
+        ],
+        "background": {
+          "type": "vertical-linear-gradient",
+          "start": "#E6F1F7",
+          "end": "#F7FAFC"
+        },
+        "matteThreshold": null,
+        "contrastAdjustment": 1.0,
+        "sharpening": "None",
+        "compositePreserved": false
+      },
+      "files": {
+        "inputBaseline": {
+          "path": "assets/products/input-baseline/midea/ai-ecomaster-inverter.webp",
+          "purpose": "Untouched input baseline copy",
+          "format": "WEBP",
+          "mode": "RGB",
+          "width": 1920,
+          "height": 888,
+          "bytes": 37318,
+          "sha256": "b6bfc47e9e2b5736170233f37329c2ee7670011c8e77e6351aa2b68625b638b6"
+        }
+      },
+      "detailInspection": {
+        "zoom": "200%",
+        "regions": [
+          "LOGO",
+          "DISPLAY / MARK",
+          "VANES / EDGE"
+        ]
+      },
+      "activation": "Superseded by an approved revision record; batch image retained in memory for audit sheet only"
+    },
+    {
+      "familyId": "midea-mission-inverter",
+      "brand": "midea",
+      "slug": "mission-inverter",
+      "status": "approved-batch-derivative",
+      "source": {
+        "localPath": "public/products/families/midea/mission-inverter.webp",
+        "officialPage": "https://miraco.com.eg/ar/ar/m1sabt-30hrdnf-q8",
+        "originalImageUrl": "https://mcprod.miraco.com.eg/media/catalog/product/cache/8ddeeed85c51e5e61315f40dbec60ae7/s/y/system.jpg",
+        "match": "Exact family/variant",
+        "authorization": "Approved",
+        "naelApproval": "Approved manifest",
+        "sha256": "632056d8eb778356c9895ae4faa9df9de3c3b37d38da877d795f77591a934c08"
+      },
+      "transform": {
+        "strategy": "conservative-opaque-panel",
+        "deviceType": "wall-mounted-composite",
+        "sourceSize": [
+          1319,
+          1200
+        ],
+        "sourceCrop": [
+          0,
+          0,
+          1319,
+          1200
+        ],
+        "scale": 0.849128,
+        "objectSize": [
+          1120,
+          1019
+        ],
+        "placement": [
+          240,
+          90
+        ],
+        "canvasSize": [
+          1600,
+          1200
+        ],
+        "background": {
+          "type": "vertical-linear-gradient",
+          "start": "#E6F1F7",
+          "end": "#F7FAFC"
+        },
+        "matteThreshold": null,
+        "contrastAdjustment": 1.0,
+        "sharpening": "None",
+        "compositePreserved": true
+      },
+      "files": {
+        "inputBaseline": {
+          "path": "assets/products/input-baseline/midea/mission-inverter.webp",
+          "purpose": "Untouched input baseline copy",
+          "format": "WEBP",
+          "mode": "RGB",
+          "width": 1319,
+          "height": 1200,
+          "bytes": 118326,
+          "sha256": "632056d8eb778356c9895ae4faa9df9de3c3b37d38da877d795f77591a934c08"
+        }
+      },
+      "detailInspection": {
+        "zoom": "200%",
+        "regions": [
+          "INDOOR LOGO / EDGE",
+          "OUTDOOR BADGE",
+          "FAN / OUTER EDGE"
+        ]
+      },
+      "activation": "Superseded by an approved revision record; batch image retained in memory for audit sheet only"
+    },
+    {
+      "familyId": "midea-xtreme-pro",
+      "brand": "midea",
+      "slug": "xtreme-pro",
+      "status": "approved-batch-derivative",
+      "source": {
+        "localPath": "public/products/families/midea/xtreme-pro.png",
+        "officialPage": "https://miraco.com.eg/en/m1seft-18crn8f-q8-seer",
+        "originalImageUrl": "https://mcprod.miraco.com.eg/media/catalog/product/cache/8ddeeed85c51e5e61315f40dbec60ae7/m/_/m_2-25_right_1_6.png",
+        "match": "Exact family/variant",
+        "authorization": "Approved",
+        "naelApproval": "Approved manifest",
+        "sha256": "dec4d14b99109a54805855d9e7133c1763fbf247e421777e8cbafbdeec26cfb5"
+      },
+      "transform": {
+        "strategy": "source-alpha",
+        "deviceType": "wall-mounted",
+        "sourceSize": [
+          1920,
+          872
+        ],
+        "sourceCrop": [
+          51,
+          30,
+          1887,
+          842
+        ],
+        "scale": 0.718954,
+        "objectSize": [
+          1320,
+          584
+        ],
+        "placement": [
+          140,
+          296
+        ],
+        "canvasSize": [
+          1600,
+          1200
+        ],
+        "background": {
+          "type": "vertical-linear-gradient",
+          "start": "#E6F1F7",
+          "end": "#F7FAFC"
+        },
+        "matteThreshold": null,
+        "contrastAdjustment": 1.0,
+        "sharpening": "None",
+        "compositePreserved": false
+      },
+      "files": {
+        "inputBaseline": {
+          "path": "assets/products/input-baseline/midea/xtreme-pro.png",
+          "purpose": "Untouched input baseline copy",
+          "format": "PNG",
+          "mode": "RGBA",
+          "width": 1920,
+          "height": 872,
+          "bytes": 689468,
+          "sha256": "dec4d14b99109a54805855d9e7133c1763fbf247e421777e8cbafbdeec26cfb5"
+        },
+        "canonicalMasterPng": {
+          "path": "assets/products/derivatives/catalog/midea/xtreme-pro.png",
+          "purpose": "Approved canonical high-quality catalog master PNG",
+          "format": "PNG",
+          "mode": "RGB",
+          "width": 1600,
+          "height": 1200,
+          "bytes": 390224,
+          "sha256": "3e03e73ff9f0a550f51f22cbefb9a01f82ce35bc31233faf2dd476e8a8832183"
+        }
+      },
+      "detailInspection": {
+        "zoom": "200%",
+        "regions": [
+          "LOGO",
+          "DISPLAY / MARK",
+          "VANES / EDGE"
+        ]
+      },
+      "activation": "Canonical master retained for production encoding"
+    }
+  ]
+}

@@ -43,3 +43,14 @@ next-env.d.ts
 /work/
 /private-source/
 *.tsbuildinfo
+
+# local product-asset review and Python cache files
+**pycache**/
+*.py[cod]
+/coolpet-review.zip
+/assets/products/previews/live-activation/
+/assets/products/previews/batch/
+/assets/products/previews/revision/
+/public/products/catalog-preview/
+/public/products/catalog-revision-preview/
+/public/products/promotional-preview/
