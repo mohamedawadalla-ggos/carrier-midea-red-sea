@@ -302,3 +302,40 @@ body{background:var(--surface-page);color:var(--heading)}
 @media(max-width:1180px){.hero-product-showcase{display:none}}
 @media(max-width:1050px){.best-selling-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.home-site .featured-products{padding-top:72px;padding-bottom:76px}.best-selling-products{width:100%;padding:72px 0 20px}.best-selling-heading,.best-selling-group-heading{width:calc(100% - 44px);margin-inline:auto}.best-selling-heading{margin-bottom:32px}.best-selling-group{padding-bottom:52px}.best-selling-group+.best-selling-group{padding-top:6px}.best-selling-group-heading{align-items:flex-end;padding-block:24px 18px}.best-selling-group-heading a{max-width:145px;text-align:end}.best-selling-grid{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:min(82vw,320px);gap:14px;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:inline mandatory;scroll-padding-inline:22px;padding:0 22px 18px;scrollbar-width:thin}.best-selling-grid .product-card{scroll-snap-align:start}.best-selling-grid .product-stage{height:205px}}
+
+/* Approved blue-canvas identity and client-supplied header lockup */
+:root{--surface-page:#dcecf4;--surface-alt:#d3e6f0;--surface-card:#f7fbfd;--surface-stage:#d6e9f2}
+body{background:linear-gradient(180deg,#dcecf4 0%,#c9e0ec 100%);background-attachment:fixed}
+.home-site main,.catalog-site,.catalog-site .catalog-main,.catalog-site .product-detail-main{background:linear-gradient(180deg,#dcecf4 0%,#c9e0ec 100%)}
+.header{background:rgba(225,240,247,.98);border-bottom-color:#b7d1df}
+.home-site .trust-strip{background:#e8f3f8}
+.home-site .solutions{background:#d3e6f0}
+.home-site :where(.sales-card,.product-card,.category-card),.catalog-site :where(.product-card,.category-card),.catalog-site .product-filters{background:#f9fcfe}
+.brand>.brand-lockups{max-width:none;display:flex;align-items:center;gap:10px;padding:0;color:inherit;border:0;font-size:inherit;line-height:normal}
+.header .brand-image{width:150px;height:auto;flex:0 0 auto;background:transparent;border:0;border-radius:0;box-shadow:none}
+.brand-lockup-divider{width:1px;height:46px;flex:0 0 auto;background:#aac5d3}
+.dealer-logo-plate{width:184px;height:60px;display:grid;place-items:center;flex:0 0 auto;padding:3px 5px;overflow:hidden;border:1px solid rgba(255,255,255,.22);border-radius:8px;background:#031b33;box-shadow:0 8px 22px rgba(3,27,51,.16)}
+.dealer-logo-image{width:100%;height:100%;display:block;object-fit:contain}
+
+/* Mr. Cool: playful deterministic vector mascot */
+.coolpet-shell-shadow{fill:#052b4d;opacity:.2}
+.coolpet-shell{fill:#e7f9ff;stroke:#4fc3e7;stroke-width:3}
+.coolpet-panel{fill:#fff;opacity:.96}
+.coolpet-eye{fill:#052f56}
+.coolpet-brow,.coolpet-smile,.coolpet-vent,.coolpet-arm,.coolpet-hand,.coolpet-foot{fill:none;stroke:#0874b9;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.coolpet-brow{stroke-width:2.5}.coolpet-cheek{fill:#ff8f9a;opacity:.72}.coolpet-vent{stroke-width:2.5}.coolpet-arm,.coolpet-hand{stroke:#50c9eb;stroke-width:4}
+.coolpet-bow{fill:#ed1b2f;stroke:#a60f20;stroke-width:1.5}.coolpet-bow-knot{fill:#fff;stroke:#a60f20;stroke-width:1.5}
+.state-greeting .coolpet-hand,.state-idle .coolpet-hand{animation:mr-cool-wave 1.8s ease-in-out infinite;transform-origin:130px 46px}
+@keyframes mr-cool-wave{50%{transform:rotate(10deg)}}
+
+@media(max-width:700px){
+  .brand>.brand-lockups{gap:5px}
+  .header .brand-image{width:84px}
+  .brand-lockup-divider{height:34px}
+  .dealer-logo-plate{width:104px;height:38px;padding:2px 3px;border-radius:5px}
+}
+@media(max-width:390px){
+  .header .brand-image{width:78px}
+  .dealer-logo-plate{width:96px;height:35px}
+}
+@media(prefers-reduced-motion:reduce){.state-greeting .coolpet-hand,.state-idle .coolpet-hand{animation:none}}

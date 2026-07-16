@@ -21,6 +21,8 @@ test("server-renders the branded Arabic experience", async () => {
   assert.match(html, /كاريير ميديا البحر الأحمر/);
   assert.match(html, /راحة استثنائية/);
   assert.match(html, /مش عارف تختار التكييف المناسب؟/);
+  assert.match(html, /مستر كول/);
+  assert.match(html, /\/brand\/logo-client-header\.png/);
   assert.match(html, /href="\/ar\/products"/);
   assert.match(html, /<form/);
   assert.match(html, /<html[^>]+lang="ar"[^>]+dir="rtl"/);
@@ -35,6 +37,8 @@ test("server-renders the English experience", async () => {
   assert.match(html, /Request service/);
   assert.match(html, /Send via WhatsApp/);
   assert.match(html, /Not sure which AC is right for you\?/);
+  assert.match(html, /Mr\. Cool/);
+  assert.match(html, /\/brand\/logo-client-header\.png/);
   assert.match(html, /href="\/en\/products"/);
   assert.match(html, /<html[^>]+lang="en"[^>]+dir="ltr"/);
 });

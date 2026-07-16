@@ -64,8 +64,8 @@ export const advisorReasonCopy: Record<SizingReasonCode, LocalizedText> = {
 
 export const advisorCopy = {
   ar: {
-    launcher: "مساعد كول بيت الذكي",
-    title: "مساعد كول بيت الذكي لاختيار التكييف",
+    launcher: "مستر كول",
+    title: "مستر كول لاختيار التكييف",
     intro: "أدخل بيانات الغرفة للحصول على توصية مبدئية بالقدرة والمنتجات المناسبة.",
     close: "إغلاق المساعد",
     progress: "الخطوة {current} من 5",
@@ -114,12 +114,12 @@ export const advisorCopy = {
     unavailable: "خدمة واتساب غير متاحة حاليًا.",
     checkpointKicker: "مساعد اختيار التكييف",
     checkpointTitle: "مش عارف تختار التكييف المناسب؟",
-    checkpointCopy: "أدخل بيانات الغرفة وسيقترح مساعد كول بيت القدرة والخيارات المناسبة.",
-    checkpointCta: "ابدأ مع مساعد كول بيت",
+    checkpointCopy: "أدخل بيانات الغرفة وسيقترح مستر كول القدرة والخيارات المناسبة.",
+    checkpointCta: "ابدأ مع مستر كول",
   },
   en: {
-    launcher: "CoolPet Smart Advisor",
-    title: "CoolPet Smart AC Advisor",
+    launcher: "Mr. Cool",
+    title: "Mr. Cool AC Advisor",
     intro: "Enter the room details for a preliminary capacity and product recommendation.",
     close: "Close advisor",
     progress: "Step {current} of 5",
@@ -168,7 +168,7 @@ export const advisorCopy = {
     unavailable: "WhatsApp is currently unavailable.",
     checkpointKicker: "AC selection advisor",
     checkpointTitle: "Not sure which AC is right for you?",
-    checkpointCopy: "Enter your room details and CoolPet will suggest a preliminary capacity and suitable options.",
-    checkpointCta: "Start with CoolPet",
+    checkpointCopy: "Enter your room details and Mr. Cool will suggest a preliminary capacity and suitable options.",
+    checkpointCta: "Start with Mr. Cool",
   },
 } as const satisfies Record<Locale, Record<string, string | readonly string[]>>;

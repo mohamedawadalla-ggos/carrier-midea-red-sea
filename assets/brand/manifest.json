@@ -2,6 +2,10 @@
   "brand": "Carrier–Midea Red Sea / كاريير ميديا البحر الأحمر",
   "source": "C:\\Users\\Mohamed Awadalla\\Documents\\Projects\\Red sea AC\\logo exclusive.png",
   "sourceSha256": "fd1f85d34464d681ba45e5333b57f66d5a0589e7fb3107e72cd748311d5a92bf",
+  "headerLogoSource": "Client attachment supplied on 2026-07-16",
+  "headerLogoSourceSha256": "b6f459d4f7eac72e6d0f40e2fd48c737bfcdfe845bff2701fb2b238fac1fc99f",
+  "siteIconSource": "Client attachment supplied on 2026-07-16",
+  "siteIconSourceSha256": "e0d89f908a14b87c70411d5df582abeb0f3e8508ef2d282214687aa5b03e200e",
   "method": "Deterministic crops, non-white ink extraction for light backgrounds, downscaling, and color-mode conversion only",
   "limitations": [
     "The supplied master is raster, not an editable vector file.",
@@ -18,6 +22,24 @@
       "height": 1254,
       "sha256": "fd1f85d34464d681ba45e5333b57f66d5a0589e7fb3107e72cd748311d5a92bf",
       "purpose": "Untouched client-approved raster master"
+    },
+    {
+      "path": "assets/brand/source/carrier-midea-red-sea-client-header-logo.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 387,
+      "height": 115,
+      "sha256": "b6f459d4f7eac72e6d0f40e2fd48c737bfcdfe845bff2701fb2b238fac1fc99f",
+      "purpose": "Untouched client-supplied header logo master"
+    },
+    {
+      "path": "assets/brand/source/carrier-midea-red-sea-client-icon.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 64,
+      "height": 56,
+      "sha256": "e0d89f908a14b87c70411d5df582abeb0f3e8508ef2d282214687aa5b03e200e",
+      "purpose": "Untouched client-supplied browser and sharing icon master"
     },
     {
       "path": "assets/brand/digital/carrier-midea-red-sea-full-white.png",
@@ -315,6 +337,60 @@
       "height": 237,
       "sha256": "ed0d08f7de36775e6666dc6d0712ed40e81a888d64bf76ca87a1a2e78bf301b7",
       "purpose": "Optimized local website derivative"
+    },
+    {
+      "path": "public/brand/logo-client-header.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 387,
+      "height": 115,
+      "sha256": "b6f459d4f7eac72e6d0f40e2fd48c737bfcdfe845bff2701fb2b238fac1fc99f",
+      "purpose": "Byte-for-byte website copy of the client-supplied header logo"
+    },
+    {
+      "path": "public/favicon.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 64,
+      "height": 56,
+      "sha256": "e0d89f908a14b87c70411d5df582abeb0f3e8508ef2d282214687aa5b03e200e",
+      "purpose": "Byte-for-byte browser favicon copy of the client-supplied icon"
+    },
+    {
+      "path": "public/apple-touch-icon.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 180,
+      "height": 180,
+      "sha256": "3685c7105b14c922012371ba090f39e8eeee01d589cb78b175ecb3d31c81b7db",
+      "purpose": "Apple touch icon derivative"
+    },
+    {
+      "path": "public/icon-192.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 192,
+      "height": 192,
+      "sha256": "88e61db1f927cc4fb86f7354f32f39d934d9ee4b69090c92f506a85a934aabfb",
+      "purpose": "Chrome and web-app shortcut icon derivative"
+    },
+    {
+      "path": "public/icon-512.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 512,
+      "height": 512,
+      "sha256": "229e916fb8fcb2a8f4b06f65b8d68e790f049e63b09d026df5f4bf33e6677ca5",
+      "purpose": "Chrome and web-app high-resolution icon derivative"
+    },
+    {
+      "path": "public/share-icon.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 512,
+      "height": 512,
+      "sha256": "229e916fb8fcb2a8f4b06f65b8d68e790f049e63b09d026df5f4bf33e6677ca5",
+      "purpose": "Square Open Graph and X sharing thumbnail"
     },
     {
       "path": "public/brand/logo-signature-reversed.png",

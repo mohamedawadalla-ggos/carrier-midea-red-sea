@@ -24,6 +24,7 @@ test("English advisor message includes the full calculation and confirmation req
   assert.match(message, /Base load: 18,000 BTU/);
   assert.match(message, /Adjusted load: 22,869 BTU/);
   assert.match(message, /Recommended capacity: 3 HP/);
+  assert.match(message, /Mr\. Cool AC Advisor request/);
   assert.match(message, /technical confirmation/i);
 });
 
@@ -35,6 +36,7 @@ test("Arabic advisor message includes localized calculation details", () => {
   assert.match(message, /المساحة المحسوبة: ٣٠ م²/);
   assert.match(message, /الحجم المحسوب: ٨١ م³/);
   assert.match(message, /القدرة المقترحة: ٣ حصان/);
+  assert.match(message, /طلب من مستر كول/);
   assert.match(message, /المعاينة/);
 });
 

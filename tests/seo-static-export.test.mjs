@@ -131,3 +131,27 @@ test("Google verification file exports byte-for-byte unchanged", async () => {
   assert.equal(createHash("sha256").update(exported).digest("hex"), expectedHash);
   assert.equal(source.equals(exported), true);
 });
+
+test("client-approved icon is exported for browsers, Chrome, and sharing", async () => {
+  const html = await readFile(exportedHtml("/en/"), "utf8");
+  for (const asset of ["/favicon.png", "/apple-touch-icon.png", "/icon-192.png", "/icon-512.png", "/share-icon.png", "/manifest.webmanifest"]) {
+    assert.ok(html.includes(asset), `metadata includes ${asset}`);
+  }
+  assert.match(html, /<meta[^>]+name="twitter:card"[^>]+content="summary"/);
+  assert.match(html, /<meta[^>]+property="og:image"[^>]+share-icon\.png/);
+
+  const manifest = JSON.parse(await readFile(join(root, "out", "manifest.webmanifest"), "utf8"));
+  assert.equal(manifest.theme_color, "#001a36");
+  assert.deepEqual(manifest.icons, [
+    { src: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    { src: "/icon-512.png", sizes: "512x512", type: "image/png" },
+  ]);
+
+  const expectedSourceHash = "e0d89f908a14b87c70411d5df582abeb0f3e8508ef2d282214687aa5b03e200e";
+  const [source, favicon] = await Promise.all([
+    readFile(join(root, "assets", "brand", "source", "carrier-midea-red-sea-client-icon.png")),
+    readFile(join(root, "public", "favicon.png")),
+  ]);
+  assert.equal(createHash("sha256").update(source).digest("hex"), expectedSourceHash);
+  assert.equal(source.equals(favicon), true);
+});

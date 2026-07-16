@@ -67,10 +67,12 @@ For large signs, vehicle graphics, exhibition walls, cutting, embroidery digitiz
 
 ## Website usage
 
-- Header: `public/brand/logo-manufacturers-white.png`, accompanied by the bilingual site identity.
+- Header: `public/brand/logo-manufacturers.png`, paired with the unchanged client-supplied `public/brand/logo-client-header.png` on its navy contrast plate.
 - Footer: `public/brand/logo-signature-reversed.png` on the approved navy background.
 - Facebook follow section: `public/brand/logo-full-white.png`.
 - Open Graph artwork remains `public/og.png`; it is promotional artwork, not the logo master.
+
+The client-supplied header logo is an independent approved raster source archived at `assets/brand/source/carrier-midea-red-sea-client-header-logo.png`. Do not redraw, recolor, crop, or stretch it. Its white lettering requires the navy plate used by the header component.
 
 ## Reproduction
 

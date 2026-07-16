@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { company, type Locale } from "@/content/site";
+import type { Locale } from "@/content/site";
 import { siteConfig } from "@/lib/site-config";
 import { FacebookLink } from "@/components/social/FacebookLink";
 import { useRequestCart } from "@/components/cart/RequestCartProvider";
@@ -25,8 +25,13 @@ export function SiteHeader({ locale, currentPath = "" }: { locale: Locale; curre
   return (
     <><a className="skip-link" href="#main-content">{locale === "ar" ? "انتقل إلى المحتوى" : "Skip to content"}</a><header className="header">
       <a className="brand" href={`/${locale}`} aria-label="Carrier Midea Red Sea home">
-        <img className="brand-image" src="/brand/logo-manufacturers.png" alt="Carrier and Midea" width={720} height={164} />
-        <span>{company.name[locale]}<small>{company.status[locale]}</small></span>
+        <span className="brand-lockups">
+          <img className="brand-image" src="/brand/logo-manufacturers.png" alt="Carrier and Midea" width={720} height={164} />
+          <span className="brand-lockup-divider" aria-hidden="true" />
+          <span className="dealer-logo-plate">
+            <img className="dealer-logo-image" src="/brand/logo-client-header.png" alt={locale === "ar" ? "كاريير ميديا البحر الأحمر" : "Carrier–Midea Red Sea"} width={387} height={115} />
+          </span>
+        </span>
       </a>
       <nav className={menuOpen ? "nav open" : "nav"} aria-label={locale === "ar" ? "التنقل الرئيسي" : "Primary navigation"}>
         {nav[locale].map(([label, path]) => <a key={label} aria-current={path === currentPath ? "page" : undefined} href={localize(path)} onClick={() => setMenuOpen(false)}>{label}</a>)}

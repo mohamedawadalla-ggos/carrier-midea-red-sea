@@ -12,6 +12,8 @@ const sources = Object.fromEntries(await Promise.all([
   "../app/(default)/layout.tsx",
   "../app/[locale]/layout.tsx",
 ].map(async (path) => [path, await readFile(new URL(path, import.meta.url), "utf8")])));
+const copy = await readFile(new URL("../content/ac-advisor-copy.ts", import.meta.url), "utf8");
+const mascot = await readFile(new URL("../components/advisor/CoolPetMascot.tsx", import.meta.url), "utf8");
 
 test("advisor mounts in both static layouts without a route or server API", () => {
   assert.match(sources["../app/(default)/layout.tsx"], /<CoolPetAdvisor locale="ar"/);
@@ -40,4 +42,13 @@ test("advisor has no persistence, AI API, runtime fetch, or imperative catalog r
   assert.doesNotMatch(combined, /fetch\s*\(|XMLHttpRequest|WebSocket/);
   assert.doesNotMatch(combined, /OpenAI|generative AI|AI-powered/i);
   assert.doesNotMatch(combined, /router\.push|window\.location\.(?:assign|replace)/);
+});
+
+test("advisor presents the approved Mr. Cool identity and playful accessible vector", () => {
+  assert.match(copy, /مستر كول/);
+  assert.match(copy, /Mr\. Cool/);
+  assert.doesNotMatch(copy, /كول بيت|CoolPet/);
+  assert.match(mascot, /Mr\. Cool playful air-conditioning advisor character/);
+  assert.match(mascot, /coolpet-cheek/);
+  assert.match(mascot, /coolpet-bow/);
 });

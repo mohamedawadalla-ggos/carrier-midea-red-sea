@@ -1,0 +1,19 @@
+import type { MetadataRoute } from "next";
+
+export const dynamic = "force-static";
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: "Carrier–Midea Red Sea",
+    short_name: "Carrier–Midea",
+    description: "Carrier and Midea air-conditioning sales and service across Ain Sokhna and the Red Sea.",
+    start_url: "/",
+    display: "standalone",
+    background_color: "#001a36",
+    theme_color: "#001a36",
+    icons: [
+      { src: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { src: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+  };
+}

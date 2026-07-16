@@ -53,7 +53,7 @@ test("approved discount excludes installation, maintenance, and delivery", () =>
   assert.match(approvedOffer.terms.en, /excludes installation, maintenance, delivery/);
 });
 
-test("homepage conversion links are localized static links and checkpoint reuses CoolPet", () => {
+test("homepage conversion links are localized static links and checkpoint reuses the AC advisor", () => {
   assert.match(home, /href=\{`\/\$\{locale\}\/products`\} prefetch=\{false\}/);
   assert.match(featured, /<Link className="catalog-link"[^>]+prefetch=\{false\}/);
   assert.ok(home.indexOf("<AdvisorCheckpoint") > home.indexOf("<FeaturedProductFamilies"));

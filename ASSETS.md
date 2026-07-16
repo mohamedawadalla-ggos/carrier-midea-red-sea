@@ -22,6 +22,30 @@ Only manufacturer or authorized-distributor media approved for this catalog may 
 - Authorization: supplied by the client as the approved logo on 2026-07-14
 - Important limitation: no official vector, Pantone, or CMYK master was supplied; raster derivatives must not be represented as native vector artwork
 
+### Client-supplied header logo
+
+- Client-supplied source: `codex-clipboard-a9daab5f-bb32-49e0-b795-f98ac6242468.png`, attached in the project review on 2026-07-16
+- Archived unchanged master: `assets/brand/source/carrier-midea-red-sea-client-header-logo.png`
+- Website copy: `public/brand/logo-client-header.png`
+- SHA-256 for both files: `B6F459D4F7EAC72E6D0F40E2FD48C737BFCDFE845BFF2701FB2B238FAC1FC99F`
+- Dimensions and mode: 387×115 RGBA PNG with an opaque navy background
+- Usage: displayed unchanged on a navy plate beside the approved Carrier and Midea manufacturer lockup in the site header
+- Transformation: none; sizing is responsive CSS only and the replacement source pixels are preserved byte-for-byte
+- External downloads: none
+- Authorization: supplied directly by the client for header use on 2026-07-16
+
+### Client-supplied browser and sharing icon
+
+- Client-supplied source: `codex-clipboard-0bc9e524-148a-48f4-b4db-bfa7e5834338.png`, attached in the project review on 2026-07-16
+- Archived unchanged master: `assets/brand/source/carrier-midea-red-sea-client-icon.png`
+- Source dimensions and mode: 64×56 RGBA PNG with a fully opaque navy background
+- Source SHA-256: `E0D89F908A14B87C70411D5DF582ABEB0F3E8508EF2D282214687AA5B03E200E`
+- Website derivatives: `public/favicon.png` (unchanged 64×56), `public/apple-touch-icon.png` (180×180), `public/icon-192.png`, `public/icon-512.png`, and `public/share-icon.png` (512×512)
+- Usage: browser tab and shortcut icon, Apple touch icon, Chrome install/shortcut icon, and square Open Graph/X sharing thumbnail
+- Transformation: deterministic Lanczos resizing that preserves the original aspect ratio, followed by edge-pixel extension outside the resized artwork to form square canvases; no redraw, generative fill, sharpening, recoloring, or invented detail; the 64×56 favicon remains byte-for-byte identical to the supplied source
+- External downloads: none
+- Authorization: supplied directly by the client for browser, Chrome, and sharing use on 2026-07-16
+
 ### Header wordmark
 
 - Local path: `public/brand-wordmark.png`
