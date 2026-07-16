@@ -7,6 +7,7 @@ const { approvedOffer, isOfferActiveAt } = await import(new URL("../content/offe
 const banner = await readFile(new URL("../components/offers/OfferBanner.tsx", import.meta.url), "utf8");
 const home = await readFile(new URL("../components/SiteExperience.tsx", import.meta.url), "utf8");
 const featured = await readFile(new URL("../components/home/FeaturedProductFamilies.tsx", import.meta.url), "utf8");
+const bestSelling = await readFile(new URL("../components/home/BestSellingProducts.tsx", import.meta.url), "utf8");
 const heroShowcase = await readFile(new URL("../components/home/HeroProductShowcase.tsx", import.meta.url), "utf8");
 const checkpoint = await readFile(new URL("../components/home/AdvisorCheckpoint.tsx", import.meta.url), "utf8");
 const company = await readFile(new URL("../content/site.ts", import.meta.url), "utf8");
@@ -62,7 +63,10 @@ test("homepage conversion links are localized static links and checkpoint reuses
 });
 
 test("homepage leads with catalog selections and uses only approved local hero product assets", () => {
-  assert.ok(home.indexOf("<FeaturedProductFamilies") < home.indexOf("section className=\"section solutions\""));
+  assert.ok(home.indexOf("<BestSellingProducts") < home.indexOf("<FeaturedProductFamilies"));
+  assert.doesNotMatch(home, /section className="section solutions"|href="#solutions"/);
+  assert.match(bestSelling, /Best-selling air conditioners/);
+  assert.match(bestSelling, /<ProductVariantCard/);
   assert.match(home, /<HeroProductShowcase locale=\{locale\}/);
   assert.match(heroShowcase, /assetAuthorization === "approved"/);
   assert.doesNotMatch(heroShowcase, /https?:\/\//);

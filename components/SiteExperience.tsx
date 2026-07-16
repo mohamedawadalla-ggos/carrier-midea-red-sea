@@ -10,6 +10,7 @@ import { FacebookFollowSection } from "@/components/home/FacebookFollowSection";
 import { ServiceAreaMap } from "@/components/home/ServiceAreaMap";
 import { AdvisorCheckpoint } from "@/components/home/AdvisorCheckpoint";
 import { HeroProductShowcase } from "@/components/home/HeroProductShowcase";
+import { BestSellingProducts } from "@/components/home/BestSellingProducts";
 import { OfferBanner } from "@/components/offers/OfferBanner";
 import { leadProvider } from "@/services/leads/whatsapp-provider";
 import { siteConfig } from "@/lib/site-config";
@@ -47,30 +48,16 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
             </div>
           </div>
           <div className="hero-note"><span>24/7</span><p>{locale === "ar" ? "دعم سريع للحالات العاجلة" : "Fast support for urgent cases"}</p></div>
-          <a className="scroll-cue" href="#solutions" aria-label="Scroll to solutions"><span>↓</span>{locale === "ar" ? "اكتشف" : "DISCOVER"}</a>
+          <a className="scroll-cue" href="#best-selling-products" aria-label={locale === "ar" ? "انتقل إلى المنتجات الأكثر مبيعًا" : "Scroll to best-selling air conditioners"}><span>↓</span>{locale === "ar" ? "اكتشف" : "DISCOVER"}</a>
         </section>
 
         <section className="trust-strip" aria-label="Our promises">
           {t.trust.map((item, i) => <div key={item}><span>{["◷", "◇", "✓", "◎"][i]}</span>{item}</div>)}
         </section>
 
-        <FeaturedProductFamilies locale={locale} />
+        <BestSellingProducts locale={locale} />
 
-        <section className="section solutions" id="solutions">
-          <div className="section-heading"><p className="kicker">{locale === "ar" ? "حلولنا" : "OUR SOLUTIONS"}</p><h2>{t.pathTitle}</h2><p>{t.pathSub}</p></div>
-          <div className="path-grid">
-            <article className="path-card sales-card">
-              <div className="path-number">01</div><div className="path-icon">❄</div><h3>{t.salesTitle}</h3><p>{t.salesText}</p>
-              <ul>{t.salesItems.map(x => <li key={x}><span>✓</span>{x}</li>)}</ul><a href="#contact">{t.explore}<span>↗</span></a>
-              <div className="product-visual"><div className="ac-unit"><span className="brand-line">CARRIER</span><i /></div><div className="cold-line l1" /><div className="cold-line l2" /><div className="cold-line l3" /></div>
-            </article>
-            <article className="path-card service-card">
-              <div className="path-number">02</div><div className="path-icon">⌁</div><h3>{t.serviceTitle}</h3><p>{t.serviceText}</p>
-              <ul>{t.serviceItems.map(x => <li key={x}><span>✓</span>{x}</li>)}</ul><a href="#contact">{t.explore}<span>↗</span></a>
-              <div className="service-rings"><i /><i /><i /></div>
-            </article>
-          </div>
-        </section>
+        <FeaturedProductFamilies locale={locale} />
 
         <AdvisorCheckpoint locale={locale} />
 

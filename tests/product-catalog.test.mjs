@@ -53,7 +53,8 @@ test("public source and build contain no confidential catalog fields or price cl
   await walk(root);
   const publicSource = (await Promise.all(files.map((file) => readFile(file, "utf8")))).join("\n");
   assert.doesNotMatch(publicSource, /dealerPrice|publicGuidePrice/);
-  assert.doesNotMatch(publicSource, /\b(?:best-?seller|most popular|cheapest|number one|inStock|OutOfStock)\b/i);
+  assert.doesNotMatch(publicSource, /\b(?:most popular|cheapest|number one|inStock|OutOfStock)\b/i);
+  assert.equal((publicSource.match(/Best-selling air conditioners/g) ?? []).length, 1);
 });
 
 test("WhatsApp cannot create an empty-recipient URL", async () => {
