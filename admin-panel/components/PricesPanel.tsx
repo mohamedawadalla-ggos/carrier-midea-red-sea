@@ -69,6 +69,8 @@ export function PricesPanel({ data, refresh }: { data: ControlPanelSnapshot; ref
       if (publishableEntry.minimum_price_minor !== null && salePrice < publishableEntry.minimum_price_minor) {
         throw new Error("Sale price is below the approved minimum.");
       }
+      const action = publishableEntry.status === "pending_approval" ? "approve this price entry and publish it" : "publish this approved customer price";
+      if (!window.confirm("Confirm you want to " + action + " for " + selectedCode + ". This changes the public price.")) return;
 
       const supabase = getSupabase();
       if (publishableEntry.status === "pending_approval") {

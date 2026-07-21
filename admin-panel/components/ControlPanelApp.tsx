@@ -12,8 +12,9 @@ import { SettingsPanel } from "@/components/SettingsPanel";
 import { LocationsPanel } from "@/components/LocationsPanel";
 import { WarehousesPanel } from "@/components/WarehousesPanel";
 import { AuditPanel } from "@/components/AuditPanel";
+import { AccountPanel } from "@/components/AccountPanel";
 
-const tabs = ["overview", "prices", "discounts", "settings", "locations", "warehouses", "audit"] as const;
+const tabs = ["overview", "prices", "discounts", "settings", "locations", "warehouses", "audit", "account"] as const;
 type Tab = typeof tabs[number];
 
 export function ControlPanelApp() {
@@ -83,7 +84,8 @@ export function ControlPanelApp() {
     locations: <LocationsPanel data={data} refresh={refresh} />,
     warehouses: <WarehousesPanel data={data} refresh={refresh} />,
     audit: <AuditPanel data={data} />,
+    account: <AccountPanel email={session.user.email ?? "staff account"} />,
   };
 
-  return <div className="admin-shell"><aside className="sidebar"><div className="logo"><span>CM</span><div><strong>Carrier–Midea</strong><small>RED SEA CONTROL</small></div></div><nav>{tabs.map((item) => <button key={item} className={tab === item ? "active" : ""} onClick={() => setTab(item)}><span>{({ overview: "◫", prices: "£", discounts: "%", settings: "⚙", locations: "⌖", warehouses: "▦", audit: "◎" } as const)[item]}</span>{item}</button>)}</nav><footer><div><b>{data.profile.full_name}</b><small>{data.profile.role.replaceAll("_", " ")}</small></div><button onClick={() => getSupabase().auth.signOut()}>Sign out</button></footer></aside><main className="workspace"><div className="mobile-top"><strong>CM Red Sea Control</strong><select value={tab} onChange={(event) => setTab(event.target.value as Tab)}>{tabs.map((item) => <option key={item}>{item}</option>)}</select></div>{panels[tab]}</main></div>;
+  return <div className="admin-shell"><aside className="sidebar"><div className="logo"><span>CM</span><div><strong>Carrier–Midea</strong><small>RED SEA CONTROL</small></div></div><nav>{tabs.map((item) => <button key={item} className={tab === item ? "active" : ""} onClick={() => setTab(item)}><span>{({ overview: "◫", prices: "£", discounts: "%", settings: "⚙", locations: "⌖", warehouses: "▦", audit: "◎", account: "○" } as const)[item]}</span>{item}</button>)}</nav><footer><div><b>{data.profile.full_name}</b><small>{data.profile.role.replaceAll("_", " ")}</small></div><button onClick={() => getSupabase().auth.signOut()}>Sign out</button></footer></aside><main className="workspace"><div className="mobile-top"><strong>CM Red Sea Control</strong><div className="mobile-actions"><select aria-label="Select admin section" value={tab} onChange={(event) => setTab(event.target.value as Tab)}>{tabs.map((item) => <option key={item}>{item}</option>)}</select><button onClick={() => getSupabase().auth.signOut()}>Sign out</button></div></div>{panels[tab]}</main></div>;
 }

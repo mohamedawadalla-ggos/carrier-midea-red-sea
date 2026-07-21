@@ -16,6 +16,7 @@ export function DiscountsPanel({ data, refresh }: { data: ControlPanelSnapshot; 
     const rawValue = String(form.get("value"));
     const discountValue = discountType === "percentage" ? Math.round(Number(rawValue) * 100) : inputToMinor(rawValue);
     if (!Number.isFinite(discountValue) || discountValue <= 0 || (discountType === "percentage" && discountValue > 10000)) { setMessage("Enter a valid discount value."); return; }
+    if (publish && !window.confirm("Approve and publish this discount campaign immediately? It will become publicly eligible now.")) return;
     const { error } = await getSupabase().from("discount_campaigns").insert({
       code: String(form.get("code")).trim().toUpperCase(), title_ar: String(form.get("titleAr")), title_en: String(form.get("titleEn")),
       discount_type: discountType, discount_value_minor_or_bps: discountValue, starts_at: String(form.get("startsAt")), ends_at: String(form.get("endsAt")),

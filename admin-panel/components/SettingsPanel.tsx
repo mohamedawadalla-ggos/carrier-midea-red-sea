@@ -23,6 +23,7 @@ export function SettingsPanel({ data, refresh }: { data: ControlPanelSnapshot; r
       setMessage("This setting is not editable in its current workflow state.");
       return;
     }
+    if (status === "published" && !window.confirm("Publish the new value for " + item.label_en + "? This updates public configuration immediately.")) return;
 
     let value: unknown = drafts[settingKey] ?? "";
     if (item.value_type === "boolean") value = value === "true";

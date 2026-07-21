@@ -8,6 +8,9 @@ const access = await readFile(new URL("../lib/access.ts", import.meta.url), "utf
 const pricesPanel = await readFile(new URL("../components/PricesPanel.tsx", import.meta.url), "utf8");
 const settingsPanel = await readFile(new URL("../components/SettingsPanel.tsx", import.meta.url), "utf8");
 const discountsPanel = await readFile(new URL("../components/DiscountsPanel.tsx", import.meta.url), "utf8");
+const locationsPanel = await readFile(new URL("../components/LocationsPanel.tsx", import.meta.url), "utf8");
+const accountPanel = await readFile(new URL("../components/AccountPanel.tsx", import.meta.url), "utf8");
+const controlPanel = await readFile(new URL("../components/ControlPanelApp.tsx", import.meta.url), "utf8");
 
 test("all exposed tables have RLS enabled", () => {
   for (const table of ["staff_profiles","catalog_products","product_price_entries","published_product_prices","discount_campaigns","discount_campaign_products","site_settings","service_locations","warehouses","audit_log"]) {
@@ -50,4 +53,21 @@ test("marketing discounts default to draft with an explicit approval submission"
   assert.match(discountsPanel, /\? "pending_approval" : "draft"/);
   assert.match(discountsPanel, /name="submitForApproval"/);
   assert.match(discountsPanel, /approved_by: publish \? data\.profile\.user_id : null/);
+});
+
+test("security actions verify the current password and expose mobile sign-out", () => {
+  assert.match(accountPanel, /current_password: currentPassword/);
+  assert.match(accountPanel, /signOut\(\{ scope: "others" \}\)/);
+  assert.match(accountPanel, /password\.length < 14/);
+  assert.match(controlPanel, /className="mobile-actions"/);
+  assert.match(controlPanel, /aria-label="Select admin section"/);
+});
+
+test("immediate publication paths require confirmation and use accurate city wording", () => {
+  assert.match(pricesPanel, /window\.confirm/);
+  assert.match(discountsPanel, /publish && !window\.confirm/);
+  assert.match(settingsPanel, /status === "published" && !window\.confirm/);
+  assert.match(locationsPanel, /publish && !window\.confirm/);
+  assert.match(locationsPanel, /Add and publish city/);
+  assert.match(locationsPanel, /City added and published/);
 });
