@@ -14,6 +14,8 @@ Build a production-ready bilingual website for:
 
 Phase 1 is a public sales and lead-generation website.
 
+Phase 2 authorization: the repository may also contain the separately deployed control-panel and Supabase foundation documented in `docs/phase2/IMPLEMENTATION_SCOPE.md`. This authorization is limited to staff authentication, role-based administration of prices, discounts, public settings, service locations, warehouses, and audit metadata. Phase 2 remains subject to the approval, security, migration, and no-deployment rules below.
+
 Include:
 
 - Arabic RTL and English LTR
@@ -29,12 +31,11 @@ Include:
 - SEO
 - Static export
 
-Do not build:
+Do not build in the public Phase 1 application:
 
 - CRM
-- Database
-- Authentication
-- Admin dashboard
+- Database or authentication features outside the approved Phase 2 foundation
+- An admin dashboard outside the separately scoped Phase 2 control panel
 - Customer portal
 - Technician portal
 - Inventory
