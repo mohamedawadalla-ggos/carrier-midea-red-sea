@@ -11,6 +11,13 @@ const permissions = {
   editLocations: ["super_admin", "management", "operations"],
   editWarehouses: ["super_admin", "management", "accounts", "operations"],
   viewAudit: ["super_admin", "management", "auditor"],
+  editStockStatus: ["super_admin", "management", "accounts", "operations"],
+  viewStockNotifyRequests: ["super_admin", "management", "sales", "marketing", "operations"],
+  actionStockNotifyRequests: ["super_admin", "management", "sales", "marketing", "operations"],
+  viewOrders: ["super_admin", "management", "accounts", "operations", "sales", "auditor"],
+  manageInspection: ["super_admin", "management", "operations"],
+  manageOrderStatus: ["super_admin", "management", "operations"],
+  initiateRefund: ["super_admin", "management", "accounts"],
 } as const satisfies Record<string, readonly AppRole[]>;
 
 export type Permission = keyof typeof permissions;
