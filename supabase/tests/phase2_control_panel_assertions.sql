@@ -6,6 +6,10 @@ declare
   policy_using text;
   policy_check text;
   executable_helpers text[];
+  pricing_function_oid oid;
+  pricing_function_definition text;
+  pricing_function_result text;
+  exposed_schemas text;
 begin
   select count(*) into product_count from public.catalog_products;
   if product_count <> 61 then
@@ -60,7 +64,7 @@ begin
     select 1
     from information_schema.columns
     where table_schema = 'public'
-      and table_name in ('public_product_prices', '_campaign_aware_public_price_rows')
+      and table_name = 'public_product_prices'
       and lower(column_name) ~ '(dealer_cost|minimum_price|source_reference|approved_by|published_by)'
   ) then
     raise exception 'Campaign-aware public pricing exposes a private field';
@@ -78,6 +82,33 @@ begin
     raise exception 'public_product_prices must use security_invoker=true';
   end if;
 
+  if (
+    select array_agg(column_name::text order by ordinal_position)
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'public_product_prices'
+  ) <> array[
+    'model_code', 'family_id', 'family_name_ar', 'family_name_en',
+    'brand', 'capacity_hp', 'currency', 'list_price_minor',
+    'sale_price_minor', 'discount_label_ar', 'discount_label_en',
+    'effective_from', 'expires_at', 'published_at', 'campaign_code',
+    'campaign_title_ar', 'campaign_title_en', 'campaign_discount_type',
+    'campaign_discount_value', 'campaign_starts_at', 'campaign_ends_at',
+    'campaign_applied'
+  ]::text[] then
+    raise exception 'public_product_prices does not expose the approved 22-column projection';
+  end if;
+
+  if not exists (
+    select 1
+    from pg_catalog.pg_views
+    where schemaname = 'public'
+      and viewname = 'public_product_prices'
+      and lower(definition) like '%pricing_private.campaign_aware_public_price_rows()%'
+  ) then
+    raise exception 'public_product_prices does not use the hardened helper function';
+  end if;
+
   if exists (
     select 1
     from pg_catalog.pg_class c
@@ -88,6 +119,132 @@ begin
       and not (coalesce(c.reloptions, array[]::text[]) @> array['security_invoker=true'])
   ) then
     raise exception 'Every public-facing view must use security_invoker=true';
+  end if;
+
+  if exists (
+    select 1
+    from pg_catalog.pg_views
+    where schemaname = 'public'
+      and viewname = '_campaign_aware_public_price_rows'
+  ) then
+    raise exception 'The owner-rights campaign helper view remains exposed in public';
+  end if;
+
+  select p.oid,
+         pg_catalog.pg_get_functiondef(p.oid),
+         pg_catalog.pg_get_function_result(p.oid)
+  into pricing_function_oid, pricing_function_definition, pricing_function_result
+  from pg_catalog.pg_proc p
+  join pg_catalog.pg_namespace n on n.oid = p.pronamespace
+  where n.nspname = 'pricing_private'
+    and p.proname = 'campaign_aware_public_price_rows'
+    and p.pronargs = 0;
+
+  if pricing_function_oid is null then
+    raise exception 'The hardened campaign pricing function is missing';
+  end if;
+
+  if not exists (
+    select 1
+    from pg_catalog.pg_proc p
+    where p.oid = pricing_function_oid
+      and p.prosecdef
+      and p.provolatile = 's'
+      and coalesce(array_to_string(p.proconfig, ','), '') = 'search_path='
+  ) then
+    raise exception 'The campaign pricing function is not hardened';
+  end if;
+
+  if lower(pricing_function_result) ~
+    '(dealer_cost|minimum_price|source_reference|approved_by|published_by)'
+  then
+    raise exception 'The campaign pricing function projects a private field';
+  end if;
+
+  if not exists (
+    select 1
+    from pg_catalog.pg_proc p
+    where p.oid = pricing_function_oid
+      and p.proargnames = array[
+        'model_code', 'family_id', 'family_name_ar', 'family_name_en',
+        'brand', 'capacity_hp', 'currency', 'list_price_minor',
+        'sale_price_minor', 'discount_label_ar', 'discount_label_en',
+        'effective_from', 'expires_at', 'published_at', 'campaign_code',
+        'campaign_title_ar', 'campaign_title_en', 'campaign_discount_type',
+        'campaign_discount_value', 'campaign_starts_at', 'campaign_ends_at',
+        'campaign_applied'
+      ]::text[]
+  ) then
+    raise exception 'The campaign pricing function does not return the approved 22-column projection';
+  end if;
+
+  if exists (
+    select 1
+    from pg_catalog.pg_proc p
+    cross join lateral pg_catalog.aclexplode(
+      coalesce(p.proacl, pg_catalog.acldefault('f', p.proowner))
+    ) acl
+    where p.oid = pricing_function_oid
+      and acl.privilege_type = 'EXECUTE'
+      and acl.grantee <> p.proowner
+      and acl.grantee not in (
+        'anon'::regrole::oid,
+        'authenticated'::regrole::oid
+      )
+  )
+    or (
+      select count(*)
+      from pg_catalog.pg_proc p
+      cross join lateral pg_catalog.aclexplode(
+        coalesce(p.proacl, pg_catalog.acldefault('f', p.proowner))
+      ) acl
+      where p.oid = pricing_function_oid
+        and acl.privilege_type = 'EXECUTE'
+        and acl.grantee in (
+          'anon'::regrole::oid,
+          'authenticated'::regrole::oid
+        )
+    ) <> 2
+    or not pg_catalog.has_function_privilege('anon', pricing_function_oid, 'EXECUTE')
+    or not pg_catalog.has_function_privilege('authenticated', pricing_function_oid, 'EXECUTE')
+    or pg_catalog.has_function_privilege('service_role', pricing_function_oid, 'EXECUTE')
+  then
+    raise exception 'The campaign pricing function has an unexpected EXECUTE grant';
+  end if;
+
+  if exists (
+    select 1
+    from pg_catalog.pg_namespace n
+    cross join lateral pg_catalog.aclexplode(
+      coalesce(n.nspacl, pg_catalog.acldefault('n', n.nspowner))
+    ) acl
+    where n.nspname = 'pricing_private'
+      and acl.grantee = 0
+      and acl.privilege_type = 'USAGE'
+  )
+    or not pg_catalog.has_schema_privilege('anon', 'pricing_private', 'USAGE')
+    or not pg_catalog.has_schema_privilege('authenticated', 'pricing_private', 'USAGE')
+    or pg_catalog.has_schema_privilege('service_role', 'pricing_private', 'USAGE')
+  then
+    raise exception 'The pricing_private schema has unexpected API-role privileges';
+  end if;
+
+  select current_setting('pgrst.db_schemas', true) into exposed_schemas;
+  if exposed_schemas is not null
+    and 'pricing_private' = any(pg_catalog.string_to_array(replace(exposed_schemas, ' ', ''), ','))
+  then
+    raise exception 'pricing_private is exposed through PostgREST';
+  end if;
+
+  if not exists (
+    select 1
+    from pg_catalog.pg_indexes
+    where schemaname = 'public'
+      and tablename = 'discount_campaign_products'
+      and indexname = 'discount_campaign_products_model_campaign_idx'
+      and lower(indexdef) like '%(model_code, campaign_id)%'
+  ) then
+    raise exception 'The campaign resolution index is missing or has the wrong column order';
   end if;
 
   -- PUBLIC and anon must not execute private authorization or trigger functions.
@@ -369,23 +526,19 @@ begin
     raise exception 'anon can execute a private campaign or price helper';
   end if;
 
-  if not exists (
-    select 1
-    from pg_catalog.pg_views
-    where schemaname = 'public'
-      and viewname = '_campaign_aware_public_price_rows'
-      and lower(definition) like '%p.published = true%'
-      and lower(definition) like '%effective_from <= current_date%'
-      and lower(definition) like '%expires_at is null%'
-      and lower(definition) like '%d.status = ''published''%'
-      and lower(definition) like '%d.starts_at <= now()%'
-      and lower(definition) like '%d.ends_at >= now()%'
-      and lower(definition) like '%minimum_price_minor%'
-      and lower(definition) like '%sale_price_minor <= p.sale_price_minor%'
-      and lower(definition) like '%discount_type = ''percentage''%'
-      and lower(definition) like '%discount_type = ''fixed_amount''%'
-      and lower(definition) like '%order by calculated.sale_price_minor, d.starts_at, d.id%'
-  ) then
+  if lower(pricing_function_definition) not like '%p.published = true%'
+    or lower(pricing_function_definition) not like '%effective_from <= current_date%'
+    or lower(pricing_function_definition) not like '%expires_at is null%'
+    or lower(pricing_function_definition) not like '%d.status = ''published''%'
+    or lower(pricing_function_definition) not like '%d.starts_at <= now()%'
+    or lower(pricing_function_definition) not like '%d.ends_at >= now()%'
+    or lower(pricing_function_definition) not like '%minimum_price_minor%'
+    or lower(pricing_function_definition) not like '%sale_price_minor <= p.sale_price_minor%'
+    or lower(pricing_function_definition) not like '%discount_type = ''percentage''%'
+    or lower(pricing_function_definition) not like '%discount_type = ''fixed_amount''%'
+    or lower(pricing_function_definition) not like
+      '%order by calculated.sale_price_minor, d.starts_at, d.id%'
+  then
     raise exception 'Campaign eligibility, floor, calculations, or deterministic selection is incomplete';
   end if;
 
