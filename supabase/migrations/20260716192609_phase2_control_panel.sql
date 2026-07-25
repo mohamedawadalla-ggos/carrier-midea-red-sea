@@ -236,6 +236,7 @@ revoke all on function private.write_audit_log() from public, anon, authenticate
 
 create trigger staff_profiles_touch before update on public.staff_profiles for each row execute function private.touch_updated_at();
 create trigger catalog_products_touch before update on public.catalog_products for each row execute function private.touch_updated_at();
+create trigger catalog_products_audit after insert or update or delete on public.catalog_products for each row execute function private.write_audit_log();
 create trigger product_price_entries_touch before update on public.product_price_entries for each row execute function private.touch_updated_at();
 create trigger published_product_prices_touch before update on public.published_product_prices for each row execute function private.touch_updated_at();
 create trigger discount_campaigns_touch before update on public.discount_campaigns for each row execute function private.touch_updated_at();

@@ -77,7 +77,7 @@ Deno.serve(async (req) => {
 
   const { data: order, error: orderError } = await supabase
     .from("orders")
-    .select("id, status, requires_inspection")
+    .select("id, status, requires_inspection_snapshot")
     .eq("order_number", specialReference)
     .maybeSingle();
   if (orderError || !order) {
@@ -119,7 +119,7 @@ Deno.serve(async (req) => {
 
   if (order.status === "pending_payment") {
     const nextOrderStatus = success
-      ? (order.requires_inspection ? "inspection_pending" : "inspection_not_required")
+      ? (order.requires_inspection_snapshot ? "inspection_pending" : "inspection_not_required")
       : "payment_failed";
     await supabase.from("orders").update({ status: nextOrderStatus }).eq("id", order.id);
   }
