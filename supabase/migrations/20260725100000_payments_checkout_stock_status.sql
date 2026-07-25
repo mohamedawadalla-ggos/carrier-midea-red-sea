@@ -19,7 +19,7 @@ create trigger product_stock_status_audit after insert or update or delete on pu
 alter table public.product_stock_status enable row level security;
 
 create policy stock_status_staff_read on public.product_stock_status for select to authenticated
-  using ((select private.current_staff_role()) is not null);
+  using ((select private.has_any_role(array['super_admin','management','accounts','operations']::public.app_role[])));
 create policy stock_status_ops_write on public.product_stock_status for update to authenticated
   using ((select private.has_any_role(array['super_admin','management','accounts','operations']::public.app_role[])))
   with check ((select private.has_any_role(array['super_admin','management','accounts','operations']::public.app_role[])) and updated_by = (select auth.uid()));
@@ -147,8 +147,8 @@ alter table public.payment_transactions enable row level security;
 create policy orders_staff_read on public.orders for select to authenticated
   using ((select private.has_any_role(array['super_admin','management','accounts','operations','sales','auditor']::public.app_role[])));
 create policy orders_staff_update_status on public.orders for update to authenticated
-  using ((select private.has_any_role(array['super_admin','management','operations']::public.app_role[])))
-  with check ((select private.has_any_role(array['super_admin','management','operations']::public.app_role[])));
+  using ((select private.has_any_role(array['super_admin','management','operations','accounts']::public.app_role[])))
+  with check ((select private.has_any_role(array['super_admin','management','operations','accounts']::public.app_role[])));
 create policy order_items_staff_read on public.order_items for select to authenticated
   using ((select private.has_any_role(array['super_admin','management','accounts','operations','sales','auditor']::public.app_role[])));
 create policy payment_transactions_staff_read on public.payment_transactions for select to authenticated

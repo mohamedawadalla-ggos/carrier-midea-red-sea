@@ -20,9 +20,15 @@ comment on view public.public_stock_status is
 grant select on public.public_stock_status to anon, authenticated;
 
 -- Seed starting stock: 20 units for every currently active catalog product.
+-- do nothing on conflict: re-running this migration must never reset a
+-- quantity staff has since adjusted back to the seed value.
 insert into public.product_stock_status (model_code, quantity_on_hand)
 select model_code, 20 from public.catalog_products
-on conflict (model_code) do update set quantity_on_hand = excluded.quantity_on_hand;
+on conflict (model_code) do nothing;
+
+-- Disambiguate the order-time snapshot from the live catalog flag it was
+-- copied from, matching order_items.requires_inspection_snapshot's naming.
+alter table public.orders rename column requires_inspection to requires_inspection_snapshot;
 
 -- Replace create_order: stock check becomes an atomic, race-safe decrement.
 create or replace function public.create_order(
@@ -78,7 +84,7 @@ begin
   insert into public.orders (
     order_number, customer_name, phone, email, locale, area_location_id,
     currency, subtotal_minor, discount_minor, total_minor,
-    status, requires_inspection, terms_version, terms_accepted_at
+    status, requires_inspection_snapshot, terms_version, terms_accepted_at
   ) values (
     v_order_number, trim(customer_name), trim(phone), nullif(trim(email), ''), locale, area_location_id,
     'EGP', 0, 0, 0, 'pending_payment', false, terms_version, now()
@@ -135,11 +141,38 @@ begin
   update public.orders
     set subtotal_minor = v_subtotal,
         total_minor = v_subtotal,
-        requires_inspection = v_requires_inspection
+        requires_inspection_snapshot = v_requires_inspection
     where id = v_order_id;
 
   return query select v_order_number;
 end;
 $function$;
+
+-- Restore stock when an order is fully cancelled or refunded, so an
+-- abandoned or reversed order doesn't permanently consume inventory.
+-- Deliberately excludes partial_refund: it's ambiguous whether goods were
+-- actually returned, so that case is left to a manual quantity adjustment.
+create or replace function private.restore_stock_on_order_reversal()
+returns trigger
+language plpgsql
+security definer
+set search_path = ''
+as $function$
+begin
+  if new.status in ('cancelled_refunded', 'refunded') and old.status not in ('cancelled_refunded', 'refunded') then
+    update public.product_stock_status s
+      set quantity_on_hand = s.quantity_on_hand + oi.quantity
+      from public.order_items oi
+      where oi.order_id = new.id and s.model_code = oi.model_code;
+  end if;
+  return new;
+end;
+$function$;
+
+revoke all on function private.restore_stock_on_order_reversal() from public, anon, authenticated;
+
+create trigger orders_restore_stock_on_reversal
+  after update on public.orders
+  for each row execute function private.restore_stock_on_order_reversal();
 
 commit;
