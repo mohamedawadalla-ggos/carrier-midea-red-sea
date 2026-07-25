@@ -13,7 +13,7 @@ const checkpoint = await readFile(new URL("../components/home/AdvisorCheckpoint.
 const company = await readFile(new URL("../content/site.ts", import.meta.url), "utf8");
 
 test("approved offer is typed, manually controlled, exact, and free of price or stock claims", () => {
-  assert.match(offer, /active: true/);
+  assert.match(offer, /active: false/);
   assert.match(offer, /startsAt: "2026-07-14T00:00:00\+03:00"/);
   assert.match(offer, /endsAtExclusive: "2026-08-02T00:00:00\+03:00"/);
   assert.match(offer, /discountPercentage: 10/);
@@ -28,11 +28,11 @@ test("approved offer is typed, manually controlled, exact, and free of price or 
   assert.doesNotMatch(`${offer}\n${banner}`, /endDate|validThrough|availability|inStock|priceCurrency|offers:/i);
 });
 
-test("offer remains visible throughout 1 August and expires at the start of 2 August in Egypt", () => {
-  assert.equal(isOfferActiveAt(approvedOffer, "2026-08-01T00:00:00+03:00"), true);
-  assert.equal(isOfferActiveAt(approvedOffer, "2026-08-01T23:59:59.999+03:00"), true);
+test("inactive hard-coded offer remains hidden throughout its configured date range", () => {
+  assert.equal(isOfferActiveAt(approvedOffer, "2026-07-25T12:00:00+03:00"), false);
+  assert.equal(isOfferActiveAt(approvedOffer, "2026-08-01T00:00:00+03:00"), false);
+  assert.equal(isOfferActiveAt(approvedOffer, "2026-08-01T23:59:59.999+03:00"), false);
   assert.equal(isOfferActiveAt(approvedOffer, "2026-08-02T00:00:00+03:00"), false);
-  assert.equal(isOfferActiveAt({ ...approvedOffer, active: false }, "2026-08-01T12:00:00+03:00"), false);
 });
 
 test("offer banner starts hidden and decides visibility only in the browser", async () => {

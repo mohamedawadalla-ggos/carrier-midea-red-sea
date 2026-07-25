@@ -17,7 +17,7 @@ export interface SiteOffer {
 }
 
 export const approvedOffer = {
-  active: true,
+  active: false,
   startsAt: "2026-07-14T00:00:00+03:00",
   endsAtExclusive: "2026-08-02T00:00:00+03:00",
   discountPercentage: 10,
