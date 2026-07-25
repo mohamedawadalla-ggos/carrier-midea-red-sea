@@ -18,6 +18,7 @@ export type CatalogProduct = {
   cooling_mode: "cool-only" | "heat-pump";
   refrigerant: string;
   active: boolean;
+  requires_inspection: boolean;
 };
 
 export type PriceEntry = {
@@ -109,5 +110,72 @@ export type AuditRecord = {
   table_name: string;
   row_id: string | null;
   action: string;
+  created_at: string;
+};
+
+export type StockStatusValue = "in_stock" | "out_of_stock";
+
+export type ProductStockStatus = {
+  model_code: string;
+  quantity_on_hand: number;
+  status: StockStatusValue;
+  updated_by: string | null;
+  updated_at: string;
+};
+
+export type NotifyRequestStatus = "pending" | "notified" | "cancelled";
+
+export type StockNotifyRequest = {
+  id: string;
+  model_code: string;
+  customer_name: string;
+  contact: string;
+  locale: "ar" | "en";
+  status: NotifyRequestStatus;
+  created_at: string;
+  notified_at: string | null;
+  notified_by: string | null;
+};
+
+export type OrderStatus =
+  | "pending_payment" | "payment_failed"
+  | "paid"
+  | "inspection_not_required" | "inspection_pending" | "inspection_scheduled"
+  | "inspection_passed" | "inspection_failed_needs_action"
+  | "reconfigured_awaiting_customer_approval" | "paid_adjusted"
+  | "fulfillment_processing" | "fulfilled" | "closed"
+  | "refund_requested" | "refunded" | "partial_refund" | "cancelled_refunded";
+
+export type Order = {
+  id: string;
+  order_number: string;
+  customer_name: string;
+  phone: string;
+  email: string | null;
+  locale: "ar" | "en";
+  area_location_id: string | null;
+  currency: string;
+  subtotal_minor: number;
+  discount_minor: number;
+  total_minor: number;
+  status: OrderStatus;
+  requires_inspection_snapshot: boolean;
+  inspection_status: string | null;
+  terms_version: string;
+  terms_accepted_at: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type OrderItem = {
+  id: string;
+  order_id: string;
+  model_code: string;
+  family_name_ar: string;
+  family_name_en: string;
+  quantity: number;
+  unit_price_minor: number;
+  requires_inspection_snapshot: boolean;
+  line_total_minor: number;
   created_at: string;
 };

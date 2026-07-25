@@ -5,10 +5,16 @@ import type { Locale } from "@/content/site";
 import { formatHorsepower } from "@/lib/catalog-filtering";
 import { openPreparedLink } from "@/lib/whatsapp";
 import { leadProvider } from "@/services/leads/whatsapp-provider";
+import { createOrder } from "@/lib/create-order";
 import type { RequestCartContextValue } from "@/components/cart/RequestCartProvider";
+
+const ORDER_TERMS_VERSION = "checkout-draft-v1";
 
 export function RequestCartPanel({ locale, cart }: { locale: Locale; cart: RequestCartContextValue }) {
   const [unavailable, setUnavailable] = useState(false);
+  const [agreeToContact, setAgreeToContact] = useState(false);
+  const [orderState, setOrderState] = useState<{ status: "idle" | "submitting" | "error" | "success"; message: string }>({ status: "idle", message: "" });
+  const formRef = useRef<HTMLFormElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const ar = locale === "ar";
   const { isOpen, closeCart } = cart;
@@ -40,6 +46,35 @@ export function RequestCartPanel({ locale, cart }: { locale: Locale; cart: Reque
     setUnavailable(!opened);
   }
 
+  async function payOnline() {
+    if (!formRef.current || !cart.resolvedItems.length) return;
+    if (!agreeToContact) {
+      setOrderState({ status: "error", message: ar ? "يرجى الموافقة على التواصل لإتمام الطلب أونلاين." : "Please agree to be contacted before placing an online order." });
+      return;
+    }
+    const data = new FormData(formRef.current);
+    setOrderState({ status: "submitting", message: "" });
+    const result = await createOrder({
+      items: cart.resolvedItems.map(({ variant, quantity }) => ({ modelCode: variant.modelCode, quantity })),
+      customerName: String(data.get("name") ?? "").trim(),
+      phone: String(data.get("telephone") ?? "").trim(),
+      email: String(data.get("email") ?? "").trim(),
+      locale,
+      termsVersion: ORDER_TERMS_VERSION,
+    });
+    if (result.ok) {
+      setOrderState({
+        status: "success",
+        message: ar
+          ? `تم استلام طلبك برقم ${result.orderNumber}. الدفع الإلكتروني غير متاح بعد — سيتواصل معك فريقنا لتأكيد الطلب واستكمال الدفع.`
+          : `Your order was received — order number ${result.orderNumber}. Online payment isn't live yet; our team will contact you to confirm the order and arrange payment.`,
+      });
+      cart.clearCart();
+    } else {
+      setOrderState({ status: "error", message: result.error });
+    }
+  }
+
   return <div className="request-cart-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) cart.closeCart(); }}>
     <section className="request-cart-panel" role="dialog" aria-modal="true" aria-labelledby="request-cart-title" dir={ar ? "rtl" : "ltr"}>
       <div className="request-cart-heading">
@@ -55,15 +90,23 @@ export function RequestCartPanel({ locale, cart }: { locale: Locale; cart: Reque
           </li>)}
         </ul>
         <button type="button" onClick={cart.clearCart}>{ar ? "مسح الطلب" : "Clear request"}</button>
-        <form className="request-cart-form" onSubmit={submit}>
+        <form ref={formRef} className="request-cart-form" onSubmit={submit}>
           <label>{ar ? "الاسم" : "Name"}<input name="name" autoComplete="name" required /></label>
           <label>{ar ? "رقم الهاتف" : "Telephone"}<input name="telephone" type="tel" autoComplete="tel" required /></label>
+          <label>{ar ? "البريد الإلكتروني (اختياري)" : "Email (optional)"}<input name="email" type="email" autoComplete="email" /></label>
           <label>{ar ? "المنطقة" : "Area"}<input name="area" autoComplete="address-level2" required /></label>
           <label>{ar ? "هل تحتاج إلى التركيب؟" : "Installation required?"}<select name="installation" defaultValue="yes"><option value="yes">{ar ? "نعم" : "Yes"}</option><option value="no">{ar ? "لا" : "No"}</option></select></label>
-          <label>{ar ? "ملاحظات" : "Notes"}<textarea name="notes" rows={3} /></label>
+          <label className="request-cart-full">{ar ? "ملاحظات" : "Notes"}<textarea name="notes" rows={3} /></label>
           <p className="request-cart-disclaimer">{ar ? "يتم تأكيد الأسعار والتوافر وتكلفة التركيب بعد مراجعة الطلب." : "Prices, availability, and installation costs are confirmed after reviewing the request."}</p>
           <button type="submit">{ar ? "إرسال الطلب عبر واتساب" : "Send request via WhatsApp"}</button>
           {unavailable && <p role="alert">{ar ? "واتساب غير متاح حاليًا. اتصل بنا لإرسال الطلب." : "WhatsApp is currently unavailable. Please call us to send the request."}</p>}
+          <label className="request-cart-terms"><input type="checkbox" checked={agreeToContact} onChange={(event) => setAgreeToContact(event.target.checked)} />{ar ? "أوافق على أن يتواصل معي الفريق لإتمام هذا الطلب." : "I agree to be contacted to complete this order."}</label>
+          <button type="button" disabled={orderState.status === "submitting"} onClick={payOnline}>
+            {orderState.status === "submitting" ? (ar ? "جارٍ الإرسال…" : "Placing order…") : (ar ? "اطلب أونلاين" : "Place order online")}
+          </button>
+          {orderState.status !== "idle" && orderState.message && (
+            <p role="status" className={`request-cart-message request-cart-message-${orderState.status}`}>{orderState.message}</p>
+          )}
         </form>
       </>}
     </section>

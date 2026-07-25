@@ -41,6 +41,7 @@
     "db",
     "worker",
     "examples",
-    "admin-panel"
+    "admin-panel",
+    "supabase/functions"
   ]
 }
