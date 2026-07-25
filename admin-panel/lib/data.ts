@@ -36,7 +36,7 @@ export async function loadSnapshot(userId: string): Promise<ControlPanelSnapshot
     requireData<ServiceLocation[]>(supabase.from("service_locations").select("*").order("display_order"), "Locations"),
     requireData<Warehouse[]>(supabase.from("warehouses").select("*").order("code"), "Warehouses"),
     requireData<AuditRecord[]>(supabase.from("audit_log").select("id,actor_user_id,table_name,row_id,action,created_at").order("created_at", { ascending: false }).limit(100), "Audit log").catch((): AuditRecord[] => []),
-    requireData<ProductStockStatus[]>(supabase.from("product_stock_status").select("*"), "Stock status"),
+    requireData<ProductStockStatus[]>(supabase.from("product_stock_status").select("*"), "Stock status").catch((): ProductStockStatus[] => []),
     requireData<StockNotifyRequest[]>(supabase.from("stock_notify_requests").select("*").order("created_at", { ascending: false }), "Notify requests").catch((): StockNotifyRequest[] => []),
     requireData<Order[]>(supabase.from("orders").select("*").order("created_at", { ascending: false }), "Orders").catch((): Order[] => []),
     requireData<OrderItem[]>(supabase.from("order_items").select("*"), "Order items").catch((): OrderItem[] => []),
