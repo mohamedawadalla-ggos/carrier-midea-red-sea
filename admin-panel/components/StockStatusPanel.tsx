@@ -9,7 +9,14 @@ export function StockStatusPanel({ data, refresh }: { data: ControlPanelSnapshot
   const [message, setMessage] = useState("");
   const [drafts, setDrafts] = useState<Record<string, string>>({});
   const editable = can(data.profile.role, "editStockStatus");
+  const catalogEditable = can(data.profile.role, "editCatalogProducts");
   const statusByModel = new Map(data.stockStatuses.map((row) => [row.model_code, row]));
+
+  async function toggleInspection(modelCode: string, nextValue: boolean) {
+    const { error } = await getSupabase().from("catalog_products").update({ requires_inspection: nextValue }).eq("model_code", modelCode);
+    if (error) setMessage(error.message);
+    else { setMessage(`${modelCode} inspection requirement set to ${nextValue ? "required" : "not required"}.`); await refresh(); }
+  }
 
   async function saveQuantity(modelCode: string, currentQuantity: number) {
     const draft = drafts[modelCode];
@@ -39,7 +46,7 @@ export function StockStatusPanel({ data, refresh }: { data: ControlPanelSnapshot
     <article className="card">
       <div className="table-wrap">
         <table>
-          <thead><tr><th>Model</th><th>Family</th><th>Quantity on hand</th><th>Status</th>{editable && <th>Action</th>}</tr></thead>
+          <thead><tr><th>Model</th><th>Family</th><th>Quantity on hand</th><th>Status</th><th>Needs inspection</th>{editable && <th>Action</th>}</tr></thead>
           <tbody>
             {data.products.map((product) => {
               const row = statusByModel.get(product.model_code);
@@ -61,6 +68,13 @@ export function StockStatusPanel({ data, refresh }: { data: ControlPanelSnapshot
                     : quantity}
                 </td>
                 <td><span className={`status ${status}`}>{status.replaceAll("_", " ")}</span></td>
+                <td>
+                  {catalogEditable
+                    ? <button className={`toggle ${product.requires_inspection ? "on" : ""}`} onClick={() => toggleInspection(product.model_code, !product.requires_inspection)} aria-label={`Toggle inspection requirement for ${product.model_code}`}>
+                        <span />
+                      </button>
+                    : (product.requires_inspection ? "Yes" : "No")}
+                </td>
                 {editable && <td className="button-row">
                   <button onClick={() => saveQuantity(product.model_code, quantity)}>Save</button>
                 </td>}

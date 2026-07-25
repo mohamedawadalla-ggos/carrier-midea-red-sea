@@ -20,7 +20,7 @@ function actionsFor(order: Order): StatusAction[] {
       return [
         {
           label: "Confirm payment received (offline)",
-          next: order.requires_inspection ? "inspection_pending" : "inspection_not_required",
+          next: order.requires_inspection_snapshot ? "inspection_pending" : "inspection_not_required",
           permission: "manageOrderStatus",
           confirm: `Confirm payment for ${order.order_number} was received outside the site (bank transfer, cash, etc.)? Online payment isn't live yet — only use this once payment has actually been verified through another channel.`,
         },
@@ -115,7 +115,7 @@ export function OrdersPanel({ data, refresh }: { data: ControlPanelSnapshot; ref
             <div><dt>Phone</dt><dd>{selectedOrder.phone}</dd></div>
             <div><dt>Email</dt><dd>{selectedOrder.email ?? "—"}</dd></div>
             <div><dt>Locale</dt><dd>{selectedOrder.locale.toUpperCase()}</dd></div>
-            <div><dt>Requires inspection</dt><dd>{selectedOrder.requires_inspection ? "Yes" : "No"}</dd></div>
+            <div><dt>Requires inspection</dt><dd>{selectedOrder.requires_inspection_snapshot ? "Yes" : "No"}</dd></div>
             <div><dt>Total</dt><dd>{formatMoney(selectedOrder.total_minor, selectedOrder.currency)}</dd></div>
             <div><dt>Placed</dt><dd>{new Date(selectedOrder.created_at).toLocaleString()}</dd></div>
           </dl>

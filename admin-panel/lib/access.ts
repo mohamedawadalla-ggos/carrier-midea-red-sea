@@ -12,6 +12,7 @@ const permissions = {
   editWarehouses: ["super_admin", "management", "accounts", "operations"],
   viewAudit: ["super_admin", "management", "auditor"],
   editStockStatus: ["super_admin", "management", "accounts", "operations"],
+  editCatalogProducts: ["super_admin", "management"],
   viewStockNotifyRequests: ["super_admin", "management", "sales", "marketing", "operations"],
   actionStockNotifyRequests: ["super_admin", "management", "sales", "marketing", "operations"],
   viewOrders: ["super_admin", "management", "accounts", "operations", "sales", "auditor"],

@@ -18,6 +18,7 @@ export type CatalogProduct = {
   cooling_mode: "cool-only" | "heat-pump";
   refrigerant: string;
   active: boolean;
+  requires_inspection: boolean;
 };
 
 export type PriceEntry = {
@@ -158,7 +159,7 @@ export type Order = {
   discount_minor: number;
   total_minor: number;
   status: OrderStatus;
-  requires_inspection: boolean;
+  requires_inspection_snapshot: boolean;
   inspection_status: string | null;
   terms_version: string;
   terms_accepted_at: string;
