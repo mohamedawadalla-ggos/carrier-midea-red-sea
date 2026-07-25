@@ -58,6 +58,28 @@ begin
 
   if exists (
     select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name in ('public_product_prices', '_campaign_aware_public_price_rows')
+      and lower(column_name) ~ '(dealer_cost|minimum_price|source_reference|approved_by|published_by)'
+  ) then
+    raise exception 'Campaign-aware public pricing exposes a private field';
+  end if;
+
+  if not exists (
+    select 1
+    from pg_catalog.pg_class c
+    join pg_catalog.pg_namespace n on n.oid = c.relnamespace
+    where n.nspname = 'public'
+      and c.relname = 'public_product_prices'
+      and c.relkind = 'v'
+      and coalesce(c.reloptions, array[]::text[]) @> array['security_invoker=true']
+  ) then
+    raise exception 'public_product_prices must use security_invoker=true';
+  end if;
+
+  if exists (
+    select 1
     from pg_catalog.pg_class c
     join pg_catalog.pg_namespace n on n.oid = c.relnamespace
     where n.nspname = 'public'
@@ -324,6 +346,47 @@ begin
     or pg_catalog.has_table_privilege('anon', 'public.audit_log', 'SELECT')
   then
     raise exception 'anon can read a private Phase 2 table';
+  end if;
+
+  if pg_catalog.has_table_privilege('anon', 'public.discount_campaigns', 'INSERT')
+    or pg_catalog.has_table_privilege('anon', 'public.discount_campaigns', 'UPDATE')
+    or pg_catalog.has_table_privilege('anon', 'public.discount_campaigns', 'DELETE')
+    or pg_catalog.has_table_privilege('anon', 'public.discount_campaign_products', 'INSERT')
+    or pg_catalog.has_table_privilege('anon', 'public.discount_campaign_products', 'UPDATE')
+    or pg_catalog.has_table_privilege('anon', 'public.discount_campaign_products', 'DELETE')
+  then
+    raise exception 'anon has private campaign mutation access';
+  end if;
+
+  if exists (
+    select 1
+    from pg_catalog.pg_proc p
+    join pg_catalog.pg_namespace n on n.oid = p.pronamespace
+    where n.nspname in ('private', 'public')
+      and p.proname ~* '(price|campaign|discount)'
+      and pg_catalog.has_function_privilege('anon', p.oid, 'EXECUTE')
+  ) then
+    raise exception 'anon can execute a private campaign or price helper';
+  end if;
+
+  if not exists (
+    select 1
+    from pg_catalog.pg_views
+    where schemaname = 'public'
+      and viewname = '_campaign_aware_public_price_rows'
+      and lower(definition) like '%p.published = true%'
+      and lower(definition) like '%effective_from <= current_date%'
+      and lower(definition) like '%expires_at is null%'
+      and lower(definition) like '%d.status = ''published''%'
+      and lower(definition) like '%d.starts_at <= now()%'
+      and lower(definition) like '%d.ends_at >= now()%'
+      and lower(definition) like '%minimum_price_minor%'
+      and lower(definition) like '%sale_price_minor <= p.sale_price_minor%'
+      and lower(definition) like '%discount_type = ''percentage''%'
+      and lower(definition) like '%discount_type = ''fixed_amount''%'
+      and lower(definition) like '%order by calculated.sale_price_minor, d.starts_at, d.id%'
+  ) then
+    raise exception 'Campaign eligibility, floor, calculations, or deterministic selection is incomplete';
   end if;
 
   select pg_catalog.pg_get_expr(polqual, polrelid)
