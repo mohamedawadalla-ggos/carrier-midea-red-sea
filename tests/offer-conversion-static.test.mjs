@@ -62,17 +62,19 @@ test("homepage conversion links are localized static links and checkpoint reuses
   assert.doesNotMatch(checkpoint, /calculateAcSizing|AdvisorQuestionFlow|href=/);
 });
 
-test("homepage leads with catalog selections and uses only approved local hero product assets", () => {
+test("homepage leads with catalog selections and the hero promotes Facebook and the active campaign", () => {
   assert.ok(home.indexOf("<BestSellingProducts") < home.indexOf("<FeaturedProductFamilies"));
   assert.doesNotMatch(home, /section className="section solutions"|href="#solutions"/);
   assert.match(bestSelling, /Best-selling air conditioners/);
   assert.match(bestSelling, /<ProductVariantCard/);
   assert.match(home, /<HeroProductShowcase locale=\{locale\}/);
-  assert.match(heroShowcase, /assetAuthorization === "approved"/);
+  // The hero no longer shows product photography (replaced by a Facebook +
+  // campaign promotion) -- assert the new content instead of the retired
+  // product-asset-authorization guard.
   assert.doesNotMatch(heroShowcase, /https?:\/\//);
-  assert.match(heroShowcase, /carrier-optimax-pro/);
-  assert.match(heroShowcase, /midea-xtreme-pro/);
-  assert.match(heroShowcase, /carrier-classicool-inverter/);
+  assert.match(heroShowcase, /facebook_hero_banner_click/);
+  assert.match(heroShowcase, /hero-campaign-badge/);
+  assert.match(heroShowcase, /siteConfig\.facebookPageUrl/);
 });
 
 test("exclusive dealer wording matches the client-approved bilingual copy", () => {

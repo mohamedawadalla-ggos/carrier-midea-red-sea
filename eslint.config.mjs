@@ -12,6 +12,14 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Generated output in nested apps/packages (e.g. admin-panel), not
+    // covered by the patterns above since flat config ignores don't
+    // recurse into subdirectories by default:
+    "**/.next/**",
+    "**/out/**",
+    "**/build/**",
+    "**/dist/**",
+    "**/node_modules/**",
   ]),
 ]);
 

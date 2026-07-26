@@ -39,7 +39,10 @@ test("homepage section reuses variant cards and current catalog query parameters
   assert.match(component, /الأكثر مبيعًا/);
   assert.match(component, /Best-selling air conditioners/);
   assert.match(component, /<ProductVariantCard/);
-  assert.match(component, /\[2\.25, 1\.5, 3\]/);
+  // The dropdown now spans the full canonical horsepower range rather than a
+  // hardcoded subset -- assert the shared source is used instead of the
+  // retired literal array.
+  assert.match(component, /supportedHorsepowerValues/);
   assert.match(component, /type=wall-mounted-split&hp=\$\{capacity\}/);
   assert.match(component, /prefetch=\{false\}/);
   assert.doesNotMatch(component, /modelCode|priceMode|stock|inventory|payment|sales rank/i);

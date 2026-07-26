@@ -26,9 +26,7 @@ export function SiteHeader({ locale, currentPath = "" }: { locale: Locale; curre
     <><a className="skip-link" href="#main-content">{locale === "ar" ? "انتقل إلى المحتوى" : "Skip to content"}</a><header className="header">
       <a className="brand" href={`/${locale}`} aria-label="Carrier Midea Red Sea home">
         <span className="brand-lockups">
-          <img className="brand-image" src="/brand/logo-manufacturers.png" alt="Carrier and Midea" width={720} height={164} />
-          <span className="brand-lockup-divider" aria-hidden="true" />
-          <span className="dealer-logo-plate">
+          <span className="dealer-logo-plate dealer-logo-plate-solo">
             <img className="dealer-logo-image" src="/brand/logo-client-header.png" alt={locale === "ar" ? "كاريير ميديا البحر الأحمر" : "Carrier–Midea Red Sea"} width={387} height={115} />
           </span>
         </span>

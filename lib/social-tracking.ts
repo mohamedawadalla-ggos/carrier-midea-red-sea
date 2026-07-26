@@ -2,6 +2,7 @@ import { siteConfig } from "@/lib/site-config";
 
 export type SocialEventName =
   | "facebook_header_click"
+  | "facebook_hero_banner_click"
   | "facebook_home_section_click"
   | "facebook_footer_click"
   | "facebook_share_click";
