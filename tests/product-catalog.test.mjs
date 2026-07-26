@@ -54,7 +54,9 @@ test("public source and build contain no confidential catalog fields or price cl
   const publicSource = (await Promise.all(files.map((file) => readFile(file, "utf8")))).join("\n");
   assert.doesNotMatch(publicSource, /dealerPrice|publicGuidePrice/);
   assert.doesNotMatch(publicSource, /\b(?:most popular|cheapest|number one|inStock|OutOfStock)\b/i);
-  assert.equal((publicSource.match(/Best-selling air conditioners/g) ?? []).length, 1);
+  // The "Best-selling" marketing heading was replaced with a direct
+  // horsepower-selection prompt per business decision.
+  assert.doesNotMatch(publicSource, /Best-selling air conditioners/);
 });
 
 test("WhatsApp cannot create an empty-recipient URL", async () => {

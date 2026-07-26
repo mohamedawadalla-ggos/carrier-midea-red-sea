@@ -318,11 +318,20 @@ body{background:var(--surface-page);color:var(--heading)}
 /* Approved blue-canvas identity and client-supplied header lockup */
 :root{--surface-page:#dcecf4;--surface-alt:#d3e6f0;--surface-card:#f7fbfd;--surface-stage:#d6e9f2}
 body{background:linear-gradient(180deg,#dcecf4 0%,#c9e0ec 100%);background-attachment:fixed}
-.home-site main,.catalog-site,.catalog-site .catalog-main,.catalog-site .product-detail-main{background:linear-gradient(180deg,#dcecf4 0%,#c9e0ec 100%)}
+.catalog-site,.catalog-site .catalog-main,.catalog-site .product-detail-main{background:linear-gradient(180deg,#dcecf4 0%,#c9e0ec 100%)}
 .header{background:rgba(225,240,247,.98);border-bottom-color:#b7d1df}
 .home-site .trust-strip{background:#e8f3f8}
 .home-site .solutions{background:#d3e6f0}
 .home-site :where(.sales-card,.product-card,.category-card),.catalog-site :where(.product-card,.category-card),.catalog-site .product-filters{background:#f9fcfe}
+/* Homepage body matches the hero image's deep-blue identity instead of the
+   pale near-white canvas the catalog pages still use. */
+.home-site main{background:linear-gradient(180deg,#03172d 0%,#0a3b6b 100%)}
+.home-site .section-heading .kicker,.home-site .best-selling-filter label,.home-site .territory-copy .kicker{color:#62ceef}
+.home-site .section-heading h2,.home-site .best-selling-group-heading h3,.home-site .territory-copy h2{color:#f2f8fb}
+.home-site .section-heading>p:last-child,.home-site .territory-copy>p{color:#aec6d6}
+.home-site .best-selling-group-heading a{color:#7dd9f2}
+.home-site .best-selling-filter select{border-color:#2c5476;background:#0f3459;color:#eaf6fc}
+.home-site .cities span{border-color:#2c5476;background:rgba(255,255,255,.94)}
 .brand>.brand-lockups{max-width:none;display:flex;align-items:center;gap:10px;padding:0;color:inherit;border:0;font-size:inherit;line-height:normal}
 .header .brand-image{width:150px;height:auto;flex:0 0 auto;background:transparent;border:0;border-radius:0;box-shadow:none}
 .brand-lockup-divider{width:1px;height:46px;flex:0 0 auto;background:#aac5d3}

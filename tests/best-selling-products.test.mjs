@@ -36,8 +36,11 @@ test("each capacity group balances brands, technologies, and cooling modes", () 
 });
 
 test("homepage section reuses variant cards and current catalog query parameters", () => {
-  assert.match(component, /الأكثر مبيعًا/);
-  assert.match(component, /Best-selling air conditioners/);
+  // Heading was replaced with a direct horsepower-selection prompt per
+  // business decision -- assert the current copy instead of the retired
+  // "Best-selling" marketing heading.
+  assert.match(component, /اختر تكييفك بالقدره \(كم حصان؟\) من هنا/);
+  assert.match(component, /Choose your AC by horsepower/);
   assert.match(component, /<ProductVariantCard/);
   // The dropdown now spans the full canonical horsepower range rather than a
   // hardcoded subset -- assert the shared source is used instead of the

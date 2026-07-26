@@ -34,8 +34,7 @@ export function BestSellingProducts({ locale }: { locale: Locale }) {
   return <section className="section best-selling-products" id="best-selling-products" aria-labelledby="best-selling-products-title">
     <div className="section-heading best-selling-heading">
       <p className="kicker">{ar ? "اختيارات الكتالوج" : "CATALOG SELECTIONS"}</p>
-      <h2 id="best-selling-products-title">{ar ? "الأكثر مبيعًا" : "Best-selling air conditioners"}</h2>
-      <p>{ar ? "اختيار تسويقي معتمد من موديلات السبليت الحائطية، دون نشر أرقام مبيعات أو ادعاء ترتيب رقمي." : "An approved marketing selection of wall-mounted split models, without publishing sales figures or claiming a numerical order."}</p>
+      <h2 id="best-selling-products-title">{ar ? "اختر تكييفك بالقدره (كم حصان؟) من هنا" : "Choose your AC by horsepower — how many HP?"}</h2>
     </div>
     <div className="best-selling-filter">
       <label>
