@@ -6,6 +6,7 @@ import { formatHorsepower } from "@/lib/catalog-filtering";
 import { openPreparedLink } from "@/lib/whatsapp";
 import { leadProvider } from "@/services/leads/whatsapp-provider";
 import { createOrder } from "@/lib/create-order";
+import { createPaymentIntent } from "@/lib/create-payment-intent";
 import type { RequestCartContextValue } from "@/components/cart/RequestCartProvider";
 
 const ORDER_TERMS_VERSION = "checkout-draft-v1";
@@ -62,17 +63,28 @@ export function RequestCartPanel({ locale, cart }: { locale: Locale; cart: Reque
       locale,
       termsVersion: ORDER_TERMS_VERSION,
     });
-    if (result.ok) {
-      setOrderState({
-        status: "success",
-        message: ar
-          ? `تم استلام طلبك برقم ${result.orderNumber}. الدفع الإلكتروني غير متاح بعد — سيتواصل معك فريقنا لتأكيد الطلب واستكمال الدفع.`
-          : `Your order was received — order number ${result.orderNumber}. Online payment isn't live yet; our team will contact you to confirm the order and arrange payment.`,
-      });
-      cart.clearCart();
-    } else {
+    if (!result.ok) {
       setOrderState({ status: "error", message: result.error });
+      return;
     }
+
+    const intent = await createPaymentIntent(result.orderNumber);
+    if (intent.ok) {
+      cart.clearCart();
+      window.location.href = intent.checkoutUrl;
+      return;
+    }
+
+    // Online payment isn't available right now (not configured, provider
+    // unreachable, etc.) -- the order itself was created successfully, so
+    // fall back to the manual-arrangement message instead of losing the order.
+    setOrderState({
+      status: "success",
+      message: ar
+        ? `تم استلام طلبك برقم ${result.orderNumber}. الدفع الإلكتروني غير متاح حاليًا — سيتواصل معك فريقنا لتأكيد الطلب واستكمال الدفع.`
+        : `Your order was received — order number ${result.orderNumber}. Online payment isn't available right now; our team will contact you to confirm the order and arrange payment.`,
+    });
+    cart.clearCart();
   }
 
   return <div className="request-cart-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) cart.closeCart(); }}>

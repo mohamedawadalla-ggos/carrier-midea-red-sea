@@ -57,7 +57,7 @@ test("exported Arabic and English catalog hrefs resolve to generated routes", as
   }
 });
 
-test("static-safe catalog changes preserve hash and external link components and all 73 routes", async () => {
+test("static-safe catalog changes preserve hash and external link components and all 75 routes", async () => {
   const requestPrice = await readFile(new URL("../components/products/RequestCurrentPriceButton.tsx", import.meta.url), "utf8");
   const familyHero = await readFile(new URL("../components/products/FamilyHero.tsx", import.meta.url), "utf8");
   const facebookLink = await readFile(new URL("../components/social/FacebookLink.tsx", import.meta.url), "utf8");
@@ -75,5 +75,7 @@ test("static-safe catalog changes preserve hash and external link components and
     }
   }
   await countRoutes(join(root, "out"));
-  assert.equal(routeCount, 73);
+  // 73 + /ar/order-status + /en/order-status = 75, added for the real-time
+  // checkout return flow.
+  assert.equal(routeCount, 75);
 });
