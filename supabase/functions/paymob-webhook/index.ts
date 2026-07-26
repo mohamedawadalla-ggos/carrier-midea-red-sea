@@ -5,17 +5,17 @@
 // never be trusted to mark an order paid.
 //
 // IMPORTANT — before this goes live:
-// 1. The HMAC field list/order below is Paymob's long-documented classic
-//    transaction-callback scheme. It was NOT verified against a live
-//    sandbox callback in this session — confirm the exact payload shape
-//    and field order for this merchant's Intention API integration before
-//    trusting this with real orders. If verification fails, this function
-//    fails CLOSED (rejects the webhook) rather than open, by design.
+// 1. The HMAC field list/order below was confirmed correct against a real
+//    Paymob sandbox card-payment callback on 2026-07-26 (a card charge
+//    verified successfully on the first attempt). Not yet confirmed for
+//    BNPL/installment methods, which may use a different transaction shape.
 // 2. The Paymob payment-method identifier -> our `payment_method` enum
-//    mapping in `mapPaymentMethod` is a best guess and must be corrected
-//    once real sandbox callbacks are observed for each enabled provider
-//    (valU, Aman, Forsa, Souhoola, HSBC installments).
-// 3. Test only against Paymob SANDBOX credentials until this is verified.
+//    mapping in `mapPaymentMethod` is confirmed correct for `card`
+//    (source_data.sub_type "Visa" correctly falls through to "card") but
+//    still a best guess for valU/Aman/Forsa/Souhoola/HSBC installments —
+//    correct each once a real sandbox callback for that method is observed.
+// 3. Test only against Paymob SANDBOX credentials until every enabled
+//    method has been confirmed this way at least once.
 //
 // Required secrets: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, PAYMOB_HMAC_SECRET
 
@@ -37,11 +37,12 @@ Deno.serve(async (req) => {
   const url = new URL(req.url);
   const hmacFromQuery = url.searchParams.get("hmac");
 
+  const rawBody = await req.text();
   let payload: unknown;
   try {
-    payload = await req.json();
+    payload = rawBody ? JSON.parse(rawBody) : null;
   } catch {
-    return new Response("Invalid JSON", { status: 400 });
+    payload = null;
   }
 
   const transaction = isObject(payload) && isObject(payload.obj) ? payload.obj : isObject(payload) ? payload : null;
@@ -84,11 +85,18 @@ Deno.serve(async (req) => {
     return new Response("Order not found", { status: 404 });
   }
 
+  // Matched by order_id, not provider_transaction_id: create-payment-intent
+  // stores the Intention's own id (e.g. "pi_test_...") at creation time, but
+  // the webhook's transaction carries a different, later-assigned numeric
+  // transaction id. Matching by order_id is the reliable link; the real
+  // transaction id is backfilled onto the row below for future idempotency.
   const { data: existingTransaction } = await supabase
     .from("payment_transactions")
     .select("id, status")
     .eq("provider", "paymob")
-    .eq("provider_transaction_id", providerTransactionId)
+    .eq("order_id", order.id)
+    .order("created_at", { ascending: false })
+    .limit(1)
     .maybeSingle();
 
   // Idempotency: a webhook already fully processed for this transaction should not be reapplied.
@@ -103,6 +111,7 @@ Deno.serve(async (req) => {
     await supabase.from("payment_transactions").update({
       status: nextTransactionStatus,
       method,
+      provider_transaction_id: providerTransactionId,
       raw_webhook_payload: transaction,
     }).eq("id", existingTransaction.id);
   } else {
@@ -159,7 +168,16 @@ function readPath(source: unknown, path: string): unknown {
 }
 
 function readSpecialReference(transaction: Record<string, unknown>): string | null {
-  const direct = readPath(transaction, "special_reference") ?? readPath(transaction, "extras.order_number") ?? readPath(transaction, "order.special_reference");
+  // Confirmed against a real sandbox callback: Paymob echoes the
+  // special_reference sent at intent-creation time back as
+  // order.merchant_order_id, not as special_reference/extras on the
+  // transaction object itself. Kept the old guesses as fallbacks in case a
+  // different payment method's callback shapes this differently.
+  const direct = readPath(transaction, "order.merchant_order_id")
+    ?? readPath(transaction, "payment_key_claims.extra.order_number")
+    ?? readPath(transaction, "special_reference")
+    ?? readPath(transaction, "extras.order_number")
+    ?? readPath(transaction, "order.special_reference");
   return typeof direct === "string" ? direct : null;
 }
 
