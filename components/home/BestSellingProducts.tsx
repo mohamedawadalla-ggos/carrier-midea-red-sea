@@ -4,17 +4,32 @@ import { useState } from "react";
 import Link from "next/link";
 import type { Locale } from "@/content/site";
 import { ProductVariantCard } from "@/components/products/ProductVariantCard";
-import { formatHorsepower, supportedHorsepowerValues } from "@/lib/catalog-filtering";
+import { formatHorsepower, supportedHorsepowerValues, emptyCatalogFilters, filterProductVariants } from "@/lib/catalog-filtering";
 import { getBestSellingProducts } from "@/lib/best-selling-products";
+import { productFamilies } from "@/content/product-families";
+import { productVariants } from "@/content/product-variants";
 import type { SupportedHorsepower } from "@/types/catalog";
+
+const curatedCapacities: readonly SupportedHorsepower[] = [1.5, 2.25, 3];
 
 export function BestSellingProducts({ locale }: { locale: Locale }) {
   const ar = locale === "ar";
-  const products = getBestSellingProducts();
+  const curatedProducts = getBestSellingProducts();
   const [capacity, setCapacity] = useState<SupportedHorsepower>(supportedHorsepowerValues[0]);
 
-  const group = products.filter(({ variant }) => variant.capacityHp === capacity);
+  const isCurated = curatedCapacities.includes(capacity);
   const catalogHref = `/${locale}/products?type=wall-mounted-split&hp=${capacity}`;
+
+  // The curated list is a fixed, reviewed 12-item marketing selection covering
+  // only 1.5/2.25/3 HP -- it is not a live catalog query and does not extend
+  // to other capacities. For every other horsepower, pull real matching
+  // catalog models instead of showing an empty "not available" state.
+  const items = isCurated
+    ? curatedProducts
+        .filter(({ variant }) => variant.capacityHp === capacity)
+        .map(({ family, variant, selection }) => ({ key: selection.variantId, family, variant }))
+    : filterProductVariants(productFamilies, productVariants, { ...emptyCatalogFilters, productType: "wall-mounted-split", hp: String(capacity) })
+        .map((variant) => ({ key: variant.id, family: productFamilies.find((family) => family.id === variant.familyId)!, variant }));
 
   return <section className="section best-selling-products" id="best-selling-products" aria-labelledby="best-selling-products-title">
     <div className="section-heading best-selling-heading">
@@ -32,13 +47,16 @@ export function BestSellingProducts({ locale }: { locale: Locale }) {
     </div>
     <section className="best-selling-group" aria-labelledby="best-selling-active-group">
       <div className="best-selling-group-heading">
-        <h3 id="best-selling-active-group">{formatHorsepower(locale, capacity)}</h3>
+        <h3 id="best-selling-active-group">
+          {formatHorsepower(locale, capacity)}
+          {!isCurated && <small>{ar ? " — كل الموديلات المتاحة" : " — all available models"}</small>}
+        </h3>
         <Link href={catalogHref} prefetch={false}>{ar ? "عرض كل الموديلات" : "View all models"}<span>↗</span></Link>
       </div>
       <div className="product-grid best-selling-grid">
-        {group.map(({ family, selection, variant }) => <ProductVariantCard key={selection.variantId} family={family} variant={variant} locale={locale} />)}
+        {items.map(({ key, family, variant }) => <ProductVariantCard key={key} family={family} variant={variant} locale={locale} />)}
       </div>
-      {!group.length && <p className="empty">{ar ? "لا توجد موديلات متاحة لهذه القدرة حاليًا." : "No models available for this horsepower right now."}</p>}
+      {!items.length && <p className="empty">{ar ? "لا توجد موديلات متاحة لهذه القدرة حاليًا." : "No models available for this horsepower right now."}</p>}
     </section>
   </section>;
 }
