@@ -375,3 +375,11 @@ body{background:linear-gradient(180deg,#dcecf4 0%,#c9e0ec 100%);background-attac
 .notify-me-form button:disabled{opacity:.55;cursor:not-allowed}
 .notify-me-error{margin:0;color:#8b2630;font-size:9px}
 .notify-me-success{margin:0;color:#176447;font-size:9px;font-weight:700}
+
+/* Header and footer match the approved deep-blue identity site-wide. */
+.header{background:rgba(3,23,45,.94);border-bottom-color:rgba(120,180,220,.22)}
+.header .nav a{color:#eaf6fc}
+.header .lang{color:#7dd9f2}
+.header .menu span{background:#eaf6fc}
+.header .nav.open{background:rgba(3,23,45,.97)}
+footer{background:linear-gradient(180deg,#051b34 0%,#020e1c 100%)}
