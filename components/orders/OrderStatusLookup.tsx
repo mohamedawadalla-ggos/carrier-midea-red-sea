@@ -7,7 +7,7 @@ import { checkOrderPaymentStatus, type OrderPaymentStatusResult } from "@/lib/ch
 function readInitialOrderNumber(): string {
   if (typeof window === "undefined") return "";
   const query = new URLSearchParams(window.location.search);
-  return query.get("order") ?? query.get("merchant_order_id") ?? query.get("special_reference") ?? "";
+  return query.get("merchant_order_id") ?? query.get("special_reference") ?? query.get("order") ?? "";
 }
 
 const orderStatusLabels: Record<string, { ar: string; en: string }> = {
