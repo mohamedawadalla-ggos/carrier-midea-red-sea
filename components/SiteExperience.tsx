@@ -25,10 +25,21 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
   const t = content[locale];
 
   useEffect(() => {
-    if (window.sessionStorage.getItem(SERVICES_RETURN_KEY) !== "1") return;
+    const flagged = window.sessionStorage.getItem(SERVICES_RETURN_KEY) === "1";
     window.sessionStorage.removeItem(SERVICES_RETURN_KEY);
-    if (window.location.hash && window.location.hash !== "#services") return;
-    document.getElementById("services")?.scrollIntoView();
+    const hashedToServices = window.location.hash === "#services";
+    if (!flagged && !hashedToServices) return;
+    if (window.location.hash && !hashedToServices) return;
+
+    // Take manual control so the framework's own scroll-to-top-on-navigate
+    // (or the browser's native restore) can't race this and win.
+    const previousRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    const scrollToServices = () => document.getElementById("services")?.scrollIntoView();
+    scrollToServices();
+    const retry = window.setTimeout(scrollToServices, 120);
+    return () => { window.clearTimeout(retry); window.history.scrollRestoration = previousRestoration; };
   }, []);
 
   async function submitLead(event: FormEvent<HTMLFormElement>) {

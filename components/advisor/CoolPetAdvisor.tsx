@@ -14,7 +14,7 @@ import type { Locale } from "@/content/site";
 import { buildAdvisorCatalogUrl, matchAdvisorCatalog } from "@/lib/ac-advisor-matching";
 import { OPEN_COOLPET_ADVISOR_EVENT, type OpenCoolPetAdvisorDetail } from "@/lib/ac-advisor-access";
 import { calculateAcSizing } from "@/lib/ac-sizing";
-import { hasTourBeenSeen, markTourSeen } from "@/lib/mr-cool-tour";
+import { clearTourOnHomeRequest, hasTourBeenSeen, isHomePath, markTourSeen, peekTourOnHomeRequest, requestTourOnHome } from "@/lib/mr-cool-tour";
 import { siteConfig } from "@/lib/site-config";
 import { openPreparedLink } from "@/lib/whatsapp";
 import { leadProvider } from "@/services/leads/whatsapp-provider";
@@ -67,7 +67,7 @@ export function CoolPetAdvisor({ locale }: { locale: Locale }) {
   const [customerName, setCustomerName] = useState("");
   const [selectedVariantId, setSelectedVariantId] = useState("");
   const [whatsappUnavailable, setWhatsappUnavailable] = useState(false);
-  const [tourPhase, setTourPhase] = useState<"hidden" | "prompt" | "touring">("hidden");
+  const [tourPhase, setTourPhase] = useState<"hidden" | "prompt" | "touring">(() => peekTourOnHomeRequest() ? "touring" : "hidden");
   const [tourStep, setTourStep] = useState(0);
 
   const matches = useMemo(() => matchAdvisorCatalog(input, result?.recommendedHp ?? null, productFamilies, productVariants, acSizingConfig.inspectionProductTypes), [input, result]);
@@ -88,10 +88,14 @@ export function CoolPetAdvisor({ locale }: { locale: Locale }) {
   }, []);
 
   useEffect(() => {
-    if (open || hasTourBeenSeen()) return;
+    clearTourOnHomeRequest();
+  }, []);
+
+  useEffect(() => {
+    if (open || tourPhase !== "hidden" || hasTourBeenSeen()) return;
     const timer = window.setTimeout(() => setTourPhase("prompt"), TOUR_PROMPT_DELAY_MS);
     return () => window.clearTimeout(timer);
-  }, [open]);
+  }, [open, tourPhase]);
 
   useEffect(() => {
     if (tourPhase !== "touring" || open) return;
@@ -124,6 +128,18 @@ export function CoolPetAdvisor({ locale }: { locale: Locale }) {
   function advanceTour(): void {
     if (tourStep + 1 < tourStops.length) setTourStep((current) => current + 1);
     else endTour({ scrollToTop: true });
+  }
+
+  function replayTour(): void {
+    if (isHomePath(window.location.pathname, locale)) {
+      startTour();
+      return;
+    }
+    // The tour points at homepage-only sections, so from any other page
+    // go home first and pick up the tour there instead of confusingly
+    // trying (and failing) to scroll to sections that don't exist here.
+    requestTourOnHome();
+    window.location.href = `/${locale}`;
   }
 
   function reset(): void {
@@ -177,7 +193,7 @@ export function CoolPetAdvisor({ locale }: { locale: Locale }) {
         <CoolPetMascot locale={locale} state={mascotState} compact />
         <span className="coolpet-launcher-tooltip" aria-hidden="true"><strong>{t.launcher}</strong><small>{locale === "ar" ? "احسب القدرة المناسبة" : "Estimate the right capacity"}</small></span>
       </button>
-      <button type="button" className="coolpet-tour-replay" aria-label={locale === "ar" ? "أعد عرض جولة الموقع" : "Replay the site tour"} onClick={startTour}>؟</button>
+      <button type="button" className="coolpet-tour-replay" aria-label={locale === "ar" ? "أعد عرض جولة الموقع" : "Replay the site tour"} onClick={replayTour}>؟</button>
     </div>
     {tourPhase !== "hidden" && !open && <div className="coolpet-tour-bubble" role="dialog" aria-live="polite" aria-label={locale === "ar" ? "جولة مستر كول" : "Mr. Cool's tour"}>
       {tourPhase === "prompt" ? <>
