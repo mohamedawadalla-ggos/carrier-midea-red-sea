@@ -26,7 +26,9 @@ test("catalog Next links disable automatic static-export prefetching", () => {
   const homeLinks = [...linkTags(featuredFamilies), ...linkTags(home)];
   assert.equal(categoryLinks.length, 1);
   assert.equal(familyLinks.length, 2);
-  assert.equal(variantLinks.length, 2);
+  // The redundant "Request current price" link was removed from variant
+  // cards now that every card already shows its live price directly.
+  assert.equal(variantLinks.length, 1);
   assert.equal(homeLinks.length, 2);
   for (const link of [...categoryLinks, ...familyLinks, ...variantLinks, ...homeLinks]) {
     assert.match(link, /prefetch=\{false\}/);

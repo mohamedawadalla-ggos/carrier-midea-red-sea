@@ -76,7 +76,7 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
         <FacebookFollowSection locale={locale} />
 
         <section className="quote-section" id="contact">
-          <div className="quote-copy"><p className="kicker light">{t.quoteKicker}</p><h2>{t.quoteTitle}</h2><p>{t.quoteText}</p><div className="contact-chips">{siteConfig.phoneTel && <a href={`tel:${siteConfig.phoneTel}`}>☎ {siteConfig.phoneDisplay || t.call}</a>}{siteConfig.email && <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>}</div></div>
+          <div className="quote-copy"><p className="kicker light">{t.quoteKicker}</p><h2>{t.quoteTitle}</h2><p>{t.quoteText}</p><div className="contact-chips">{siteConfig.phoneTel && <a href={`tel:${siteConfig.phoneTel}`} dir="ltr">☎ {siteConfig.phoneDisplay || t.call}</a>}{siteConfig.email && <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>}</div></div>
           <form className="lead-form" onSubmit={submitLead}>
             <label>{t.name}<input name="name" required placeholder={t.placeholderName} /></label>
             <label>{t.phone}<input name="phone" required inputMode="tel" placeholder={t.placeholderPhone} /></label>
@@ -84,7 +84,7 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
             <label>{t.need}<select name="need">{t.needOptions.map(x => <option key={x}>{x}</option>)}</select></label>
             <label className="full">{t.details}<textarea name="details" rows={3} placeholder={t.details} /></label>
             <button className="full" type="submit" disabled={!siteConfig.whatsappNumber}>{t.send}<span>↗</span></button>
-            {!siteConfig.whatsappNumber && <p className="form-unavailable full" role="status">{locale === "ar" ? "خدمة واتساب غير متاحة حالياً." : "WhatsApp is currently unavailable."}{siteConfig.phoneTel && <> <a href={`tel:${siteConfig.phoneTel}`}>{siteConfig.phoneDisplay || siteConfig.phoneTel}</a></>}{siteConfig.email && <> <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></>}</p>}
+            {!siteConfig.whatsappNumber && <p className="form-unavailable full" role="status">{locale === "ar" ? "خدمة واتساب غير متاحة حالياً." : "WhatsApp is currently unavailable."}{siteConfig.phoneTel && <> <a href={`tel:${siteConfig.phoneTel}`} dir="ltr">{siteConfig.phoneDisplay || siteConfig.phoneTel}</a></>}{siteConfig.email && <> <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></>}</p>}
           </form>
         </section>
       </main>

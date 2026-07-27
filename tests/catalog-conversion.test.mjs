@@ -114,6 +114,8 @@ test("catalog UI keeps HP first, switches to model cards, and hides codes from c
   assert.match(grid, /<ProductVariantCard/);
   assert.match(familyCard, /View matching models/);
   assert.match(variantCard, /AddToRequestButton/);
-  assert.match(variantCard, /Request current price/);
+  // "Request current price" was removed as a redundant CTA now that every
+  // variant already shows its live current price directly on the card.
+  assert.doesNotMatch(variantCard, /Request current price/i);
   assert.doesNotMatch(variantCard, /modelCode/);
 });
