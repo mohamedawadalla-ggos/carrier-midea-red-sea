@@ -7,16 +7,20 @@ import { AdvisorResults } from "@/components/advisor/AdvisorResults";
 import { CoolPetMascot, type CoolPetState } from "@/components/advisor/CoolPetMascot";
 import { advisorCopy } from "@/content/ac-advisor-copy";
 import { acSizingConfig } from "@/content/ac-sizing-config";
+import { tourGreetingPrompt, tourStops } from "@/content/mr-cool-tour-copy";
 import { productFamilies } from "@/content/product-families";
 import { productVariants } from "@/content/product-variants";
 import type { Locale } from "@/content/site";
 import { buildAdvisorCatalogUrl, matchAdvisorCatalog } from "@/lib/ac-advisor-matching";
 import { OPEN_COOLPET_ADVISOR_EVENT, type OpenCoolPetAdvisorDetail } from "@/lib/ac-advisor-access";
 import { calculateAcSizing } from "@/lib/ac-sizing";
+import { hasTourBeenSeen, markTourSeen } from "@/lib/mr-cool-tour";
 import { siteConfig } from "@/lib/site-config";
 import { openPreparedLink } from "@/lib/whatsapp";
 import { leadProvider } from "@/services/leads/whatsapp-provider";
 import type { AcSizingInput, AcSizingResult } from "@/types/ac-advisor";
+
+const TOUR_PROMPT_DELAY_MS = 2500;
 
 function initialInput(locale: Locale): AcSizingInput {
   return {
@@ -63,6 +67,8 @@ export function CoolPetAdvisor({ locale }: { locale: Locale }) {
   const [customerName, setCustomerName] = useState("");
   const [selectedVariantId, setSelectedVariantId] = useState("");
   const [whatsappUnavailable, setWhatsappUnavailable] = useState(false);
+  const [tourPhase, setTourPhase] = useState<"hidden" | "prompt" | "touring">("hidden");
+  const [tourStep, setTourStep] = useState(0);
 
   const matches = useMemo(() => matchAdvisorCatalog(input, result?.recommendedHp ?? null, productFamilies, productVariants, acSizingConfig.inspectionProductTypes), [input, result]);
   const catalogUrl = result?.recommendedHp ? buildAdvisorCatalogUrl(locale, input, result.recommendedHp) : null;
@@ -80,6 +86,44 @@ export function CoolPetAdvisor({ locale }: { locale: Locale }) {
     window.addEventListener(OPEN_COOLPET_ADVISOR_EVENT, handleOpen);
     return () => window.removeEventListener(OPEN_COOLPET_ADVISOR_EVENT, handleOpen);
   }, []);
+
+  useEffect(() => {
+    if (open || hasTourBeenSeen()) return;
+    const timer = window.setTimeout(() => setTourPhase("prompt"), TOUR_PROMPT_DELAY_MS);
+    return () => window.clearTimeout(timer);
+  }, [open]);
+
+  useEffect(() => {
+    if (tourPhase !== "touring" || open) return;
+    const stop = tourStops[tourStep];
+    if (!stop) return;
+    document.getElementById(stop.anchorId)?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [tourPhase, tourStep, open]);
+
+  useEffect(() => {
+    if (tourPhase === "hidden" || open) return;
+    const handleEscape = (event: KeyboardEvent): void => {
+      if (event.key !== "Escape") return;
+      endTour();
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [tourPhase, open]);
+
+  function startTour(): void {
+    setTourStep(0);
+    setTourPhase("touring");
+  }
+
+  function endTour(): void {
+    markTourSeen();
+    setTourPhase("hidden");
+  }
+
+  function advanceTour(): void {
+    if (tourStep + 1 < tourStops.length) setTourStep((current) => current + 1);
+    else endTour();
+  }
 
   function reset(): void {
     setStep(0);
@@ -127,10 +171,29 @@ export function CoolPetAdvisor({ locale }: { locale: Locale }) {
   }
 
   return <div className="coolpet-advisor" dir={locale === "ar" ? "rtl" : "ltr"}>
-    <button ref={launcherRef} className="coolpet-launcher" type="button" aria-haspopup="dialog" aria-expanded={open} aria-label={`${t.launcher} — ${locale === "ar" ? "احسب القدرة المناسبة" : "Estimate the right capacity"}`} onClick={() => setOpen(true)}>
-      <CoolPetMascot locale={locale} state={mascotState} compact />
-      <span className="coolpet-launcher-tooltip" aria-hidden="true"><strong>{t.launcher}</strong><small>{locale === "ar" ? "احسب القدرة المناسبة" : "Estimate the right capacity"}</small></span>
-    </button>
+    <div className="coolpet-launcher-group">
+      <button ref={launcherRef} className="coolpet-launcher" type="button" aria-haspopup="dialog" aria-expanded={open} aria-label={`${t.launcher} — ${locale === "ar" ? "احسب القدرة المناسبة" : "Estimate the right capacity"}`} onClick={() => setOpen(true)}>
+        <CoolPetMascot locale={locale} state={mascotState} compact />
+        <span className="coolpet-launcher-tooltip" aria-hidden="true"><strong>{t.launcher}</strong><small>{locale === "ar" ? "احسب القدرة المناسبة" : "Estimate the right capacity"}</small></span>
+      </button>
+      <button type="button" className="coolpet-tour-replay" aria-label={locale === "ar" ? "أعد عرض جولة الموقع" : "Replay the site tour"} onClick={startTour}>؟</button>
+    </div>
+    {tourPhase !== "hidden" && !open && <div className="coolpet-tour-bubble" role="dialog" aria-live="polite" aria-label={locale === "ar" ? "جولة مستر كول" : "Mr. Cool's tour"}>
+      {tourPhase === "prompt" ? <>
+        <p>{tourGreetingPrompt[locale]}</p>
+        <div className="coolpet-tour-bubble-actions">
+          <button type="button" className="coolpet-tour-secondary" onClick={endTour}>{locale === "ar" ? "لأ شكرًا" : "No thanks"}</button>
+          <button type="button" className="coolpet-tour-primary" onClick={startTour}>{locale === "ar" ? "أيوة، وريني" : "Yes, show me"}</button>
+        </div>
+      </> : <>
+        <span className="coolpet-tour-bubble-progress">{tourStep + 1}/{tourStops.length}</span>
+        <p>{tourStops[tourStep].text[locale]}</p>
+        <div className="coolpet-tour-bubble-actions">
+          <button type="button" className="coolpet-tour-secondary" onClick={endTour}>{locale === "ar" ? "تخطي" : "Skip tour"}</button>
+          <button type="button" className="coolpet-tour-primary" onClick={advanceTour}>{tourStep + 1 === tourStops.length ? (locale === "ar" ? "تمام!" : "Got it!") : (locale === "ar" ? "التالي" : "Next")}</button>
+        </div>
+      </>}
+    </div>}
     <AdvisorDialog locale={locale} open={open} titleId="coolpet-title" onClose={close}>
       <header className="coolpet-dialog-header">
         <CoolPetMascot locale={locale} state={mascotState} />
