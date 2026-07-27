@@ -32,7 +32,7 @@ export const tourStops: readonly TourStop[] = [
     id: "services",
     anchorId: "services",
     text: {
-      ar: "إحنا مش بس بنبيع تكييفات — بنركّب ونصون ونصلح كمان.",
+      ar: "إحنا مش بس بنبيع تكييفات — بنركّب ونقوم بصيانة ونصلح كمان.",
       en: "We don't just sell ACs — we install, maintain, and repair them too.",
     },
   },

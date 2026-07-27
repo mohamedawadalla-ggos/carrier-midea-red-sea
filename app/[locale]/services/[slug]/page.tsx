@@ -75,7 +75,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
             <h2>{ar ? "اطلب هذه الخدمة عبر واتساب" : "Request this service on WhatsApp"}</h2>
             <p>{ar ? "أرسل تفاصيل موقعك واحتياجك وسنرد عليك لتحديد الخطوة التالية." : "Send us your location and what you need, and we'll follow up to arrange the next step."}</p>
           </div>
-          <a className="btn primary" href={`/${locale}#contact`}>{ar ? "اطلب خدمة" : "Request service"}<span>↗</span></a>
+          <a className="btn whatsapp" href={`/${locale}#contact`}><span className="btn-label"><span className="whatsapp-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14"><path fill="#25D366" d="M16.5 14.2c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.1-.3.2-.5.1-.7-.3-1.4-.7-2-1.3-.5-.5-.9-1-1.3-1.6-.1-.2 0-.4.1-.5.1-.1.2-.3.3-.4.1-.1.1-.2.2-.4 0-.1 0-.3 0-.4-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c.1.1 1.7 2.6 4.1 3.6.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1 .1-1.2-.1-.1-.2-.1-.4-.2Z"/></svg></span>{ar ? "اطلب خدمة" : "Request service"}</span><span>↗</span></a>
         </div>
       </section>
     </main>

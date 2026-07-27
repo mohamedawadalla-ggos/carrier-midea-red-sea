@@ -37,9 +37,15 @@ export function SiteHeader({ locale, currentPath = "" }: { locale: Locale; curre
       </nav>
       <div className="header-actions">
         <FacebookLink className="header-facebook" href={siteConfig.facebookPageUrl} event="facebook_header_click"><span className="facebook-icon" aria-hidden="true">f</span><span>{locale === "ar" ? "تابعنا على فيسبوك" : "Follow us on Facebook"}</span></FacebookLink>
-        <button className="cart-indicator" type="button" onClick={toggleCart} aria-label={locale === "ar" ? `فتح طلب الأجهزة، ${itemCount} عناصر` : `Open AC request, ${itemCount} items`}><span aria-hidden="true">▣</span><b>{itemCount}</b><small>{locale === "ar" ? "الطلب" : "Request"}</small></button>
+        <button className="cart-indicator" type="button" onClick={toggleCart} aria-label={locale === "ar" ? `فتح طلب الأجهزة، ${itemCount} عناصر` : `Open AC request, ${itemCount} items`}>
+          <span className="cart-indicator-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 8h12l-1 12a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 8Z" /><path d="M9 8V6a3 3 0 0 1 6 0v2" /></svg>
+            <b className="cart-indicator-badge">{itemCount}</b>
+          </span>
+          <small>{locale === "ar" ? "الطلب" : "Request"}</small>
+        </button>
         <a className="lang" href={`/${otherLocale}${currentPath}`}>{locale === "ar" ? "EN" : "عربي"}</a>
-        <a className="header-cta" href={`/${locale}#contact`}>{locale === "ar" ? "اطلب خدمة" : "Request service"}</a>
+        <a className="header-cta" href={`/${locale}#contact`}><span className="whatsapp-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14"><path fill="#25D366" d="M16.5 14.2c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.1-.3.2-.5.1-.7-.3-1.4-.7-2-1.3-.5-.5-.9-1-1.3-1.6-.1-.2 0-.4.1-.5.1-.1.2-.3.3-.4.1-.1.1-.2.2-.4 0-.1 0-.3 0-.4-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c.1.1 1.7 2.6 4.1 3.6.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1 .1-1.2-.1-.1-.2-.1-.4-.2Z"/></svg></span>{locale === "ar" ? "اطلب خدمة" : "Request service"}</a>
         <button className="menu" type="button" aria-label={locale === "ar" ? "فتح القائمة" : "Toggle navigation"} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}><span /><span /></button>
       </div>
     </header></>

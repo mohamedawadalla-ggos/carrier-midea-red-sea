@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent } from "react";
+import { FormEvent, useEffect } from "react";
 import Link from "next/link";
 import { content, type Locale } from "@/content/site";
 import { services } from "@/content/services";
@@ -18,10 +18,18 @@ import { siteConfig } from "@/lib/site-config";
 import { openPreparedLink } from "@/lib/whatsapp";
 
 const HERO_IMAGE = "/hero/carrier-midea-red-sea-hero.webp";
+const SERVICES_RETURN_KEY = "carrier-midea-return-to-services";
 
 export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
   const locale = initialLocale;
   const t = content[locale];
+
+  useEffect(() => {
+    if (window.sessionStorage.getItem(SERVICES_RETURN_KEY) !== "1") return;
+    window.sessionStorage.removeItem(SERVICES_RETURN_KEY);
+    if (window.location.hash && window.location.hash !== "#services") return;
+    document.getElementById("services")?.scrollIntoView();
+  }, []);
 
   async function submitLead(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -45,7 +53,7 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
             <p className="hero-copy">{t.intro}</p>
             <div className="hero-actions">
               <Link className="btn primary" href={`/${locale}/products`} prefetch={false}>{t.buy}<span>↗</span></Link>
-              <a className="btn glass" href="#contact">{t.service}<span>↗</span></a>
+              <a className="btn whatsapp" href="#contact"><span className="btn-label"><span className="whatsapp-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14"><path fill="#25D366" d="M16.5 14.2c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.1-.3.2-.5.1-.7-.3-1.4-.7-2-1.3-.5-.5-.9-1-1.3-1.6-.1-.2 0-.4.1-.5.1-.1.2-.3.3-.4.1-.1.1-.2.2-.4 0-.1 0-.3 0-.4-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c.1.1 1.7 2.6 4.1 3.6.6.3 1 .4 1.4.5.6.2 1.1.2 1.5.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1 .1-1.2-.1-.1-.2-.1-.4-.2Z"/></svg></span>{t.service}</span><span>↗</span></a>
             </div>
           </div>
           <div className="hero-note"><span>24/7</span><p>{locale === "ar" ? "دعم سريع للحالات العاجلة" : "Fast support for urgent cases"}</p></div>
@@ -65,7 +73,7 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
         <section className="services-section" id="services">
           <div className="section services-inner">
             <div className="services-intro"><p className="kicker light">{t.servicesKicker}</p><h2>{t.servicesTitle}</h2><p>{t.servicesSub}</p><a className="text-link" href="#contact">{t.service} <span>↗</span></a></div>
-            <div className="service-list">{services.map((item) => <Link key={item.id} href={`/${locale}/services/${item.slug}`} prefetch={false}><span>{item.number}</span><div><h3>{item.title[locale]}</h3><p>{item.summary[locale]}</p></div><b>↗</b></Link>)}</div>
+            <div className="service-list">{services.map((item) => <Link key={item.id} href={`/${locale}/services/${item.slug}`} prefetch={false} onClick={() => window.sessionStorage.setItem(SERVICES_RETURN_KEY, "1")}><span>{item.number}</span><div><h3>{item.title[locale]}</h3><p>{item.summary[locale]}</p></div><b>↗</b></Link>)}</div>
           </div>
         </section>
 
@@ -91,7 +99,6 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
       </main>
 
       <SiteFooter locale={locale} />
-      {siteConfig.whatsappNumber && <a className="floating-wa" href="#contact" aria-label="WhatsApp"><span>◉</span></a>}
     </div>
   );
 }

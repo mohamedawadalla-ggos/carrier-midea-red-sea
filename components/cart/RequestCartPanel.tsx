@@ -12,6 +12,10 @@ import { usePublicPricing } from "@/components/pricing/PublicPricingProvider";
 import { formatPublicMoney, getPublicPrice } from "@/lib/public-pricing";
 
 const ORDER_TERMS_VERSION = "checkout-draft-v1";
+// Online payment is temporarily hidden until the checkout flow is fully
+// verified in production -- flip back to true to re-enable "Place order
+// online" without removing any of the underlying order/payment code.
+const ONLINE_PAYMENT_ENABLED = false;
 
 export function RequestCartPanel({ locale, cart }: { locale: Locale; cart: RequestCartContextValue }) {
   const [unavailable, setUnavailable] = useState(false);
@@ -124,13 +128,15 @@ export function RequestCartPanel({ locale, cart }: { locale: Locale; cart: Reque
           <p className="request-cart-disclaimer">{ar ? "يتم تأكيد الأسعار والتوافر وتكلفة التركيب بعد مراجعة الطلب." : "Prices, availability, and installation costs are confirmed after reviewing the request."}</p>
           <button type="submit">{ar ? "إرسال الطلب عبر واتساب" : "Send request via WhatsApp"}</button>
           {unavailable && <p role="alert">{ar ? "واتساب غير متاح حاليًا. اتصل بنا لإرسال الطلب." : "WhatsApp is currently unavailable. Please call us to send the request."}</p>}
-          <label className="request-cart-terms"><input type="checkbox" checked={agreeToContact} onChange={(event) => setAgreeToContact(event.target.checked)} />{ar ? "أوافق على أن يتواصل معي الفريق لإتمام هذا الطلب." : "I agree to be contacted to complete this order."}</label>
-          <button type="button" disabled={orderState.status === "submitting"} onClick={payOnline}>
-            {orderState.status === "submitting" ? (ar ? "جارٍ الإرسال…" : "Placing order…") : (ar ? "اطلب أونلاين" : "Place order online")}
-          </button>
-          {orderState.status !== "idle" && orderState.message && (
-            <p role="status" className={`request-cart-message request-cart-message-${orderState.status}`}>{orderState.message}</p>
-          )}
+          {ONLINE_PAYMENT_ENABLED && <>
+            <label className="request-cart-terms"><input type="checkbox" checked={agreeToContact} onChange={(event) => setAgreeToContact(event.target.checked)} />{ar ? "أوافق على أن يتواصل معي الفريق لإتمام هذا الطلب." : "I agree to be contacted to complete this order."}</label>
+            <button type="button" disabled={orderState.status === "submitting"} onClick={payOnline}>
+              {orderState.status === "submitting" ? (ar ? "جارٍ الإرسال…" : "Placing order…") : (ar ? "اطلب أونلاين" : "Place order online")}
+            </button>
+            {orderState.status !== "idle" && orderState.message && (
+              <p role="status" className={`request-cart-message request-cart-message-${orderState.status}`}>{orderState.message}</p>
+            )}
+          </>}
         </form>
       </>}
     </section>

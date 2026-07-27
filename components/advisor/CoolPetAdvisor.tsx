@@ -115,14 +115,15 @@ export function CoolPetAdvisor({ locale }: { locale: Locale }) {
     setTourPhase("touring");
   }
 
-  function endTour(): void {
+  function endTour(options?: { scrollToTop?: boolean }): void {
     markTourSeen();
     setTourPhase("hidden");
+    if (options?.scrollToTop) window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function advanceTour(): void {
     if (tourStep + 1 < tourStops.length) setTourStep((current) => current + 1);
-    else endTour();
+    else endTour({ scrollToTop: true });
   }
 
   function reset(): void {
@@ -182,14 +183,14 @@ export function CoolPetAdvisor({ locale }: { locale: Locale }) {
       {tourPhase === "prompt" ? <>
         <p>{tourGreetingPrompt[locale]}</p>
         <div className="coolpet-tour-bubble-actions">
-          <button type="button" className="coolpet-tour-secondary" onClick={endTour}>{locale === "ar" ? "لأ شكرًا" : "No thanks"}</button>
+          <button type="button" className="coolpet-tour-secondary" onClick={() => endTour()}>{locale === "ar" ? "لأ شكرًا" : "No thanks"}</button>
           <button type="button" className="coolpet-tour-primary" onClick={startTour}>{locale === "ar" ? "أيوة، وريني" : "Yes, show me"}</button>
         </div>
       </> : <>
         <span className="coolpet-tour-bubble-progress">{tourStep + 1}/{tourStops.length}</span>
         <p>{tourStops[tourStep].text[locale]}</p>
         <div className="coolpet-tour-bubble-actions">
-          <button type="button" className="coolpet-tour-secondary" onClick={endTour}>{locale === "ar" ? "تخطي" : "Skip tour"}</button>
+          <button type="button" className="coolpet-tour-secondary" onClick={() => endTour()}>{locale === "ar" ? "تخطي" : "Skip tour"}</button>
           <button type="button" className="coolpet-tour-primary" onClick={advanceTour}>{tourStep + 1 === tourStops.length ? (locale === "ar" ? "تمام!" : "Got it!") : (locale === "ar" ? "التالي" : "Next")}</button>
         </div>
       </>}
