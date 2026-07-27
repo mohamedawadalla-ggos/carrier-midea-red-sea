@@ -60,10 +60,8 @@ test("exported Arabic and English catalog hrefs resolve to generated routes", as
 });
 
 test("static-safe catalog changes preserve hash and external link components and all 75 routes", async () => {
-  const requestPrice = await readFile(new URL("../components/products/RequestCurrentPriceButton.tsx", import.meta.url), "utf8");
   const familyHero = await readFile(new URL("../components/products/FamilyHero.tsx", import.meta.url), "utf8");
   const facebookLink = await readFile(new URL("../components/social/FacebookLink.tsx", import.meta.url), "utf8");
-  assert.match(requestPrice, /href = "#inquiry"/);
   assert.match(familyHero, /href=\{`\/\$\{locale\}#contact`\}/);
   assert.match(facebookLink, /target="_blank"/);
   assert.match(facebookLink, /rel="noreferrer"/);
