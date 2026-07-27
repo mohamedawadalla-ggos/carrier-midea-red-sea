@@ -9,7 +9,7 @@ export const siteMetadata: Metadata = {
   manifest: "/manifest.webmanifest",
   icons: {
     icon: [
-      { url: "/favicon.png", type: "image/png", sizes: "64x56" },
+      { url: "/favicon.png", type: "image/png", sizes: "64x64" },
       { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
       { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
     ],

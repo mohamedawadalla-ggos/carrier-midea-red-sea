@@ -147,7 +147,7 @@ test("client-approved icon is exported for browsers, Chrome, and sharing", async
     { src: "/icon-512.png", sizes: "512x512", type: "image/png" },
   ]);
 
-  const expectedSourceHash = "e0d89f908a14b87c70411d5df582abeb0f3e8508ef2d282214687aa5b03e200e";
+  const expectedSourceHash = "aa5576a9a1482c34b631d92bd1fe33fd4e27c27c9c1fe2abfba73fb290208b82";
   const [source, favicon] = await Promise.all([
     readFile(join(root, "assets", "brand", "source", "carrier-midea-red-sea-client-icon.png")),
     readFile(join(root, "public", "favicon.png")),
