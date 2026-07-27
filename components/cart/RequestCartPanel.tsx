@@ -8,6 +8,8 @@ import { leadProvider } from "@/services/leads/whatsapp-provider";
 import { createOrder } from "@/lib/create-order";
 import { createPaymentIntent } from "@/lib/create-payment-intent";
 import type { RequestCartContextValue } from "@/components/cart/RequestCartProvider";
+import { usePublicPricing } from "@/components/pricing/PublicPricingProvider";
+import { formatPublicMoney, getPublicPrice } from "@/lib/public-pricing";
 
 const ORDER_TERMS_VERSION = "checkout-draft-v1";
 
@@ -19,6 +21,7 @@ export function RequestCartPanel({ locale, cart }: { locale: Locale; cart: Reque
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const ar = locale === "ar";
   const { isOpen, closeCart } = cart;
+  const pricing = usePublicPricing();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -30,6 +33,14 @@ export function RequestCartPanel({ locale, cart }: { locale: Locale; cart: Reque
   }, [closeCart, isOpen]);
 
   if (!isOpen) return null;
+
+  const lineTotals = cart.resolvedItems.map(({ variant, quantity }) => {
+    const price = getPublicPrice(pricing, variant.modelCode);
+    return price ? price.salePriceMinor * quantity : null;
+  });
+  const cartTotalMinor = lineTotals.every((value): value is number => value !== null)
+    ? lineTotals.reduce((sum, value) => sum + value, 0)
+    : null;
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -95,12 +106,13 @@ export function RequestCartPanel({ locale, cart }: { locale: Locale; cart: Reque
       </div>
       {cart.resolvedItems.length === 0 ? <p>{ar ? "لم تضف أجهزة إلى الطلب بعد." : "No units have been added yet."}</p> : <>
         <ul className="request-cart-items">
-          {cart.resolvedItems.map(({ family, variant, quantity }) => <li key={variant.id}>
-            <div><strong>{family.name[locale]}</strong><span>{formatHorsepower(locale, variant.capacityHp)}</span></div>
+          {cart.resolvedItems.map(({ family, variant, quantity }, index) => <li key={variant.id}>
+            <div><strong>{family.name[locale]}</strong><span>{formatHorsepower(locale, variant.capacityHp)}</span>{lineTotals[index] !== null && <span className="request-cart-line-total">{formatPublicMoney(lineTotals[index]!, locale)}</span>}</div>
             <label>{ar ? "الكمية" : "Quantity"}<input type="number" min={1} max={99} inputMode="numeric" value={quantity} onChange={(event) => cart.updateQuantity(variant.id, Number(event.target.value))} /></label>
             <button type="button" onClick={() => cart.removeItem(variant.id)}>{ar ? "إزالة" : "Remove"}</button>
           </li>)}
         </ul>
+        {cartTotalMinor !== null && <p className="request-cart-total">{ar ? "الإجمالي التقديري" : "Estimated total"}<strong>{formatPublicMoney(cartTotalMinor, locale)}</strong></p>}
         <button type="button" onClick={cart.clearCart}>{ar ? "مسح الطلب" : "Clear request"}</button>
         <form ref={formRef} className="request-cart-form" onSubmit={submit}>
           <label>{ar ? "الاسم" : "Name"}<input name="name" autoComplete="name" required /></label>

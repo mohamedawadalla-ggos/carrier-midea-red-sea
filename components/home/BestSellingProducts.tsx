@@ -18,17 +18,20 @@ export function BestSellingProducts({ locale }: { locale: Locale }) {
   const [capacity, setCapacity] = useState<SupportedHorsepower>(supportedHorsepowerValues[0]);
 
   const isCurated = curatedCapacities.includes(capacity);
-  const catalogHref = `/${locale}/products?type=wall-mounted-split&hp=${capacity}`;
+  const catalogHref = isCurated
+    ? `/${locale}/products?type=wall-mounted-split&hp=${capacity}`
+    : `/${locale}/products?hp=${capacity}`;
 
   // The curated list is a fixed, reviewed 12-item marketing selection covering
-  // only 1.5/2.25/3 HP -- it is not a live catalog query and does not extend
-  // to other capacities. For every other horsepower, pull real matching
-  // catalog models instead of showing an empty "not available" state.
+  // only 1.5/2.25/3 HP wall-mounted models -- it is not a live catalog query
+  // and does not extend to other capacities. For every other horsepower,
+  // pull real matching catalog models across all equipment types instead of
+  // showing an empty "not available" state.
   const items = isCurated
     ? curatedProducts
         .filter(({ variant }) => variant.capacityHp === capacity)
         .map(({ family, variant, selection }) => ({ key: selection.variantId, family, variant }))
-    : filterProductVariants(productFamilies, productVariants, { ...emptyCatalogFilters, productType: "wall-mounted-split", hp: String(capacity) })
+    : filterProductVariants(productFamilies, productVariants, { ...emptyCatalogFilters, hp: String(capacity) })
         .map((variant) => ({ key: variant.id, family: productFamilies.find((family) => family.id === variant.familyId)!, variant }));
 
   return <section className="section best-selling-products" id="best-selling-products" aria-labelledby="best-selling-products-title">
