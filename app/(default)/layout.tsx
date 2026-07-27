@@ -4,6 +4,8 @@ import { siteMetadata } from "@/lib/site-metadata";
 import { CoolPetAdvisor } from "@/components/advisor/CoolPetAdvisor";
 import { SiteStructuredData } from "@/components/seo/SiteStructuredData";
 import { RequestCartProvider } from "@/components/cart/RequestCartProvider";
+import { PublicPricingProvider } from "@/components/pricing/PublicPricingProvider";
+import { PublicStockProvider } from "@/components/pricing/PublicStockProvider";
 
 export const metadata: Metadata = siteMetadata;
-export default function DefaultRootLayout({ children }: { children: React.ReactNode }) { return <html lang="ar" dir="rtl"><body><SiteStructuredData /><RequestCartProvider locale="ar">{children}<CoolPetAdvisor locale="ar" /></RequestCartProvider></body></html>; }
+export default function DefaultRootLayout({ children }: { children: React.ReactNode }) { return <html lang="ar" dir="rtl"><body><SiteStructuredData /><PublicPricingProvider><PublicStockProvider><RequestCartProvider locale="ar">{children}<CoolPetAdvisor locale="ar" /></RequestCartProvider></PublicStockProvider></PublicPricingProvider></body></html>; }
