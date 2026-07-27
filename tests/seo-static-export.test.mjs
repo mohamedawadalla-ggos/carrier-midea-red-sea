@@ -13,14 +13,16 @@ const websiteId = `${origin}/#website`;
 
 if (existsSync(join(root, ".env.local"))) process.loadEnvFile(join(root, ".env.local"));
 
-const [familySource, typeSource] = await Promise.all([
+const [familySource, typeSource, serviceSource] = await Promise.all([
   readFile(new URL("../content/product-families.ts", import.meta.url), "utf8"),
   readFile(new URL("../content/catalog-types.ts", import.meta.url), "utf8"),
+  readFile(new URL("../content/services.ts", import.meta.url), "utf8"),
 ]);
 
 const productTypes = [...typeSource.matchAll(/\{ id: "([^"]+)", name:/g)].map((match) => match[1]);
 const families = [...familySource.matchAll(/id: "(?:carrier|midea)-[^"]+", slug: "([^"]+)"[\s\S]*?productType: "([^"]+)"/g)].map((match) => ({ slug: match[1], type: match[2] }));
-const suffixes = ["", "/products", ...productTypes.map((type) => `/products/${type}`), ...families.map((family) => `/products/${family.type}/${family.slug}`)];
+const serviceSlugs = [...serviceSource.matchAll(/slug: "([^"]+)"/g)].map((match) => match[1]);
+const suffixes = ["", "/products", ...productTypes.map((type) => `/products/${type}`), ...families.map((family) => `/products/${family.type}/${family.slug}`), ...serviceSlugs.map((slug) => `/services/${slug}`)];
 const localizedPaths = ["ar", "en"].flatMap((locale) => suffixes.map((suffix) => `/${locale}${suffix}/`.replace(/\/\/$/, "/")));
 
 function exportedHtml(path) {
@@ -38,13 +40,13 @@ function jsonLd(html) {
   return [...html.matchAll(/<script\s+type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((match) => JSON.parse(match[1]));
 }
 
-test("sitemap exports exactly the 38 canonical localized URLs", async () => {
-  assert.equal(localizedPaths.length, 38);
+test("sitemap exports exactly the 46 canonical localized URLs", async () => {
+  assert.equal(localizedPaths.length, 46);
   const xml = await readFile(join(root, "out", "sitemap.xml"), "utf8");
   const locations = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
   const expected = localizedPaths.map((path) => `${origin}${path}`);
   assert.deepEqual([...locations].sort(), [...expected].sort());
-  assert.equal(new Set(locations).size, 38);
+  assert.equal(new Set(locations).size, 46);
   assert.ok(locations.every((location) => location.startsWith(origin) && location.endsWith("/")));
 });
 

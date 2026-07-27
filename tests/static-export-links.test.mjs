@@ -29,7 +29,8 @@ test("catalog Next links disable automatic static-export prefetching", () => {
   // The redundant "Request current price" link was removed from variant
   // cards now that every card already shows its live price directly.
   assert.equal(variantLinks.length, 1);
-  assert.equal(homeLinks.length, 2);
+  // The homepage service list now links each service to its own detail page.
+  assert.equal(homeLinks.length, 3);
   for (const link of [...categoryLinks, ...familyLinks, ...variantLinks, ...homeLinks]) {
     assert.match(link, /prefetch=\{false\}/);
     assert.match(link, /href=/);
@@ -59,7 +60,7 @@ test("exported Arabic and English catalog hrefs resolve to generated routes", as
   }
 });
 
-test("static-safe catalog changes preserve hash and external link components and all 75 routes", async () => {
+test("static-safe catalog changes preserve hash and external link components and all 83 routes", async () => {
   const familyHero = await readFile(new URL("../components/products/FamilyHero.tsx", import.meta.url), "utf8");
   const facebookLink = await readFile(new URL("../components/social/FacebookLink.tsx", import.meta.url), "utf8");
   assert.match(familyHero, /href=\{`\/\$\{locale\}#contact`\}/);
@@ -75,7 +76,6 @@ test("static-safe catalog changes preserve hash and external link components and
     }
   }
   await countRoutes(join(root, "out"));
-  // 73 + /ar/order-status + /en/order-status = 75, added for the real-time
-  // checkout return flow.
-  assert.equal(routeCount, 75);
+  // 75 + 4 services x 2 locales = 83, added for the new service detail pages.
+  assert.equal(routeCount, 83);
 });

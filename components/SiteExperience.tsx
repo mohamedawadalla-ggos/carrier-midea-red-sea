@@ -3,6 +3,7 @@
 import { FormEvent } from "react";
 import Link from "next/link";
 import { content, type Locale } from "@/content/site";
+import { services } from "@/content/services";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { FeaturedProductFamilies } from "@/components/home/FeaturedProductFamilies";
@@ -64,7 +65,7 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
         <section className="services-section" id="services">
           <div className="section services-inner">
             <div className="services-intro"><p className="kicker light">{t.servicesKicker}</p><h2>{t.servicesTitle}</h2><p>{t.servicesSub}</p><a className="text-link" href="#contact">{t.service} <span>↗</span></a></div>
-            <div className="service-list">{t.services.map(([n, title, desc]) => <article key={n}><span>{n}</span><div><h3>{title}</h3><p>{desc}</p></div><b>↗</b></article>)}</div>
+            <div className="service-list">{services.map((item) => <Link key={item.id} href={`/${locale}/services/${item.slug}`} prefetch={false}><span>{item.number}</span><div><h3>{item.title[locale]}</h3><p>{item.summary[locale]}</p></div><b>↗</b></Link>)}</div>
           </div>
         </section>
 

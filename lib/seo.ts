@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { productFamilies } from "@/content/product-families";
 import { productTypes } from "@/content/catalog-types";
+import { services } from "@/content/services";
 import { company, content, type Locale } from "@/content/site";
 import { locales } from "@/lib/i18n";
 import { absoluteUrl, siteConfig } from "@/lib/site-config";
@@ -41,6 +42,7 @@ const canonicalSuffixes = [
   "/products",
   ...productTypes.map((type) => `/products/${type.id}`),
   ...productFamilies.map((family) => `/products/${family.productType}/${family.slug}`),
+  ...services.map((service) => `/services/${service.slug}`),
 ];
 
 export const canonicalSitePaths = locales.flatMap((locale) => canonicalSuffixes.map((suffix) => localizedPath(locale, suffix)));
