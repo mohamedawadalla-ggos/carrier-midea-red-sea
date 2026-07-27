@@ -95,7 +95,6 @@ export function CoolPetAdvisor({ locale }: { locale: Locale }) {
     const focusTarget = externalOpenerRef.current ?? launcherRef.current;
     externalOpenerRef.current = null;
     setOpen(false);
-    reset();
     window.setTimeout(() => focusTarget?.focus(), 0);
   }
 
@@ -128,9 +127,9 @@ export function CoolPetAdvisor({ locale }: { locale: Locale }) {
   }
 
   return <div className="coolpet-advisor" dir={locale === "ar" ? "rtl" : "ltr"}>
-    <button ref={launcherRef} className="coolpet-launcher" type="button" aria-haspopup="dialog" aria-expanded={open} onClick={() => setOpen(true)}>
+    <button ref={launcherRef} className="coolpet-launcher" type="button" aria-haspopup="dialog" aria-expanded={open} aria-label={`${t.launcher} — ${locale === "ar" ? "احسب القدرة المناسبة" : "Estimate the right capacity"}`} onClick={() => setOpen(true)}>
       <CoolPetMascot locale={locale} state={mascotState} compact />
-      <span><strong>{t.launcher}</strong><small>{locale === "ar" ? "احسب القدرة المناسبة" : "Estimate the right capacity"}</small></span>
+      <span className="coolpet-launcher-tooltip" aria-hidden="true"><strong>{t.launcher}</strong><small>{locale === "ar" ? "احسب القدرة المناسبة" : "Estimate the right capacity"}</small></span>
     </button>
     <AdvisorDialog locale={locale} open={open} titleId="coolpet-title" onClose={close}>
       <header className="coolpet-dialog-header">
