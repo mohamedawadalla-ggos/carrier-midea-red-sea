@@ -33,12 +33,13 @@ export function UsersPanel({ currentUserId }: { currentUserId: string }) {
 
   async function invite(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const formElement = event.currentTarget;
     setBusy(true);
     setMessage("");
-    const form = new FormData(event.currentTarget);
+    const form = new FormData(formElement);
     try {
       await invoke({ action: "invite", email: String(form.get("email")), full_name: String(form.get("fullName")), role: String(form.get("role")) });
-      event.currentTarget.reset();
+      formElement.reset();
       await reload();
       setMessage("Invitation sent and staff access created.");
     } catch (error) {
