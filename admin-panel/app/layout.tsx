@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./users.css";
 
 export const metadata: Metadata = {
   title: "Carrier–Midea Red Sea Control Panel",

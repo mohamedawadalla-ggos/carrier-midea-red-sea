@@ -11,6 +11,8 @@ const discountsPanel = await readFile(new URL("../components/DiscountsPanel.tsx"
 const locationsPanel = await readFile(new URL("../components/LocationsPanel.tsx", import.meta.url), "utf8");
 const accountPanel = await readFile(new URL("../components/AccountPanel.tsx", import.meta.url), "utf8");
 const controlPanel = await readFile(new URL("../components/ControlPanelApp.tsx", import.meta.url), "utf8");
+const usersPanel = await readFile(new URL("../components/UsersPanel.tsx", import.meta.url), "utf8");
+const manageStaffUsers = await readFile(new URL("../../supabase/functions/manage-staff-users/index.ts", import.meta.url), "utf8");
 
 test("all exposed tables have RLS enabled", () => {
   for (const table of ["staff_profiles","catalog_products","product_price_entries","published_product_prices","discount_campaigns","discount_campaign_products","site_settings","service_locations","warehouses","audit_log"]) {
@@ -53,6 +55,18 @@ test("marketing discounts default to draft with an explicit approval submission"
   assert.match(discountsPanel, /\? "pending_approval" : "draft"/);
   assert.match(discountsPanel, /name="submitForApproval"/);
   assert.match(discountsPanel, /approved_by: publish \? data\.profile\.user_id : null/);
+});
+
+test("staff user management is super-admin-only and deactivates instead of deleting", () => {
+  assert.match(access, /manageStaffUsers: \["super_admin"\]/);
+  assert.match(controlPanel, /data\.profile\.role === "super_admin"/);
+  assert.match(usersPanel, /manage-staff-users/);
+  assert.doesNotMatch(usersPanel, /deleteUser/);
+  assert.match(manageStaffUsers, /callerProfile\.role !== "super_admin"/);
+  assert.match(manageStaffUsers, /last active super admin/i);
+  assert.match(manageStaffUsers, /cannot deactivate or demote your own/i);
+  assert.match(manageStaffUsers, /ban_duration: active \? "none" : "876000h"/);
+  assert.match(manageStaffUsers, /staff_profiles/);
 });
 
 test("security actions verify the current password and expose mobile sign-out", () => {

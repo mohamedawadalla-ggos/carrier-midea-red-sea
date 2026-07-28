@@ -65,6 +65,13 @@ export type DiscountCampaign = {
   approval_reference: string | null;
 };
 
+export type ManagedStaffUser = StaffProfile & {
+  email: string;
+  invited_at: string | null;
+  last_sign_in_at: string | null;
+  created_at: string;
+};
+
 export type SiteSetting = {
   key: string;
   category: string;

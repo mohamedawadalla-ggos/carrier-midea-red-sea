@@ -16,9 +16,10 @@ import { NotifyRequestsPanel } from "@/components/NotifyRequestsPanel";
 import { OrdersPanel } from "@/components/OrdersPanel";
 import { AuditPanel } from "@/components/AuditPanel";
 import { AccountPanel } from "@/components/AccountPanel";
+import { UsersPanel } from "@/components/UsersPanel";
 
-const tabs = ["overview", "prices", "discounts", "settings", "locations", "warehouses", "stock", "notify", "orders", "audit", "account"] as const;
-type Tab = typeof tabs[number];
+const allTabs = ["overview", "prices", "discounts", "settings", "locations", "warehouses", "stock", "notify", "orders", "audit", "users", "account"] as const;
+type Tab = typeof allTabs[number];
 
 export function ControlPanelApp() {
   const [session, setSession] = useState<Session | null>(null);
@@ -78,6 +79,7 @@ export function ControlPanelApp() {
   if (!session) return <LoginScreen onSignedIn={refresh} />;
   if (!data) return <main className="center-state"><h1>Access unavailable</h1><p>{error}</p><button onClick={() => getSupabase().auth.signOut()}>Sign out</button></main>;
 
+  const tabs = data.profile.role === "super_admin" ? allTabs : allTabs.filter((item) => item !== "users");
   const settingsVersion = data.settings.map((item) => `${item.key}:${item.updated_at}`).join("|");
   const panels: Record<Tab, React.ReactNode> = {
     overview: <OverviewPanel data={data} />,
@@ -90,8 +92,9 @@ export function ControlPanelApp() {
     notify: <NotifyRequestsPanel data={data} refresh={refresh} />,
     orders: <OrdersPanel data={data} refresh={refresh} />,
     audit: <AuditPanel data={data} />,
+    users: <UsersPanel currentUserId={data.profile.user_id} />,
     account: <AccountPanel email={session.user.email ?? "staff account"} />,
   };
 
-  return <div className="admin-shell"><aside className="sidebar"><div className="logo"><span>CM</span><div><strong>Carrier–Midea</strong><small>RED SEA CONTROL</small></div></div><nav>{tabs.map((item) => <button key={item} className={tab === item ? "active" : ""} onClick={() => setTab(item)}><span>{({ overview: "◫", prices: "£", discounts: "%", settings: "⚙", locations: "⌖", warehouses: "▦", stock: "◒", notify: "◍", orders: "▤", audit: "◎", account: "○" } as const)[item]}</span>{item}</button>)}</nav><footer><div><b>{data.profile.full_name}</b><small>{data.profile.role.replaceAll("_", " ")}</small></div><button onClick={() => getSupabase().auth.signOut()}>Sign out</button></footer></aside><main className="workspace"><div className="mobile-top"><strong>CM Red Sea Control</strong><div className="mobile-actions"><select aria-label="Select admin section" value={tab} onChange={(event) => setTab(event.target.value as Tab)}>{tabs.map((item) => <option key={item}>{item}</option>)}</select><button onClick={() => getSupabase().auth.signOut()}>Sign out</button></div></div>{panels[tab]}</main></div>;
+  return <div className="admin-shell"><aside className="sidebar"><div className="logo"><span>CM</span><div><strong>Carrier–Midea</strong><small>RED SEA CONTROL</small></div></div><nav>{tabs.map((item) => <button key={item} className={tab === item ? "active" : ""} onClick={() => setTab(item)}><span>{({ overview: "◫", prices: "£", discounts: "%", settings: "⚙", locations: "⌖", warehouses: "▦", stock: "◒", notify: "◍", orders: "▤", audit: "◎", users: "♙", account: "○" } as const)[item]}</span>{item}</button>)}</nav><footer><div><b>{data.profile.full_name}</b><small>{data.profile.role.replaceAll("_", " ")}</small></div><button onClick={() => getSupabase().auth.signOut()}>Sign out</button></footer></aside><main className="workspace"><div className="mobile-top"><strong>CM Red Sea Control</strong><div className="mobile-actions"><select aria-label="Select admin section" value={tab} onChange={(event) => setTab(event.target.value as Tab)}>{tabs.map((item) => <option key={item}>{item}</option>)}</select><button onClick={() => getSupabase().auth.signOut()}>Sign out</button></div></div>{panels[tab]}</main></div>;
 }
