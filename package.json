@@ -11,7 +11,7 @@
     "static:export": "next build",
     "build:vinext": "vinext build",
     "start": "vinext start",
-    "test": "npm run build && node --test tests/*.test.mjs",
+    "test": "npm run build && npm run build:vinext && node --test tests/*.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "typecheck": "tsc --noEmit",
     "validate:production": "node tests/validate-production.mjs",

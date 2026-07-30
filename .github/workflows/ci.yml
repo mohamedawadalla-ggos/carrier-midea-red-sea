@@ -9,6 +9,8 @@ jobs:
   storefront:
     name: Storefront (root)
     runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_SITE_URL: https://carrier-midea-red-sea.pages.dev
     steps:
       - uses: actions/checkout@v4
 
