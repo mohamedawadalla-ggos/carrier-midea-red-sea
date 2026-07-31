@@ -5,7 +5,7 @@ import { getSupabase } from "@/lib/supabase";
 import type { AppRole, ManagedStaffUser } from "@/lib/types";
 
 const roles: AppRole[] = ["super_admin", "management", "accounts", "sales", "operations", "marketing", "auditor"];
-type StaffResponse = { users?: ManagedStaffUser[]; error?: string };
+type StaffResponse = { users?: ManagedStaffUser[]; error?: string; resent?: boolean };
 
 export function UsersPanel({ currentUserId }: { currentUserId: string }) {
   const [users, setUsers] = useState<ManagedStaffUser[]>([]);
@@ -38,10 +38,10 @@ export function UsersPanel({ currentUserId }: { currentUserId: string }) {
     setMessage("");
     const form = new FormData(formElement);
     try {
-      await invoke({ action: "invite", email: String(form.get("email")), full_name: String(form.get("fullName")), role: String(form.get("role")) });
+      const result = await invoke({ action: "invite", email: String(form.get("email")), full_name: String(form.get("fullName")), role: String(form.get("role")) });
       formElement.reset();
       await reload();
-      setMessage("Invitation sent and staff access created.");
+      setMessage(result.resent ? "This email was already invited — the invitation email was resent." : "Invitation sent and staff access created.");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Unable to invite user.");
     } finally {
