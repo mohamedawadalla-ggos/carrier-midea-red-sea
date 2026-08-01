@@ -10,6 +10,7 @@ const settingsPanel = await readFile(new URL("../components/SettingsPanel.tsx", 
 const discountsPanel = await readFile(new URL("../components/DiscountsPanel.tsx", import.meta.url), "utf8");
 const locationsPanel = await readFile(new URL("../components/LocationsPanel.tsx", import.meta.url), "utf8");
 const accountPanel = await readFile(new URL("../components/AccountPanel.tsx", import.meta.url), "utf8");
+const loginScreen = await readFile(new URL("../components/LoginScreen.tsx", import.meta.url), "utf8");
 const controlPanel = await readFile(new URL("../components/ControlPanelApp.tsx", import.meta.url), "utf8");
 const usersPanel = await readFile(new URL("../components/UsersPanel.tsx", import.meta.url), "utf8");
 const manageStaffUsers = await readFile(new URL("../../supabase/functions/manage-staff-users/index.ts", import.meta.url), "utf8");
@@ -75,6 +76,15 @@ test("security actions verify the current password and expose mobile sign-out", 
   assert.match(accountPanel, /password\.length < 14/);
   assert.match(controlPanel, /className="mobile-actions"/);
   assert.match(controlPanel, /aria-label="Select admin section"/);
+});
+
+test("password recovery opens a new-password flow without requiring the forgotten password", () => {
+  assert.match(loginScreen, /resetPasswordForEmail/);
+  assert.match(loginScreen, /redirectTo: window\.location\.origin/);
+  assert.match(controlPanel, /event === "PASSWORD_RECOVERY"/);
+  assert.match(controlPanel, /setTab\("account"\)/);
+  assert.match(accountPanel, /passwordRecovery\s*\? \{ password: newPassword \}/);
+  assert.match(accountPanel, /!passwordRecovery && <label>Current password/);
 });
 
 test("immediate publication paths require confirmation and use accurate city wording", () => {

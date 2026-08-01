@@ -25,6 +25,7 @@ export function ControlPanelApp() {
   const [session, setSession] = useState<Session | null>(null);
   const [data, setData] = useState<ControlPanelSnapshot | null>(null);
   const [tab, setTab] = useState<Tab>("overview");
+  const [passwordRecovery, setPasswordRecovery] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -59,14 +60,21 @@ export function ControlPanelApp() {
     const supabase = getSupabase();
     let active = true;
 
-    void supabase.auth.getSession().then(({ data: authData }) => {
-      if (active) void loadForSession(authData.session);
+    const { data: listener } = supabase.auth.onAuthStateChange((event, nextSession) => {
+      queueMicrotask(() => {
+        if (!active) return;
+        if (event === "PASSWORD_RECOVERY") {
+          setPasswordRecovery(true);
+          setTab("account");
+        } else if (!nextSession) {
+          setPasswordRecovery(false);
+        }
+        void loadForSession(nextSession);
+      });
     });
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
-      queueMicrotask(() => {
-        if (active) void loadForSession(nextSession);
-      });
+    void supabase.auth.getSession().then(({ data: authData }) => {
+      if (active) void loadForSession(authData.session);
     });
 
     return () => {
@@ -93,7 +101,7 @@ export function ControlPanelApp() {
     orders: <OrdersPanel data={data} refresh={refresh} />,
     audit: <AuditPanel data={data} />,
     users: <UsersPanel currentUserId={data.profile.user_id} />,
-    account: <AccountPanel email={session.user.email ?? "staff account"} />,
+    account: <AccountPanel email={session.user.email ?? "staff account"} passwordRecovery={passwordRecovery} onRecoveryComplete={() => setPasswordRecovery(false)} />,
   };
 
   return <div className="admin-shell"><aside className="sidebar"><div className="logo"><span>CM</span><div><strong>Carrier–Midea</strong><small>RED SEA CONTROL</small></div></div><nav>{tabs.map((item) => <button key={item} className={tab === item ? "active" : ""} onClick={() => setTab(item)}><span>{({ overview: "◫", prices: "£", discounts: "%", settings: "⚙", locations: "⌖", warehouses: "▦", stock: "◒", notify: "◍", orders: "▤", audit: "◎", users: "♙", account: "○" } as const)[item]}</span>{item}</button>)}</nav><footer><div><b>{data.profile.full_name}</b><small>{data.profile.role.replaceAll("_", " ")}</small></div><button onClick={() => getSupabase().auth.signOut()}>Sign out</button></footer></aside><main className="workspace"><div className="mobile-top"><strong>CM Red Sea Control</strong><div className="mobile-actions"><select aria-label="Select admin section" value={tab} onChange={(event) => setTab(event.target.value as Tab)}>{tabs.map((item) => <option key={item}>{item}</option>)}</select><button onClick={() => getSupabase().auth.signOut()}>Sign out</button></div></div>{panels[tab]}</main></div>;
