@@ -70,6 +70,18 @@ Deno.serve(async (req) => {
 
     const { data: invited, error: inviteError } = await admin.auth.admin.inviteUserByEmail(email, { data: { full_name: fullName } });
     if (inviteError || !invited.user) return response({ error: inviteError?.message ?? "Invitation failed." }, 400);
+
+    // A re-invite of an already-pending user returns the same auth user instead of erroring.
+    // Treat that as a resend rather than falling through to the insert below, which would hit
+    // the staff_profiles primary key and previously caused the just-re-invited user to be deleted.
+    const { data: existingProfile, error: existingProfileError } = await admin
+      .from("staff_profiles")
+      .select("user_id")
+      .eq("user_id", invited.user.id)
+      .maybeSingle();
+    if (existingProfileError) return response({ error: existingProfileError.message }, 500);
+    if (existingProfile) return response({ ok: true, resent: true });
+
     const { error: insertError } = await admin.from("staff_profiles").insert({ user_id: invited.user.id, full_name: fullName, role, active: true });
     if (insertError) {
       await admin.auth.admin.deleteUser(invited.user.id);
