@@ -12,7 +12,13 @@ function passwordIssue(password: string): string | null {
   return null;
 }
 
-export function AccountPanel({ email }: { email: string }) {
+type AccountPanelProps = {
+  email: string;
+  passwordRecovery: boolean;
+  onRecoveryComplete: () => void;
+};
+
+export function AccountPanel({ email, passwordRecovery, onRecoveryComplete }: AccountPanelProps) {
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -21,7 +27,7 @@ export function AccountPanel({ email }: { email: string }) {
     event.preventDefault();
     const form = event.currentTarget;
     const values = new FormData(form);
-    const currentPassword = String(values.get("currentPassword"));
+    const currentPassword = passwordRecovery ? "" : String(values.get("currentPassword"));
     const newPassword = String(values.get("newPassword"));
     const confirmPassword = String(values.get("confirmPassword"));
     setMessage("");
@@ -30,21 +36,23 @@ export function AccountPanel({ email }: { email: string }) {
     const issue = passwordIssue(newPassword);
     if (issue) { setMessage(issue); return; }
     if (newPassword !== confirmPassword) { setMessage("New passwords do not match."); return; }
-    if (newPassword === currentPassword) { setMessage("Choose a password different from the current password."); return; }
+    if (!passwordRecovery && newPassword === currentPassword) { setMessage("Choose a password different from the current password."); return; }
 
     setBusy(true);
     try {
       const supabase = getSupabase();
-      const { error } = await supabase.auth.updateUser({
-        password: newPassword,
-        current_password: currentPassword,
-      });
+      const { error } = await supabase.auth.updateUser(passwordRecovery
+        ? { password: newPassword }
+        : { password: newPassword, current_password: currentPassword });
       if (error) throw error;
       const { error: signOutError } = await supabase.auth.signOut({ scope: "others" });
       if (signOutError) throw signOutError;
       form.reset();
+      if (passwordRecovery) onRecoveryComplete();
       setSuccess(true);
-      setMessage("Password changed. Other signed-in sessions were ended.");
+      setMessage(passwordRecovery
+        ? "New password saved. You can use it the next time you sign in."
+        : "Password changed. Other signed-in sessions were ended.");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Unable to change password.");
     } finally {
@@ -55,12 +63,12 @@ export function AccountPanel({ email }: { email: string }) {
   return <div className="panel-stack">
     <header className="page-heading"><div><p className="eyebrow">ACCOUNT SECURITY</p><h2>Your account</h2></div><span className="status-pill">Signed in as {email}</span></header>
     <section className="account-grid">
-      <article className="card"><h3>Change password</h3><p className="muted">Confirm your current password, then use at least 14 characters with uppercase, lowercase, a number and a symbol.</p>
+      <article className="card"><h3>{passwordRecovery ? "Set a new password" : "Change password"}</h3><p className="muted">{passwordRecovery ? "Your recovery link was verified. Choose a new password with at least 14 characters, including uppercase, lowercase, a number and a symbol." : "Confirm your current password, then use at least 14 characters with uppercase, lowercase, a number and a symbol."}</p>
         <form className="form-grid one" onSubmit={changePassword}>
-          <label>Current password<input name="currentPassword" type="password" autoComplete="current-password" required /></label>
+          {!passwordRecovery && <label>Current password<input name="currentPassword" type="password" autoComplete="current-password" required /></label>}
           <label>New password<input name="newPassword" type="password" autoComplete="new-password" minLength={14} required /></label>
           <label>Confirm new password<input name="confirmPassword" type="password" autoComplete="new-password" minLength={14} required /></label>
-          <button className="primary" disabled={busy}>{busy ? "Changing password…" : "Change password"}</button>
+          <button className="primary" disabled={busy}>{busy ? "Saving password…" : passwordRecovery ? "Set new password" : "Change password"}</button>
         </form>
         {message && <p role={success ? "status" : "alert"} className={success ? "success" : "error"}>{message}</p>}
       </article>
