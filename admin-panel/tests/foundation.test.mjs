@@ -14,6 +14,10 @@ const loginScreen = await readFile(new URL("../components/LoginScreen.tsx", impo
 const controlPanel = await readFile(new URL("../components/ControlPanelApp.tsx", import.meta.url), "utf8");
 const usersPanel = await readFile(new URL("../components/UsersPanel.tsx", import.meta.url), "utf8");
 const manageStaffUsers = await readFile(new URL("../../supabase/functions/manage-staff-users/index.ts", import.meta.url), "utf8");
+const catalogMigration = await readFile(new URL("../../supabase/migrations/20260802024417_admin_catalog_management.sql", import.meta.url), "utf8");
+const warehousesPanel = await readFile(new URL("../components/WarehousesPanel.tsx", import.meta.url), "utf8");
+const catalogVisibilityPanel = await readFile(new URL("../components/CatalogVisibilityPanel.tsx", import.meta.url), "utf8");
+const catalogManagementPanel = await readFile(new URL("../components/CatalogManagementPanel.tsx", import.meta.url), "utf8");
 
 test("all exposed tables have RLS enabled", () => {
   for (const table of ["staff_profiles","catalog_products","product_price_entries","published_product_prices","discount_campaigns","discount_campaign_products","site_settings","service_locations","warehouses","audit_log"]) {
@@ -94,4 +98,27 @@ test("immediate publication paths require confirmation and use accurate city wor
   assert.match(locationsPanel, /publish && !window\.confirm/);
   assert.match(locationsPanel, /Add and publish city/);
   assert.match(locationsPanel, /City added and published/);
+});
+
+test("catalog management separates operational availability from storefront visibility", () => {
+  assert.match(catalogMigration, /add column visible boolean not null default true/);
+  assert.match(catalogMigration, /catalog_status public\.record_status/);
+  assert.match(catalogMigration, /p\.visible = true and p\.active = true/);
+  assert.match(catalogVisibilityPanel, /Pending storefront deployment/);
+  assert.match(catalogVisibilityPanel, /Mark manual deployment complete/);
+});
+
+test("empty visible families cannot leak into the safe public catalog snapshot", () => {
+  assert.match(catalogMigration, /join public\.catalog_products p on p\.family_id = f\.id/);
+  assert.match(catalogMigration, /f\.status = 'published' and f\.visible = true/);
+  assert.match(catalogMigration, /p\.catalog_status = 'published' and p\.visible = true/);
+});
+
+test("warehouse and catalog editors expose controlled edit flows without permanent delete", () => {
+  assert.match(warehousesPanel, /Edit warehouse/);
+  assert.match(warehousesPanel, /\.from\("warehouses"\)\.update/);
+  assert.match(catalogManagementPanel, /Create family draft/);
+  assert.match(catalogManagementPanel, /Create product draft/);
+  assert.doesNotMatch(catalogManagementPanel, /\.delete\(/);
+  assert.match(access, /manageCatalogVisibility: \["super_admin", "management"\]/);
 });

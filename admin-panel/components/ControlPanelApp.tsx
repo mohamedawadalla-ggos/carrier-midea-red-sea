@@ -11,6 +11,8 @@ import { DiscountsPanel } from "@/components/DiscountsPanel";
 import { SettingsPanel } from "@/components/SettingsPanel";
 import { LocationsPanel } from "@/components/LocationsPanel";
 import { WarehousesPanel } from "@/components/WarehousesPanel";
+import { CatalogVisibilityPanel } from "@/components/CatalogVisibilityPanel";
+import { CatalogManagementPanel } from "@/components/CatalogManagementPanel";
 import { StockStatusPanel } from "@/components/StockStatusPanel";
 import { NotifyRequestsPanel } from "@/components/NotifyRequestsPanel";
 import { OrdersPanel } from "@/components/OrdersPanel";
@@ -18,7 +20,7 @@ import { AuditPanel } from "@/components/AuditPanel";
 import { AccountPanel } from "@/components/AccountPanel";
 import { UsersPanel } from "@/components/UsersPanel";
 
-const allTabs = ["overview", "prices", "discounts", "settings", "locations", "warehouses", "stock", "notify", "orders", "audit", "users", "account"] as const;
+const allTabs = ["overview", "prices", "discounts", "settings", "locations", "warehouses", "stock", "catalog-visibility", "catalog-management", "notify", "orders", "audit", "users", "account"] as const;
 type Tab = typeof allTabs[number];
 
 export function ControlPanelApp() {
@@ -97,6 +99,8 @@ export function ControlPanelApp() {
     locations: <LocationsPanel data={data} refresh={refresh} />,
     warehouses: <WarehousesPanel data={data} refresh={refresh} />,
     stock: <StockStatusPanel data={data} refresh={refresh} />,
+    "catalog-visibility": <CatalogVisibilityPanel data={data} refresh={refresh} />,
+    "catalog-management": <CatalogManagementPanel data={data} refresh={refresh} />,
     notify: <NotifyRequestsPanel data={data} refresh={refresh} />,
     orders: <OrdersPanel data={data} refresh={refresh} />,
     audit: <AuditPanel data={data} />,
@@ -104,5 +108,5 @@ export function ControlPanelApp() {
     account: <AccountPanel email={session.user.email ?? "staff account"} passwordRecovery={passwordRecovery} onRecoveryComplete={() => setPasswordRecovery(false)} />,
   };
 
-  return <div className="admin-shell"><aside className="sidebar"><div className="logo"><span>CM</span><div><strong>Carrier–Midea</strong><small>RED SEA CONTROL</small></div></div><nav>{tabs.map((item) => <button key={item} className={tab === item ? "active" : ""} onClick={() => setTab(item)}><span>{({ overview: "◫", prices: "£", discounts: "%", settings: "⚙", locations: "⌖", warehouses: "▦", stock: "◒", notify: "◍", orders: "▤", audit: "◎", users: "♙", account: "○" } as const)[item]}</span>{item}</button>)}</nav><footer><div><b>{data.profile.full_name}</b><small>{data.profile.role.replaceAll("_", " ")}</small></div><button onClick={() => getSupabase().auth.signOut()}>Sign out</button></footer></aside><main className="workspace"><div className="mobile-top"><strong>CM Red Sea Control</strong><div className="mobile-actions"><select aria-label="Select admin section" value={tab} onChange={(event) => setTab(event.target.value as Tab)}>{tabs.map((item) => <option key={item}>{item}</option>)}</select><button onClick={() => getSupabase().auth.signOut()}>Sign out</button></div></div>{panels[tab]}</main></div>;
+  return <div className="admin-shell"><aside className="sidebar"><div className="logo"><span>CM</span><div><strong>Carrier–Midea</strong><small>RED SEA CONTROL</small></div></div><nav>{tabs.map((item) => <button key={item} className={tab === item ? "active" : ""} onClick={() => setTab(item)}><span>{({ overview: "◫", prices: "£", discounts: "%", settings: "⚙", locations: "⌖", warehouses: "▦", stock: "◒", "catalog-visibility": "◉", "catalog-management": "▣", notify: "◍", orders: "▤", audit: "◎", users: "♙", account: "○" } as const)[item]}</span>{item.replaceAll("-", " ")}</button>)}</nav><footer><div><b>{data.profile.full_name}</b><small>{data.profile.role.replaceAll("_", " ")}</small></div><button onClick={() => getSupabase().auth.signOut()}>Sign out</button></footer></aside><main className="workspace"><div className="mobile-top"><strong>CM Red Sea Control</strong><div className="mobile-actions"><select aria-label="Select admin section" value={tab} onChange={(event) => setTab(event.target.value as Tab)}>{tabs.map((item) => <option key={item} value={item}>{item.replaceAll("-", " ")}</option>)}</select><button onClick={() => getSupabase().auth.signOut()}>Sign out</button></div></div>{panels[tab]}</main></div>;
 }

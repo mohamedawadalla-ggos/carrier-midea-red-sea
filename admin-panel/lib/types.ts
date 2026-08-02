@@ -18,7 +18,47 @@ export type CatalogProduct = {
   cooling_mode: "cool-only" | "heat-pump";
   refrigerant: string;
   active: boolean;
+  visible: boolean;
   requires_inspection: boolean;
+  capacity_btu: number | null;
+  energy_class: string | null;
+  display_order: number;
+  catalog_status: RecordStatus;
+  source_reference: string;
+  updated_at: string;
+};
+
+export type CatalogFamily = {
+  id: string;
+  slug: string;
+  brand: "carrier" | "midea";
+  name_ar: string;
+  name_en: string;
+  product_type: "wall-mounted-split" | "concealed-ducted" | "ceiling-cassette" | "floor-standing";
+  market_segments: Array<"residential" | "commercial" | "projects">;
+  technology: "inverter" | "fixed-speed";
+  refrigerant: "R32" | "R410A";
+  description_ar: string;
+  description_en: string;
+  highlights_ar: string[];
+  highlights_en: string[];
+  family_image_path: string | null;
+  asset_authorization: "approved" | "pending";
+  featured: boolean;
+  display_order: number;
+  visible: boolean;
+  status: RecordStatus;
+  source_reference: string;
+  created_by: string | null;
+  approved_by: string | null;
+  updated_at: string;
+};
+
+export type CatalogDeploymentState = {
+  singleton: boolean;
+  last_deployed_at: string;
+  updated_by: string | null;
+  updated_at: string;
 };
 
 export type PriceEntry = {

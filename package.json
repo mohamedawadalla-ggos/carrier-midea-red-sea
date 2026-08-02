@@ -7,8 +7,11 @@
   },
   "scripts": {
     "dev": "vinext dev",
+    "catalog:sync": "node scripts/sync-public-catalog.mjs",
+    "prebuild": "npm run catalog:sync",
     "build": "next build",
-    "static:export": "next build",
+    "static:export": "npm run catalog:sync && next build",
+    "prebuild:vinext": "npm run catalog:sync",
     "build:vinext": "vinext build",
     "start": "vinext start",
     "test": "npm run build && npm run build:vinext && node --test tests/*.test.mjs",

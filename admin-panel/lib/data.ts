@@ -1,9 +1,11 @@
 import { getSupabase } from "@/lib/supabase";
-import type { AuditRecord, CatalogProduct, DiscountCampaign, Order, OrderItem, PriceEntry, ProductStockStatus, PublishedPrice, ServiceLocation, SiteSetting, StaffProfile, StockNotifyRequest, Warehouse } from "@/lib/types";
+import type { AuditRecord, CatalogDeploymentState, CatalogFamily, CatalogProduct, DiscountCampaign, Order, OrderItem, PriceEntry, ProductStockStatus, PublishedPrice, ServiceLocation, SiteSetting, StaffProfile, StockNotifyRequest, Warehouse } from "@/lib/types";
 
 export type ControlPanelSnapshot = {
   profile: StaffProfile;
   products: CatalogProduct[];
+  catalogFamilies: CatalogFamily[];
+  catalogDeploymentState: CatalogDeploymentState;
   priceEntries: PriceEntry[];
   publishedPrices: PublishedPrice[];
   discounts: DiscountCampaign[];
@@ -26,9 +28,11 @@ async function requireData<T>(query: PromiseLike<{ data: T | null; error: { mess
 
 export async function loadSnapshot(userId: string): Promise<ControlPanelSnapshot> {
   const supabase = getSupabase();
-  const [profile, products, priceEntries, publishedPrices, discounts, settings, locations, warehouses, audit, stockStatuses, notifyRequests, orders, orderItems] = await Promise.all([
+  const [profile, products, catalogFamilies, catalogDeploymentState, priceEntries, publishedPrices, discounts, settings, locations, warehouses, audit, stockStatuses, notifyRequests, orders, orderItems] = await Promise.all([
     requireData<StaffProfile>(supabase.from("staff_profiles").select("user_id,full_name,role,active").eq("user_id", userId).single(), "Profile"),
     requireData<CatalogProduct[]>(supabase.from("catalog_products").select("*").order("brand").order("family_name_en").order("capacity_hp"), "Products"),
+    requireData<CatalogFamily[]>(supabase.from("catalog_families").select("*").order("brand").order("display_order"), "Catalog families"),
+    requireData<CatalogDeploymentState>(supabase.from("catalog_storefront_deployment_state").select("*").eq("singleton", true).single(), "Catalog deployment state"),
     requireData<PriceEntry[]>(supabase.from("product_price_entries").select("*").order("updated_at", { ascending: false }), "Price entries"),
     requireData<PublishedPrice[]>(supabase.from("published_product_prices").select("*").order("model_code"), "Published prices"),
     requireData<DiscountCampaign[]>(supabase.from("discount_campaigns").select("*").order("starts_at", { ascending: false }), "Discounts"),
@@ -41,5 +45,5 @@ export async function loadSnapshot(userId: string): Promise<ControlPanelSnapshot
     requireData<Order[]>(supabase.from("orders").select("*").order("created_at", { ascending: false }), "Orders").catch((): Order[] => []),
     requireData<OrderItem[]>(supabase.from("order_items").select("*"), "Order items").catch((): OrderItem[] => []),
   ]);
-  return { profile, products, priceEntries, publishedPrices, discounts, settings, locations, warehouses, audit, stockStatuses, notifyRequests, orders, orderItems };
+  return { profile, products, catalogFamilies, catalogDeploymentState, priceEntries, publishedPrices, discounts, settings, locations, warehouses, audit, stockStatuses, notifyRequests, orders, orderItems };
 }
