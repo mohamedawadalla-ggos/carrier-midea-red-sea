@@ -1,9 +1,10 @@
 import type { ProductFamily } from "@/types/catalog";
+import generatedCatalog from "./generated-public-catalog.json" with { type: "json" };
 
 const copy = (ar: string, en: string) => ({ ar, en });
 const commonHighlights = [copy("موديلات متعددة داخل العائلة", "Multiple model configurations"), copy("السعر الحالي متاح عند الطلب", "Current price available on request")];
 
-export const productFamilies: ProductFamily[] = ([
+const fallbackProductFamilies: ProductFamily[] = ([
   { id: "carrier-xcool-inverter", slug: "xcool-inverter", brand: "carrier", name: copy("XCOOL إنفرتر", "XCOOL Inverter"), productType: "wall-mounted-split", marketSegments: ["residential"], technology: "inverter", refrigerant: "R32", description: copy("عائلة سبليت حائطية بتقنية الإنفرتر ومبرد R32.", "Wall-mounted split family with inverter technology and R32 refrigerant."), highlights: commonHighlights, familyImagePath: "/products/catalog/carrier/xcool-inverter.webp", assetAuthorization: "approved", featured: true, displayOrder: 1 },
   { id: "carrier-optimax-inverter", slug: "optimax-inverter", brand: "carrier", name: copy("Optimax إنفرتر", "Optimax Inverter"), productType: "wall-mounted-split", marketSegments: ["residential", "commercial"], technology: "inverter", refrigerant: "R410A", description: copy("عائلة سبليت حائطية إنفرتر بمبرد R410A.", "Wall-mounted inverter family using R410A refrigerant."), highlights: commonHighlights, familyImagePath: "/products/catalog/carrier/optimax-inverter.webp", assetAuthorization: "approved", featured: false, displayOrder: 2 },
   { id: "carrier-optimax-pro", slug: "optimax-pro", brand: "carrier", name: copy("Optimax Pro", "Optimax Pro"), productType: "wall-mounted-split", marketSegments: ["residential", "commercial"], technology: "fixed-speed", refrigerant: "R410A", description: copy("عائلة سبليت حائطية ثابتة السرعة بمبرد R410A.", "Fixed-speed wall-mounted split family using R410A refrigerant."), highlights: commonHighlights, familyImagePath: "/products/catalog/carrier/optimax-pro.webp", assetAuthorization: "approved", featured: true, displayOrder: 3 },
@@ -18,5 +19,9 @@ export const productFamilies: ProductFamily[] = ([
   { id: "midea-xtreme-pro", slug: "xtreme-pro", brand: "midea", name: copy("XTreme Pro", "XTreme Pro"), productType: "wall-mounted-split", marketSegments: ["residential"], technology: "fixed-speed", refrigerant: "R32", description: copy("عائلة سبليت حائطية ثابتة السرعة بمبرد R32.", "Wall-mounted split family using R32 refrigerant."), highlights: commonHighlights, familyImagePath: "/products/catalog/midea/xtreme-pro.webp", assetAuthorization: "approved", featured: true, displayOrder: 12 },
   { id: "midea-mission-pro", slug: "mission-pro", brand: "midea", name: copy("Mission Pro", "Mission Pro"), productType: "wall-mounted-split", marketSegments: ["residential", "commercial"], technology: "fixed-speed", refrigerant: "R410A", description: copy("عائلة سبليت حائطية ثابتة السرعة بمبرد R410A.", "Fixed-speed wall-mounted split family using R410A refrigerant."), highlights: commonHighlights, familyImagePath: null, assetAuthorization: "pending", featured: true, displayOrder: 13 },
 ] satisfies ProductFamily[]).sort((a, b) => a.displayOrder - b.displayOrder);
+
+export const productFamilies: ProductFamily[] = (
+  generatedCatalog.families.length ? generatedCatalog.families as ProductFamily[] : fallbackProductFamilies
+).sort((a, b) => a.displayOrder - b.displayOrder);
 
 export const featuredProductFamilies = productFamilies.filter((family) => family.featured).slice(0, 6);

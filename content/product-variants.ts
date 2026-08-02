@@ -1,4 +1,5 @@
 import type { CoolingMode, ProductVariant, SupportedHorsepower } from "@/types/catalog";
+import generatedCatalog from "./generated-public-catalog.json" with { type: "json" };
 
 type VariantSeed = readonly [modelCode: string, capacityHp: SupportedHorsepower];
 
@@ -17,7 +18,7 @@ const makeVariants = (familyId: string, models: readonly VariantSeed[], start: n
     displayOrder: start + index,
   }));
 
-export const productVariants: ProductVariant[] = [
+const fallbackProductVariants: ProductVariant[] = [
   ...makeVariants("carrier-xcool-inverter", [["53KHEFT12DN8-708F", 1.5], ["53KHEFT18DN8-708F", 2.25], ["53KHEFT24DN8-708F", 3], ["53QHEFT12DN8-708F", 1.5], ["53QHEFT18DN8-708F", 2.25], ["53QHEFT24DN8-708F", 3]], 1),
   ...makeVariants("carrier-optimax-inverter", [["53QHABT30DN-708F", 4], ["53QHABT36DN-708F", 5]], 10),
   ...makeVariants("carrier-optimax-pro", [["53KHCT12N-708", 1.5], ["53KHCT18N-708", 2.25], ["53KHCT24N-708", 3], ["53QHCT12N-708F", 1.5], ["53QHCT18N-708F", 2.25], ["53QHCT24N-708F", 3], ["53QHABT30N-708F", 4], ["53QHABT36N-708F", 5]], 20),
@@ -32,3 +33,7 @@ export const productVariants: ProductVariant[] = [
   ...makeVariants("midea-xtreme-pro", [["M1SEFT-12CRN8F-Q8", 1.5], ["M1SEFT-18CRN8F-Q8", 2.25], ["M1SEFT-24CRN8F-Q8", 3], ["M1SEFT-12HRN8F-Q8", 1.5], ["M1SEFT-18HRN8F-Q8", 2.25], ["M1SEFT-24HRN8F-Q8", 3]], 110),
   ...makeVariants("midea-mission-pro", [["M1SCT-12CRN-Q8", 1.5], ["M1SCT-18CRN-Q8", 2.25], ["M1SCT-24CRN-Q8", 3], ["M1SCT-12HRNF-Q8", 1.5], ["M1SCT-18HRNF-Q8", 2.25], ["M1SCT-24HRNF-Q8", 3], ["M1SABT-30HRNF-Q8", 4], ["M1SABT-36HRNF-Q8", 5]], 120),
 ].sort((a, b) => a.displayOrder - b.displayOrder);
+
+export const productVariants: ProductVariant[] = (
+  generatedCatalog.variants.length ? generatedCatalog.variants as ProductVariant[] : fallbackProductVariants
+).sort((a, b) => a.displayOrder - b.displayOrder);
