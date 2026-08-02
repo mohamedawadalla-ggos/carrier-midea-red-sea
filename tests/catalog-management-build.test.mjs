@@ -5,7 +5,7 @@ import test from "node:test";
 const syncScript = await readFile(new URL("../scripts/sync-public-catalog.mjs", import.meta.url), "utf8");
 const families = await readFile(new URL("../content/product-families.ts", import.meta.url), "utf8");
 const variants = await readFile(new URL("../content/product-variants.ts", import.meta.url), "utf8");
-const migration = await readFile(new URL("../supabase/migrations/20260802024417_admin_catalog_management.sql", import.meta.url), "utf8");
+const migration = await readFile(new URL("../supabase/migrations/20260802094555_admin_catalog_management.sql", import.meta.url), "utf8");
 
 test("static storefront catalog sync is build-time only and fails closed on an empty production snapshot", () => {
   assert.match(syncScript, /public_catalog_rows/);
