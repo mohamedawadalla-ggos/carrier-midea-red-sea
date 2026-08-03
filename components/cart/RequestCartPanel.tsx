@@ -108,6 +108,7 @@ export function RequestCartPanel({ locale, cart }: { locale: Locale; cart: Reque
         <h2 id="request-cart-title">{ar ? "طلب أجهزة التكييف" : "AC request"}</h2>
         <button ref={closeButtonRef} type="button" onClick={cart.closeCart} aria-label={ar ? "إغلاق الطلب" : "Close request"}>×</button>
       </div>
+      {cart.removedHiddenItemCount > 0 && <p className="request-cart-visibility-notice" role="status">{ar ? "تمت إزالة موديل لم يعد ظاهرًا في الكتالوج من طلبك." : "A model that is no longer shown in the catalog was removed from your request."}</p>}
       {cart.resolvedItems.length === 0 ? <p>{ar ? "لم تضف أجهزة إلى الطلب بعد." : "No units have been added yet."}</p> : <>
         <ul className="request-cart-items">
           {cart.resolvedItems.map(({ family, variant, quantity }, index) => <li key={variant.id}>

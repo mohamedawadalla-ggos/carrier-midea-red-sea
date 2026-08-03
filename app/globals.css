@@ -398,3 +398,14 @@ body{background:linear-gradient(180deg,#dcecf4 0%,#c9e0ec 100%);background-attac
 .header .menu span{background:#eaf6fc}
 .header .nav.open{background:rgba(3,23,45,.97)}
 footer{background:linear-gradient(180deg,#051b34 0%,#020e1c 100%)}
+
+/* Live catalog visibility states */
+.catalog-live-state{width:min(760px,calc(100% - 44px));margin:28px auto;padding:24px;border:1px solid #b9d2df;border-radius:8px;background:#f7fbfd;color:#12364f;text-align:center;box-shadow:0 12px 30px rgba(5,43,77,.08)}
+.catalog-live-state h2,.catalog-live-state h3{margin:0 0 8px;color:#052f56}
+.catalog-live-state p{margin:0 auto 16px;max-width:620px;line-height:1.7}
+.catalog-live-state-compact{margin-block:16px;padding:18px}
+.catalog-live-state-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.catalog-live-state-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:9px 14px;border-radius:4px;background:#0874b9;color:#fff;text-decoration:none;font-weight:800}
+.catalog-live-state-actions a:last-child{background:#176447}
+.request-cart-visibility-notice{margin:0 0 12px;padding:10px;border:1px solid #e5c36d;border-radius:4px;background:#fff8df;color:#6c4b08;font-size:11px;line-height:1.5}
+.family-unavailable{min-height:45vh;display:grid;align-content:center}

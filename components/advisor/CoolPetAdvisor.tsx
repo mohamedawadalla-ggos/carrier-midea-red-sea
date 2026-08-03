@@ -19,6 +19,7 @@ import { siteConfig } from "@/lib/site-config";
 import { openPreparedLink } from "@/lib/whatsapp";
 import { leadProvider } from "@/services/leads/whatsapp-provider";
 import type { AcSizingInput, AcSizingResult } from "@/types/ac-advisor";
+import { useVisibleCatalog } from "@/components/catalog/PublicCatalogVisibilityProvider";
 
 const TOUR_PROMPT_DELAY_MS = 2500;
 
@@ -69,8 +70,9 @@ export function CoolPetAdvisor({ locale }: { locale: Locale }) {
   const [whatsappUnavailable, setWhatsappUnavailable] = useState(false);
   const [tourPhase, setTourPhase] = useState<"hidden" | "prompt" | "touring">(() => peekTourOnHomeRequest() ? "touring" : "hidden");
   const [tourStep, setTourStep] = useState(0);
+  const liveCatalog = useVisibleCatalog(productFamilies, productVariants);
 
-  const matches = useMemo(() => matchAdvisorCatalog(input, result?.recommendedHp ?? null, productFamilies, productVariants, acSizingConfig.inspectionProductTypes), [input, result]);
+  const matches = useMemo(() => matchAdvisorCatalog(input, result?.recommendedHp ?? null, liveCatalog.families, liveCatalog.variants, acSizingConfig.inspectionProductTypes), [input, liveCatalog.families, liveCatalog.variants, result]);
   const catalogUrl = result?.recommendedHp ? buildAdvisorCatalogUrl(locale, input, result.recommendedHp) : null;
   const allMatches = [...matches.direct, ...matches.inspectionRequired];
   const selectedMatch = allMatches.find((match) => match.variants.some((variant) => variant.id === selectedVariantId));
@@ -169,7 +171,7 @@ export function CoolPetAdvisor({ locale }: { locale: Locale }) {
     if (step < 3) setStep((current) => current + 1);
     else {
       const sizingResult = calculateAcSizing(input, acSizingConfig);
-      const initialMatches = matchAdvisorCatalog(input, sizingResult.recommendedHp, productFamilies, productVariants, acSizingConfig.inspectionProductTypes);
+      const initialMatches = matchAdvisorCatalog(input, sizingResult.recommendedHp, liveCatalog.families, liveCatalog.variants, acSizingConfig.inspectionProductTypes);
       setResult(initialMatches.conflictingPreferences ? {
         ...sizingResult,
         confidence: "site-inspection-required",
