@@ -104,8 +104,11 @@ test("catalog management separates operational availability from storefront visi
   assert.match(catalogMigration, /add column visible boolean not null default true/);
   assert.match(catalogMigration, /catalog_status public\.record_status/);
   assert.match(catalogMigration, /p\.visible = true and p\.active = true/);
-  assert.match(catalogVisibilityPanel, /Pending storefront deployment/);
-  assert.match(catalogVisibilityPanel, /Mark manual deployment complete/);
+  assert.match(catalogVisibilityPanel, /Live storefront control/);
+  assert.match(catalogVisibilityPanel, /within the 60-second automatic refresh/);
+  assert.doesNotMatch(catalogVisibilityPanel, /Mark manual deployment complete/);
+  assert.doesNotMatch(catalogVisibilityPanel, /Storefront rebuild required/);
+  assert.match(catalogManagementPanel, /Creating a new family or model does not create its public page until the storefront is rebuilt/);
 });
 
 test("empty visible families cannot leak into the safe public catalog snapshot", () => {

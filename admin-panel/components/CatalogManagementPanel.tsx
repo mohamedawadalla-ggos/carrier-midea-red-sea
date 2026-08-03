@@ -28,7 +28,7 @@ export function CatalogManagementPanel({ data, refresh }: { data: ControlPanelSn
     const form = new FormData(event.currentTarget);
     const id = family?.id ?? String(form.get("id")).trim().toLowerCase();
     const status = String(form.get("status")) as RecordStatus;
-    if (status === "published" && !window.confirm("Publishing master data still requires a manual storefront rebuild. Continue?")) return;
+    if (status === "published" && !window.confirm("Publishing catalog master data requires a storefront rebuild to update static page content or create new routes. Visibility for an existing published page is controlled live. Continue?")) return;
     const payload = {
       slug: String(form.get("slug")).trim().toLowerCase(), brand: String(form.get("brand")),
       name_en: String(form.get("nameEn")).trim(), name_ar: String(form.get("nameAr")).trim(),
@@ -53,7 +53,7 @@ export function CatalogManagementPanel({ data, refresh }: { data: ControlPanelSn
     const selectedFamily = data.catalogFamilies.find((item) => item.id === String(form.get("familyId")));
     if (!selectedFamily) { setMessage("Select a valid family."); return; }
     const status = String(form.get("status")) as RecordStatus;
-    if (status === "published" && !window.confirm("Publishing master data still requires a manual storefront rebuild. Continue?")) return;
+    if (status === "published" && !window.confirm("Publishing catalog master data requires a storefront rebuild to update static page content or create new routes. Visibility for an existing published page is controlled live. Continue?")) return;
     const payload = {
       family_id: selectedFamily.id, family_name_en: selectedFamily.name_en, family_name_ar: selectedFamily.name_ar,
       brand: selectedFamily.brand, capacity_hp: Number(form.get("capacityHp")),
@@ -71,8 +71,8 @@ export function CatalogManagementPanel({ data, refresh }: { data: ControlPanelSn
   }
 
   return <div className="panel-stack">
-    <header className="page-heading"><div><p className="eyebrow">CATALOG MASTER DATA</p><h2>Families and products</h2><p>Create drafts, edit approved fields, then publish into the next manual storefront build.</p></div><span className="status-pill">Management only</span></header>
-    <p className="notice">No permanent delete is available. Archive or hide records so historic orders, prices and audit entries remain intact.</p>
+    <header className="page-heading"><div><p className="eyebrow">CATALOG MASTER DATA</p><h2>Families and products</h2><p>Create drafts and edit approved fields. New routes and static page content are included in the next storefront build; visibility for existing published pages is controlled live.</p></div><span className="status-pill">Management only</span></header>
+    <p className="notice">No permanent delete is available. Archive or hide records so historic orders, prices and audit entries remain intact. Creating a new family or model does not create its public page until the storefront is rebuilt.</p>
     {message && <p className={message.endsWith(".") ? "success" : "error"}>{message}</p>}
     <div className="catalog-management-grid">
       <article className="card"><div className="editor-heading"><h3>Family editor</h3><select aria-label="Choose family to edit" value={familyId} onChange={(event) => setFamilyId(event.target.value)}><option value="">Create new family</option>{data.catalogFamilies.map((item) => <option key={item.id} value={item.id}>{item.brand} · {item.name_en}</option>)}</select></div><FamilyForm key={family?.id ?? "new-family"} family={family} onSubmit={saveFamily} /></article>
@@ -93,7 +93,7 @@ function FamilyForm({ family, onSubmit }: { family?: CatalogFamily; onSubmit: (e
     <label className="wide">English highlights (one per line)<textarea name="highlightsEn" defaultValue={family?.highlights_en.join("\n")} /></label><label className="wide">Arabic highlights (one per line)<textarea name="highlightsAr" defaultValue={family?.highlights_ar.join("\n")} dir="rtl" /></label>
     <label>Image path<input name="imagePath" defaultValue={family?.family_image_path ?? ""} placeholder="/products/catalog/..." /></label><label>Asset authorization<select name="assetAuthorization" defaultValue={family?.asset_authorization ?? "pending"}><option value="pending">Pending</option><option value="approved">Approved</option></select></label>
     <label>Display order<input type="number" min="0" name="displayOrder" defaultValue={family?.display_order ?? 0} required /></label><label>Status<select name="status" defaultValue={family?.status ?? "draft"}>{statuses.map((value) => <option key={value}>{value}</option>)}</select></label>
-    <label className="check-row"><input type="checkbox" name="featured" defaultChecked={family?.featured} /> Featured</label><label className="check-row"><input type="checkbox" name="visible" defaultChecked={family?.visible} /> Visible after deployment</label>
+    <label className="check-row"><input type="checkbox" name="featured" defaultChecked={family?.featured} /> Featured</label><label className="check-row"><input type="checkbox" name="visible" defaultChecked={family?.visible} /> Allow public visibility after the page exists</label>
     <label className="wide">Source reference<input name="sourceReference" defaultValue={family?.source_reference ?? "Client-approved catalog update"} required /></label><button className="primary wide">{family ? "Save family changes" : "Create family draft"}</button>
   </form>;
 }
@@ -104,7 +104,7 @@ function ProductForm({ product, families, onSubmit }: { product?: CatalogProduct
     <label>Capacity HP<input type="number" min="0.1" step="0.01" name="capacityHp" defaultValue={product?.capacity_hp ?? 1.5} required /></label><label>Capacity BTU<input type="number" min="1" name="capacityBtu" defaultValue={product?.capacity_btu ?? ""} /></label>
     <label>Cooling mode<select name="coolingMode" defaultValue={product?.cooling_mode ?? "cool-only"}><option value="cool-only">Cool only</option><option value="heat-pump">Cool & heat</option></select></label><label>Energy class<input name="energyClass" defaultValue={product?.energy_class ?? ""} /></label>
     <label>Display order<input type="number" min="0" name="displayOrder" defaultValue={product?.display_order ?? 0} required /></label><label>Status<select name="status" defaultValue={product?.catalog_status ?? "draft"}>{statuses.map((value) => <option key={value}>{value}</option>)}</select></label>
-    <label className="check-row"><input type="checkbox" name="active" defaultChecked={product?.active ?? true} /> Operationally active</label><label className="check-row"><input type="checkbox" name="requiresInspection" defaultChecked={product?.requires_inspection} /> Requires inspection</label><label className="check-row"><input type="checkbox" name="visible" defaultChecked={product?.visible} /> Visible after deployment</label>
+    <label className="check-row"><input type="checkbox" name="active" defaultChecked={product?.active ?? true} /> Operationally active</label><label className="check-row"><input type="checkbox" name="requiresInspection" defaultChecked={product?.requires_inspection} /> Requires inspection</label><label className="check-row"><input type="checkbox" name="visible" defaultChecked={product?.visible} /> Allow public visibility after the page exists</label>
     <label className="wide">Source reference<input name="sourceReference" defaultValue={product?.source_reference ?? "Client-approved catalog update"} required /></label><button className="primary wide">{product ? "Save product changes" : "Create product draft"}</button>
   </form>;
 }
