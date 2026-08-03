@@ -9,12 +9,15 @@ import { getBestSellingProducts } from "@/lib/best-selling-products";
 import { productFamilies } from "@/content/product-families";
 import { productVariants } from "@/content/product-variants";
 import type { SupportedHorsepower } from "@/types/catalog";
+import { useVisibleCatalog } from "@/components/catalog/PublicCatalogVisibilityProvider";
+import { PublicCatalogUnavailable } from "@/components/catalog/PublicCatalogUnavailable";
 
 const curatedCapacities: readonly SupportedHorsepower[] = [1.5, 2.25, 3];
 
 export function BestSellingProducts({ locale }: { locale: Locale }) {
   const ar = locale === "ar";
   const curatedProducts = getBestSellingProducts();
+  const liveCatalog = useVisibleCatalog(productFamilies, productVariants);
   const [capacity, setCapacity] = useState<SupportedHorsepower>(supportedHorsepowerValues[0]);
 
   const isCurated = curatedCapacities.includes(capacity);
@@ -27,12 +30,13 @@ export function BestSellingProducts({ locale }: { locale: Locale }) {
   // and does not extend to other capacities. For every other horsepower,
   // pull real matching catalog models across all equipment types instead of
   // showing an empty "not available" state.
-  const items = isCurated
+  const candidateItems = isCurated
     ? curatedProducts
         .filter(({ variant }) => variant.capacityHp === capacity)
         .map(({ family, variant, selection }) => ({ key: selection.variantId, family, variant }))
-    : filterProductVariants(productFamilies, productVariants, { ...emptyCatalogFilters, hp: String(capacity) })
-        .map((variant) => ({ key: variant.id, family: productFamilies.find((family) => family.id === variant.familyId)!, variant }));
+    : filterProductVariants(liveCatalog.families, liveCatalog.variants, { ...emptyCatalogFilters, hp: String(capacity) })
+        .map((variant) => ({ key: variant.id, family: liveCatalog.families.find((family) => family.id === variant.familyId)!, variant }));
+  const items = candidateItems.filter(({ family, variant }) => liveCatalog.families.some((item) => item.id === family.id) && liveCatalog.variants.some((item) => item.id === variant.id));
 
   return <section className="section best-selling-products" id="best-selling-products" aria-labelledby="best-selling-products-title">
     <div className="section-heading best-selling-heading">
@@ -55,10 +59,10 @@ export function BestSellingProducts({ locale }: { locale: Locale }) {
         </h3>
         <Link href={catalogHref} prefetch={false}>{ar ? "عرض كل الموديلات" : "View all models"}<span>↗</span></Link>
       </div>
-      <div className="product-grid best-selling-grid">
+      {liveCatalog.status === "loading" || liveCatalog.status === "error" ? <PublicCatalogUnavailable locale={locale} loading={liveCatalog.status === "loading"} compact /> : <div className="product-grid best-selling-grid">
         {items.map(({ key, family, variant }) => <ProductVariantCard key={key} family={family} variant={variant} locale={locale} />)}
-      </div>
-      {!items.length && <p className="empty">{ar ? "لا توجد موديلات متاحة لهذه القدرة حاليًا." : "No models available for this horsepower right now."}</p>}
+      </div>}
+      {liveCatalog.status !== "loading" && liveCatalog.status !== "error" && !items.length && <p className="empty">{ar ? "لا توجد موديلات متاحة لهذه القدرة حاليًا." : "No models available for this horsepower right now."}</p>}
     </section>
   </section>;
 }

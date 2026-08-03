@@ -13,6 +13,15 @@ const required = [
 const errors = [];
 const value = (name) => process.env[name]?.trim() ?? "";
 
+if (value("NEXT_PUBLIC_LIVE_CATALOG_VISIBILITY_ENABLED") !== "true") {
+  errors.push("NEXT_PUBLIC_LIVE_CATALOG_VISIBILITY_ENABLED must be true for production.");
+}
+
+if (!value("NEXT_PUBLIC_SUPABASE_URL")) errors.push("NEXT_PUBLIC_SUPABASE_URL is required for live catalog visibility.");
+if (!value("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY").startsWith("sb_publishable_")) {
+  errors.push("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY must use the sb_publishable_ format.");
+}
+
 for (const name of required) {
   if (!value(name)) errors.push(`${name} is required.`);
 }
@@ -33,6 +42,7 @@ validateHttpsUrl("NEXT_PUBLIC_SITE_URL");
 validateHttpsUrl("NEXT_PUBLIC_FACEBOOK_PAGE_URL");
 validateHttpsUrl("NEXT_PUBLIC_GOOGLE_MAPS_URL");
 validateHttpsUrl("NEXT_PUBLIC_GOOGLE_BUSINESS_URL");
+validateHttpsUrl("NEXT_PUBLIC_SUPABASE_URL");
 
 if (value("NEXT_PUBLIC_WHATSAPP_NUMBER") && !/^20\d{10}$/.test(value("NEXT_PUBLIC_WHATSAPP_NUMBER"))) {
   errors.push("NEXT_PUBLIC_WHATSAPP_NUMBER must contain exactly 12 digits, beginning with Egypt country code 20.");

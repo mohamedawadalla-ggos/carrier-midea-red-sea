@@ -38,6 +38,7 @@ export const siteConfig = {
   googleBusinessUrl: process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_URL ?? "",
   metaPixelId: process.env.NEXT_PUBLIC_META_PIXEL_ID ?? "",
   gaMeasurementId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "",
+  liveCatalogVisibilityEnabled: process.env.NEXT_PUBLIC_LIVE_CATALOG_VISIBILITY_ENABLED === "true",
   publicSupabase,
 } as const;
 

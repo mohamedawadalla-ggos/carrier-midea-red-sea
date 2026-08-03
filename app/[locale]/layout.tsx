@@ -8,7 +8,8 @@ import { SiteStructuredData } from "@/components/seo/SiteStructuredData";
 import { RequestCartProvider } from "@/components/cart/RequestCartProvider";
 import { PublicPricingProvider } from "@/components/pricing/PublicPricingProvider";
 import { PublicStockProvider } from "@/components/pricing/PublicStockProvider";
+import { PublicCatalogVisibilityProvider } from "@/components/catalog/PublicCatalogVisibilityProvider";
 
 export const metadata: Metadata = siteMetadata;
 export function generateStaticParams() { return locales.map((locale) => ({ locale })); }
-export default async function LocaleRootLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) { const { locale } = await params; if (!isLocale(locale)) notFound(); return <html lang={locale} dir={localeDirection(locale)}><body><SiteStructuredData /><PublicPricingProvider><PublicStockProvider><RequestCartProvider locale={locale}>{children}<CoolPetAdvisor locale={locale} /></RequestCartProvider></PublicStockProvider></PublicPricingProvider></body></html>; }
+export default async function LocaleRootLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) { const { locale } = await params; if (!isLocale(locale)) notFound(); return <html lang={locale} dir={localeDirection(locale)}><body><SiteStructuredData /><PublicCatalogVisibilityProvider><PublicPricingProvider><PublicStockProvider><RequestCartProvider locale={locale}>{children}<CoolPetAdvisor locale={locale} /></RequestCartProvider></PublicStockProvider></PublicPricingProvider></PublicCatalogVisibilityProvider></body></html>; }
