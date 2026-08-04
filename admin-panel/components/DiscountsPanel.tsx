@@ -4,6 +4,7 @@ import { useMemo, useState, type FormEvent } from "react";
 import { can } from "@/lib/access";
 import { calculateDiscountBps, parseCeilingPricePaste, validateCeilingPrice } from "@/lib/discount-ceiling";
 import type { ControlPanelSnapshot } from "@/lib/data";
+import { errorMessage } from "@/lib/errors";
 import { formatMoney, inputToMinor, minorToInput } from "@/lib/money";
 import { getSupabase } from "@/lib/supabase";
 import type { DiscountCampaign } from "@/lib/types";
@@ -170,7 +171,7 @@ export function DiscountsPanel({ data, refresh }: { data: ControlPanelSnapshot; 
       resetEditor();
       await refresh();
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Unable to save campaign.");
+      setMessage(errorMessage(error, "Unable to save campaign."));
     }
   }
 
