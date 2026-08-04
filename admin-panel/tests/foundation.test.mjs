@@ -59,7 +59,8 @@ test("settings workflow blocks final marketing edits and exposes explicit transi
 test("marketing discounts default to draft with an explicit approval submission", () => {
   assert.match(discountsPanel, /\? "pending_approval" : "draft"/);
   assert.match(discountsPanel, /name="submitForApproval"/);
-  assert.match(discountsPanel, /approved_by: publish \? data\.profile\.user_id : null/);
+  assert.match(discountsPanel, /approved_by: null/);
+  assert.match(discountsPanel, /publish_discount_campaign/);
 });
 
 test("staff user management is super-admin-only and deactivates instead of deleting", () => {
@@ -93,7 +94,7 @@ test("password recovery opens a new-password flow without requiring the forgotte
 
 test("immediate publication paths require confirmation and use accurate city wording", () => {
   assert.match(pricesPanel, /window\.confirm/);
-  assert.match(discountsPanel, /publish && !window\.confirm/);
+  assert.match(discountsPanel, /Only one campaign can remain active/);
   assert.match(settingsPanel, /status === "published" && !window\.confirm/);
   assert.match(locationsPanel, /publish && !window\.confirm/);
   assert.match(locationsPanel, /Add and publish city/);
