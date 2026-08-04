@@ -51,11 +51,22 @@ export function UsersPanel({ currentUserId }: { currentUserId: string }) {
 
   async function save(user: ManagedStaffUser, event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const nextEmail = String(form.get("email"));
+    const nextFullName = String(form.get("fullName"));
+    const nextRole = String(form.get("role"));
+    const nextActive = form.get("active") === "on";
+
+    const changes: string[] = [];
+    if (nextActive !== user.active) changes.push(nextActive ? "reactivate this account" : "deactivate this account");
+    if (nextRole !== user.role) changes.push(`change their role from ${user.role.replaceAll("_", " ")} to ${nextRole.replaceAll("_", " ")}`);
+    if (nextEmail !== user.email) changes.push(`change their sign-in email to ${nextEmail}`);
+    if (changes.length && !window.confirm(`For ${user.full_name}: ${changes.join(", ")}. This takes effect immediately. Continue?`)) return;
+
     setBusy(true);
     setMessage("");
-    const form = new FormData(event.currentTarget);
     try {
-      await invoke({ action: "update", user_id: user.user_id, email: String(form.get("email")), full_name: String(form.get("fullName")), role: String(form.get("role")), active: form.get("active") === "on" });
+      await invoke({ action: "update", user_id: user.user_id, email: nextEmail, full_name: nextFullName, role: nextRole, active: nextActive });
       await reload();
       setMessage("Staff user updated.");
     } catch (error) {
