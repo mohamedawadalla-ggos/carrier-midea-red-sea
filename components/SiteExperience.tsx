@@ -11,6 +11,7 @@ import { FacebookFollowSection } from "@/components/home/FacebookFollowSection";
 import { ServiceAreaMap } from "@/components/home/ServiceAreaMap";
 import { AdvisorCheckpoint } from "@/components/home/AdvisorCheckpoint";
 import { HeroProductShowcase } from "@/components/home/HeroProductShowcase";
+import { SummerPromoBanner } from "@/components/home/SummerPromoBanner";
 import { BestSellingProducts } from "@/components/home/BestSellingProducts";
 import { OfferBanner } from "@/components/offers/OfferBanner";
 import { leadProvider } from "@/services/leads/whatsapp-provider";
@@ -70,6 +71,8 @@ export function SiteExperience({ initialLocale }: { initialLocale: Locale }) {
           <div className="hero-note"><span>24/7</span><p>{locale === "ar" ? "دعم سريع للحالات العاجلة" : "Fast support for urgent cases"}</p></div>
           <a className="scroll-cue" href="#best-selling-products" aria-label={locale === "ar" ? "انتقل إلى المنتجات الأكثر مبيعًا" : "Scroll to best-selling air conditioners"}><span>↓</span>{locale === "ar" ? "اكتشف" : "DISCOVER"}</a>
         </section>
+
+        <SummerPromoBanner locale={locale} />
 
         <section className="trust-strip" aria-label="Our promises">
           {t.trust.map((item, i) => <div key={item}><span>{["◷", "◇", "✓", "◎"][i]}</span>{item}</div>)}

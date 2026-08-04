@@ -9,6 +9,7 @@ const home = await readFile(new URL("../components/SiteExperience.tsx", import.m
 const featured = await readFile(new URL("../components/home/FeaturedProductFamilies.tsx", import.meta.url), "utf8");
 const bestSelling = await readFile(new URL("../components/home/BestSellingProducts.tsx", import.meta.url), "utf8");
 const heroShowcase = await readFile(new URL("../components/home/HeroProductShowcase.tsx", import.meta.url), "utf8");
+const promoBanner = await readFile(new URL("../components/home/SummerPromoBanner.tsx", import.meta.url), "utf8");
 const checkpoint = await readFile(new URL("../components/home/AdvisorCheckpoint.tsx", import.meta.url), "utf8");
 const company = await readFile(new URL("../content/site.ts", import.meta.url), "utf8");
 
@@ -68,13 +69,16 @@ test("homepage leads with catalog selections and the hero promotes Facebook and 
   assert.match(bestSelling, /Choose your AC by horsepower/);
   assert.match(bestSelling, /<ProductVariantCard/);
   assert.match(home, /<HeroProductShowcase locale=\{locale\}/);
-  // The hero no longer shows product photography (replaced by a Facebook +
-  // campaign promotion) -- assert the new content instead of the retired
+  // The hero no longer shows product photography (replaced by a Facebook
+  // promotion) -- assert the new content instead of the retired
   // product-asset-authorization guard.
   assert.doesNotMatch(heroShowcase, /https?:\/\//);
   assert.match(heroShowcase, /facebook_hero_banner_click/);
-  assert.match(heroShowcase, /hero-campaign-badge/);
   assert.match(heroShowcase, /siteConfig\.facebookPageUrl/);
+  // The active campaign is promoted via a dedicated image banner section
+  // right after the hero, rather than a text badge inside the hero itself.
+  assert.match(home, /<SummerPromoBanner locale=\{locale\}/);
+  assert.match(promoBanner, /summer-2026-launch-promo\.webp/);
 });
 
 test("exclusive dealer wording matches the client-approved bilingual copy", () => {
