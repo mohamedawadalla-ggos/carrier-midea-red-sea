@@ -46,10 +46,14 @@ export function CatalogVisibilityPanel({ data, refresh }: { data: ControlPanelSn
       return <article className="card catalog-family-card" key={family.id}>
         <header><div><span className={`product-brand ${family.brand}`}>{family.brand}</span><h3>{family.name_en}</h3><small dir="rtl">{family.name_ar}</small></div><label className="switch-row"><input type="checkbox" checked={family.visible} disabled={!editable || busy !== ""} onChange={(event) => setFamilyVisible(family.id, event.target.checked)} /> {family.visible ? "Visible" : "Hidden"}</label></header>
         <p><code>{family.id}</code> · {family.status}</p>
-        <div className="catalog-model-list">{products.map((product) => <label key={product.model_code} className={!familyEnabled ? "muted switch-row" : "switch-row"}>
-          <span><code>{product.model_code}</code><small>{product.capacity_hp} HP · {product.cooling_mode}</small></span>
-          <input type="checkbox" checked={product.visible} disabled={!editable || !familyEnabled || busy !== ""} onChange={(event) => setProductVisible(product.model_code, event.target.checked)} />
-        </label>)}</div>
+        <div className="catalog-model-list">{products.map((product) => {
+          const productEligible = product.catalog_status === "published" && product.active;
+          const rowEnabled = familyEnabled && productEligible;
+          return <label key={product.model_code} className={!rowEnabled ? "muted switch-row" : "switch-row"}>
+            <span><code>{product.model_code}</code><small>{product.capacity_hp} HP · {product.cooling_mode}{!productEligible ? ` · not eligible for public display (${product.catalog_status !== "published" ? product.catalog_status : "inactive"})` : ""}</small></span>
+            <input type="checkbox" checked={product.visible} disabled={!editable || !rowEnabled || busy !== ""} onChange={(event) => setProductVisible(product.model_code, event.target.checked)} />
+          </label>;
+        })}</div>
       </article>;
     })}</section>
   </div>;
