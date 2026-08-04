@@ -33,3 +33,22 @@ table td input[type="number"]{width:90px;min-height:36px;border:1px solid var(--
   .catalog-management-grid { grid-template-columns: 1fr; }
   .deployment-state { justify-items: start; text-align: start; }
 }
+
+.campaign-editor { grid-column: 1 / -1; }
+.ceiling-price-editor { display: grid; gap: 16px; margin-top: 8px; border-top: 1px solid #d7e4ea; padding-top: 18px; }
+.ceiling-summary { display: grid; justify-items: end; gap: 4px; }
+.ceiling-summary strong { color: var(--navy2); font-size: 20px; }
+.ceiling-summary small { color: var(--muted); }
+.paste-prices { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; }
+.paste-prices textarea { min-height: 92px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+.ceiling-table { max-height: 520px; }
+.ceiling-table input { min-width: 130px; }
+.invalid-price-row { background: #fff0f2; }
+.success-text { color: #16734a; font-weight: 800; }
+.table-actions { display: flex; gap: 6px; }
+.table-action.danger { color: #a22531; }
+
+@media (max-width: 760px) {
+  .paste-prices { grid-template-columns: 1fr; }
+  .ceiling-summary { justify-items: start; }
+}

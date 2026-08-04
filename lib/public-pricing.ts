@@ -11,7 +11,7 @@ export type PublicPrice = Readonly<{
   campaignCode: string | null;
   campaignTitleAr: string | null;
   campaignTitleEn: string | null;
-  campaignDiscountType: "percentage" | "fixed_amount" | null;
+  campaignDiscountType: "percentage" | "fixed_amount" | "ceiling_price" | null;
   campaignDiscountValue: number | null;
   campaignStartsAt: string | null;
   campaignEndsAt: string | null;
@@ -59,12 +59,12 @@ function parsePrice(value: unknown): PublicPrice | null {
   if (campaignApplied && (
     !campaignCode || !campaignTitleAr || !campaignTitleEn ||
     !isSafeMinor(campaignDiscountValue) || campaignDiscountValue === 0 ||
-    (campaignDiscountType !== "percentage" && campaignDiscountType !== "fixed_amount") ||
+    (campaignDiscountType !== "percentage" && campaignDiscountType !== "fixed_amount" && campaignDiscountType !== "ceiling_price") ||
     !campaignStartsAt || !campaignEndsAt || salePriceMinor >= listPriceMinor
   )) return null;
 
   const safeDiscountType =
-    campaignDiscountType === "percentage" || campaignDiscountType === "fixed_amount"
+    campaignDiscountType === "percentage" || campaignDiscountType === "fixed_amount" || campaignDiscountType === "ceiling_price"
       ? campaignDiscountType
       : null;
   const safeDiscountValue = isSafeMinor(campaignDiscountValue) ? campaignDiscountValue : null;

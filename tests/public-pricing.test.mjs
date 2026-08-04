@@ -66,7 +66,7 @@ test("valid list and sale prices map by exact model code", async () => {
   assert.equal(getPublicPrice(result, "53khct12n-708"), undefined);
 });
 
-test("percentage and fixed campaigns retain safe public metadata", async () => {
+test("percentage, fixed, and ceiling campaigns retain safe public metadata", async () => {
   const common = {
     ...basePrice,
     sale_price_minor: 2377350,
@@ -80,9 +80,11 @@ test("percentage and fixed campaigns retain safe public metadata", async () => {
   };
   const fixed = { ...common, model_code: "FIXED-1", campaign_discount_type: "fixed_amount", campaign_discount_value: 10000 };
   const percentage = { ...common, campaign_discount_type: "percentage" };
-  const result = await loadPublicPricing({ config, fetchImpl: mockFetch(setting, [percentage, fixed]) });
+  const ceiling = { ...common, model_code: "CEILING-1", campaign_discount_type: "ceiling_price" };
+  const result = await loadPublicPricing({ config, fetchImpl: mockFetch(setting, [percentage, fixed, ceiling]) });
   assert.equal(getPublicPrice(result, basePrice.model_code)?.campaignDiscountType, "percentage");
   assert.equal(getPublicPrice(result, "FIXED-1")?.campaignDiscountType, "fixed_amount");
+  assert.equal(getPublicPrice(result, "CEILING-1")?.campaignDiscountType, "ceiling_price");
 });
 
 test("invalid negative and malformed responses fail safely", async () => {

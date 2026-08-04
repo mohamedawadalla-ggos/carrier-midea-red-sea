@@ -97,12 +97,20 @@ export type DiscountCampaign = {
   code: string;
   title_ar: string;
   title_en: string;
-  discount_type: "percentage" | "fixed_amount";
-  discount_value_minor_or_bps: number;
+  discount_type: "percentage" | "fixed_amount" | "ceiling_price";
+  discount_value_minor_or_bps: number | null;
   starts_at: string;
   ends_at: string;
   status: RecordStatus;
   approval_reference: string | null;
+  created_by: string;
+  approved_by: string | null;
+};
+
+export type DiscountCampaignProduct = {
+  campaign_id: string;
+  model_code: string;
+  campaign_sale_price_minor: number | null;
 };
 
 export type ManagedStaffUser = StaffProfile & {
