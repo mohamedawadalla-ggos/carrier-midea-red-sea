@@ -11,10 +11,6 @@ export function HeroProductShowcase({ locale }: { locale: Locale }) {
       role="group"
       aria-label={ar ? "عروض وترويج" : "Promotions"}
     >
-      <a className="hero-campaign-badge" href={`/${locale}/products`}>
-        <strong>{ar ? "صيف 2026" : "SUMMER 2026"}</strong>
-        <span>{ar ? "خصم 10% على كل الموديلات حتى 1 سبتمبر" : "10% OFF every model, ends Sep 1"}</span>
-      </a>
       {siteConfig.facebookPageUrl && (
         <FacebookLink className="hero-facebook-banner" href={siteConfig.facebookPageUrl} event="facebook_hero_banner_click">
           <span className="facebook-icon" aria-hidden="true">f</span>
