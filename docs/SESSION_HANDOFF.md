@@ -35,6 +35,7 @@ In order, most recent first:
 ## 3. What's still open — sorted by who can actually do it
 
 ### Needs local/laptop access (probably why you're reading this on Desktop)
+- **In progress (2026-08-04, started on Desktop):** Mohamed is replacing 4 home-page promo images that show wrong discount percentages. Not yet pushed as of this note — if you're picking this up and don't see a matching recent commit/PR for it, it's either still in progress locally or was pushed after this note was written; check `git log` for anything image-related before assuming it's still outstanding. When it lands (PR or direct push), verify: the right 4 images were swapped, the discount numbers shown actually match intended pricing (not just "a new image landed"), and nothing else on the home page regressed — the Cloudflare/Vercel preview URLs on the PR are the fastest way to eyeball the actual rendered numbers.
 - ~~A credential file, something like `.branch2_*_tmp`, reported in `C:\projects\RED SEA AC`~~ — **checked 2026-08-04, does not exist.** `Get-ChildItem -Force -Recurse -Filter ".branch2_*"` on that machine turned up nothing. Dead end / stale report from the earlier "Codex" session; no credential to rotate. Closed, don't re-flag it.
 - Whatever local files a prior "Codex" session produced at that same path, including a second copy of the Arabic delivery-docs package (see §4).
 
@@ -71,6 +72,9 @@ In order, most recent first:
 ## Session log
 
 *(Newest entry on top. Whoever picks up next: read everything above, do your work, then add an entry here before committing and handing off again.)*
+
+### 2026-08-04 — Claude Code (cloud), noting Desktop work in progress
+Mohamed started replacing 4 home-page images with wrong discount percentages, working directly on Desktop — not through this cloud session, since it's local image file work. Logged in §3 as in-progress so it's not lost or duplicated. Cloud session's role here is to review once it's pushed (PR or direct commit) — watching for it.
 
 ### 2026-08-04 — Claude Code (cloud) + Mohamed (Desktop), migration drift resolved and deploy completed
 Picking up from the failed deploy attempt below: Mohamed installed the Supabase CLI on his laptop (via Scoop — `npm install -g supabase` doesn't work, Supabase blocks that), ran `supabase login` + `supabase link`, then worked through the drift interactively together — repairing the 6 phantom old migrations as `reverted`, confirming `20260726200000` was already live before repairing it `applied`, and explicitly *not* repair-marking the two real pending ones. Ran `supabase db push` for real, which applied `20260804180000` and `20260804190000` — both are now genuinely live, not just marked as such. Re-ran the `Deploy Supabase` GitHub Actions workflow afterward and it went fully green: `db push` no-op, all 3 Edge Functions redeployed. See the rewritten §3 Supabase bullet for the full detail. This closes out the deploy-drift item entirely — PR #27's pipeline is now proven working.
