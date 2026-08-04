@@ -54,3 +54,8 @@ next-env.d.ts
 /public/products/catalog-preview/
 /public/products/catalog-revision-preview/
 /public/products/promotional-preview/
+
+# local delivery-docs draft (unofficial reference copy; not the canonical
+# handover package, which is tracked/reviewed separately)
+/docs/delivery/
+/output/
