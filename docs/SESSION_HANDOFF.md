@@ -11,11 +11,14 @@ If you're picking this up cold: this is a Carrier/Midea AC dealer's storefront +
 ```
 git log origin/main --oneline -5
 ```
-As of this writing, `main` is at `1b22e5a` (merged #29, this handoff file) — check it's still current before acting on anything below. All work in this project has gone through PR branches (`claude/...` or `codex/...`) merged to `main`; there is no long-lived feature branch.
+As of this writing, `main` is at `de2a567` (merged #30, credential-file check + local setup notes) — check it's still current before acting on anything below. All work in this project has gone through PR branches (`claude/...` or `codex/...`) merged to `main`; there is no long-lived feature branch.
+
+**⚠ Local working directory has moved.** The laptop checkout is no longer at `C:\projects\RED SEA AC` — it moved to the **J: partition**. If you're picking this up on Desktop: confirm the new path there before doing anything, don't assume the old `C:\projects\RED SEA AC` path is still valid or still current, and `git pull` (or re-clone, if the old folder wasn't carried over) before continuing work. Every reference to `C:\projects\RED SEA AC` elsewhere in this doc is the *old* path — kept as-is below since the commands/fixes documented under it (execution policy, `allow-scripts`) still apply, just at the new location.
 
 ## 2. What's already done (merged to `main`)
 
 In order, most recent first:
+- **#30** `docs: close out credential-file check, add local Windows setup notes` — closed the `.branch2_*_tmp` item in §3 (confirmed not present on the laptop) and documented the Chocolatey/execution-policy/`allow-scripts` local setup steps in §5.
 - **#28** `chore: gitignore the local delivery-docs draft` — see §4 below, the two-versions handover-doc situation.
 - **#27** `ci: add manual-trigger workflow to deploy pending Supabase changes` — `.github/workflows/deploy-supabase.yml`, a `workflow_dispatch` button that runs `supabase db push` + redeploys all 3 Edge Functions. **Not usable yet** — needs `SUPABASE_ACCESS_TOKEN` and `SUPABASE_PROJECT_REF` added as GitHub repo secrets first (Settings → Secrets and variables → Actions).
 - **#26** `fix(orders): rate-limit and auto-expire pending orders in create_order` — closes a stock-drain gap (anonymous checkout could hold inventory forever via abandoned unpaid orders). Migration: `supabase/migrations/20260804190000_order_creation_abuse_guards.sql`. Verified end-to-end against a local throwaway Postgres (not just read) — see the PR body for the test transcript.
@@ -67,6 +70,9 @@ In order, most recent first:
 ## Session log
 
 *(Newest entry on top. Whoever picks up next: read everything above, do your work, then add an entry here before committing and handing off again.)*
+
+### 2026-08-04 — Claude Code (cloud), handing off to Desktop
+Opened, watched through CI, and merged PR #30 (credential-file check + local setup notes) — `main` is now at `de2a567`. Mohamed is picking up work from his Desktop/laptop session next. **Two things for whoever's on Desktop:** (1) pull the latest `main` into your local checkout before doing anything — don't build on a stale copy. (2) The project's local folder has moved to the **J: partition** (was `C:\projects\RED SEA AC`) — confirm you're working out of the new location, not the old one, before running any of the setup steps documented in §5. See the ⚠ note in §1 for more.
 
 ### 2026-08-04 — Claude Code (cloud), continued
 Got Mohamed's laptop (`C:\projects\RED SEA AC`) to a working local dev environment: Node 24.19/npm 11.17 installed via Chocolatey, PowerShell execution-policy and npm `allow-scripts` blockers resolved (see §5), `npm install` clean in both root and `admin-panel/`, `typecheck` clean in both, `admin-panel` production build succeeds. Checked the flagged `.branch2_*_tmp` credential file from §3 — does not exist on that machine, closed as a dead end. Remaining §3 items are unchanged and still need Supabase dashboard, Paymob dashboard, or Mohamed's own decision to close.
