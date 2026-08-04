@@ -11,10 +11,23 @@ export function calculateDiscountBps(listPriceMinor: number, salePriceMinor: num
   return Math.floor(((listPriceMinor - salePriceMinor) * 10_000) / listPriceMinor);
 }
 
+// Excel paste always delimits columns with a tab, so split on tabs when one
+// is present -- this leaves commas free to be thousand separators inside the
+// price cell (e.g. "57,135.00"), which inputToMinor strips separately. Only
+// fall back to comma-as-delimiter for input with no tab at all (e.g. a
+// hand-typed or CSV-style line), and even then split on just the first comma
+// so any further commas in the price are treated as formatting, not columns.
+function splitPasteLine(line: string): string[] {
+  if (line.includes("\t")) return line.split("\t").map((cell) => cell.trim());
+  const commaIndex = line.indexOf(",");
+  if (commaIndex === -1) return [line.trim()];
+  return [line.slice(0, commaIndex).trim(), line.slice(commaIndex + 1).trim()];
+}
+
 export function parseCeilingPricePaste(value: string): CeilingPriceInput[] {
   const seen = new Set<string>();
   return value.split(/\r?\n/).filter((line) => line.trim()).map((line, index) => {
-    const [rawCode, rawPrice, ...extra] = line.split(/\t|,/).map((cell) => cell.trim());
+    const [rawCode, rawPrice, ...extra] = splitPasteLine(line);
     const modelCode = rawCode?.toUpperCase();
     if (!modelCode || !rawPrice || extra.length) {
       throw new Error(`Row ${index + 1} must contain model code and offer price only.`);
