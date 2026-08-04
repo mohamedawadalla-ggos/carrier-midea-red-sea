@@ -11,10 +11,25 @@ const flags = ["active", "sales_available", "delivery_available", "installation_
 export function LocationsPanel({ data, refresh }: { data: ControlPanelSnapshot; refresh: () => Promise<void> }) {
   const [message, setMessage] = useState("");
   async function toggle(city: ServiceLocation, key: typeof flags[number]) {
-    const publish = data.profile.role === "super_admin" || data.profile.role === "management";
+    const isPrivileged = data.profile.role === "super_admin" || data.profile.role === "management";
     const nextValue = !city[key];
-    if (publish && !window.confirm((nextValue ? "Enable " : "Disable ") + key.replaceAll("_", " ") + " for " + city.name_en + "? This publishes immediately.")) return;
-    const { error } = await getSupabase().from("service_locations").update({ [key]: !city[key], status: publish ? "published" : "pending_approval", approved_by: publish ? data.profile.user_id : null }).eq("id", city.id);
+    const preservesLive = !isPrivileged && city.status === "published";
+    const label = (nextValue ? "Enable " : "Disable ") + key.replaceAll("_", " ") + " for " + city.name_en + "?";
+    const consequence = isPrivileged
+      ? " This publishes immediately."
+      : preservesLive
+        ? " The city stays live and published; Management does not need to re-approve it."
+        : " This submits the change for Management approval before it goes live.";
+    if (!window.confirm(label + consequence)) return;
+    const payload: Record<string, unknown> = { [key]: nextValue };
+    if (isPrivileged) {
+      payload.status = "published";
+      payload.approved_by = data.profile.user_id;
+    } else if (!preservesLive) {
+      payload.status = "pending_approval";
+      payload.approved_by = null;
+    }
+    const { error } = await getSupabase().from("service_locations").update(payload).eq("id", city.id);
     if (error) setMessage(error.message); else await refresh();
   }
   async function addCity(event: FormEvent<HTMLFormElement>) {
