@@ -3,6 +3,7 @@
 import { useMemo, useState, type FormEvent } from "react";
 import { can, findEditablePriceEntry, findPublishablePriceEntry } from "@/lib/access";
 import type { ControlPanelSnapshot } from "@/lib/data";
+import { errorMessage } from "@/lib/errors";
 import { formatMoney, inputToMinor, minorToInput } from "@/lib/money";
 import { getSupabase } from "@/lib/supabase";
 
@@ -52,7 +53,7 @@ export function PricesPanel({ data, refresh }: { data: ControlPanelSnapshot; ref
       setMessage(status === "pending_approval" ? "Price submitted for approval." : "Price draft saved.");
       await refresh();
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Unable to save price.");
+      setMessage(errorMessage(error, "Unable to save price."));
     }
   }
 
@@ -102,7 +103,7 @@ export function PricesPanel({ data, refresh }: { data: ControlPanelSnapshot; ref
       await refresh();
     } catch (error) {
       if (approvedNow) await refresh().catch(() => undefined);
-      const detail = error instanceof Error ? error.message : "Unable to publish price.";
+      const detail = errorMessage(error, "Unable to publish price.");
       setMessage(approvedNow ? `Price approved, but publication failed: ${detail} Retry publication.` : detail);
     }
   }
