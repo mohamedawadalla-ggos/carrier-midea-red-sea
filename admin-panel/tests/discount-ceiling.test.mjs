@@ -20,6 +20,19 @@ test("Excel-style two-column paste preserves exact model codes and rejects dupli
   assert.throws(() => parseCeilingPricePaste("MODEL-A\t10\nMODEL-A\t9"), /Duplicate model code/);
 });
 
+test("thousand-separator commas in the price cell don't get mistaken for a column delimiter", () => {
+  assert.deepEqual(parseCeilingPricePaste("MODEL-A\t57,135.00\nMODEL-B\t127,100"), [
+    { modelCode: "MODEL-A", salePriceMinor: 5_713_500 },
+    { modelCode: "MODEL-B", salePriceMinor: 12_710_000 },
+  ]);
+  // No-tab fallback (hand-typed/CSV-style input): split on the first comma
+  // only, so further commas in the price are still just formatting.
+  assert.deepEqual(parseCeilingPricePaste("MODEL-C,57,135.00"), [
+    { modelCode: "MODEL-C", salePriceMinor: 5_713_500 },
+  ]);
+  assert.throws(() => parseCeilingPricePaste("MODEL-A\t10\t20"), /Row 1 must contain model code and offer price only/);
+});
+
 test("ceiling validation blocks prices above customer price or below the private floor", () => {
   assert.match(validateCeilingPrice({ modelCode: "A", listPriceMinor: 3000, minimumPriceMinor: 2500, salePriceMinor: 3000 }), /below the customer price/);
   assert.match(validateCeilingPrice({ modelCode: "A", listPriceMinor: 3000, minimumPriceMinor: 2500, salePriceMinor: 2400 }), /below the approved minimum/);
