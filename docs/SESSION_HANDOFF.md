@@ -11,7 +11,7 @@ If you're picking this up cold: this is a Carrier/Midea AC dealer's storefront +
 ```
 git log origin/main --oneline -5
 ```
-As of this writing, `main` is at `cebb787` — check it's still current before acting on anything below. All work in this project has gone through PR branches (`claude/...` or `codex/...`) merged to `main`; there is no long-lived feature branch.
+As of this writing, `main` is at `1b22e5a` (merged #29, this handoff file) — check it's still current before acting on anything below. All work in this project has gone through PR branches (`claude/...` or `codex/...`) merged to `main`; there is no long-lived feature branch.
 
 ## 2. What's already done (merged to `main`)
 
@@ -31,7 +31,7 @@ In order, most recent first:
 ## 3. What's still open — sorted by who can actually do it
 
 ### Needs local/laptop access (probably why you're reading this on Desktop)
-- **A credential file, something like `.branch2_*_tmp`, reported in a local working directory** (`C:\projects\RED SEA AC` per an earlier report from a "Codex" session) — contains what looks like a database connection string. **Never confirmed whether it's live/active.** If you have access to that machine: check it, and if the credential is real, rotate it and delete the file. It is **not** in this git repo or any branch — confirmed by exhaustive `git log --all` search from the cloud session.
+- ~~A credential file, something like `.branch2_*_tmp`, reported in `C:\projects\RED SEA AC`~~ — **checked 2026-08-04, does not exist.** `Get-ChildItem -Force -Recurse -Filter ".branch2_*"` on that machine turned up nothing. Dead end / stale report from the earlier "Codex" session; no credential to rotate. Closed, don't re-flag it.
 - Whatever local files a prior "Codex" session produced at that same path, including a second copy of the Arabic delivery-docs package (see §4).
 
 ### Needs Supabase dashboard or CLI access
@@ -60,12 +60,16 @@ In order, most recent first:
 - **RLS is the real security boundary, not the UI.** Every admin panel talks to Supabase directly from the client; permission checks in `admin-panel/lib/access.ts` are UX only. When adding or reviewing a feature, always check the matching RLS policy in `supabase/migrations/`, not just the component code.
 - **This business confirms payment manually/offline** (bank transfer, cash) — there's no live online payment flow yet ("Phase 4" per an old code comment), so don't assume order-status transitions happen automatically.
 - **No hard deletes anywhere in the admin panel** — always archive/deactivate. This is deliberate, for audit-trail integrity.
+- **Local Windows setup, if starting from scratch** (e.g. Mohamed's laptop at `C:\projects\RED SEA AC`): Node install via `choco install nodejs-lts -y` works, but two things trip people up afterward — (1) PowerShell blocks `npm.ps1` by default (`running scripts is disabled`); fix with `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`. (2) npm's `allow-scripts` guard blocks `sharp`/`esbuild`/`workerd`/`unrs-resolver` postinstall scripts (needed for their native binaries — `sharp` in particular breaks Next.js image handling if skipped); approve them by name (`npm approve-scripts sharp`, etc., shown per-package in the warning output) then re-run `npm install` so the scripts actually execute. Root wants Node `22.x`; `v24.19.0` throws an `EBADENGINE` warning but installs and builds fine anyway.
 
 ---
 
 ## Session log
 
 *(Newest entry on top. Whoever picks up next: read everything above, do your work, then add an entry here before committing and handing off again.)*
+
+### 2026-08-04 — Claude Code (cloud), continued
+Got Mohamed's laptop (`C:\projects\RED SEA AC`) to a working local dev environment: Node 24.19/npm 11.17 installed via Chocolatey, PowerShell execution-policy and npm `allow-scripts` blockers resolved (see §5), `npm install` clean in both root and `admin-panel/`, `typecheck` clean in both, `admin-panel` production build succeeds. Checked the flagged `.branch2_*_tmp` credential file from §3 — does not exist on that machine, closed as a dead end. Remaining §3 items are unchanged and still need Supabase dashboard, Paymob dashboard, or Mohamed's own decision to close.
 
 ### 2026-08-04 — Claude Code (cloud), session ending
 Merged PRs #10, #22–#28 as described in §2. Verified #26 (stock-drain fix) against a real local Postgres instance, not just code review. Wrote this handoff file per Mohamed's request, to relay to Claude Desktop on his laptop. Everything in §3 is still open exactly as listed — no local/dashboard/Paymob access from this session to close any of it further.
