@@ -82,7 +82,13 @@ Deno.serve(async (req) => {
     if (existingProfileError) return response({ error: existingProfileError.message }, 500);
     if (existingProfile) return response({ ok: true, resent: true });
 
-    const { error: insertError } = await admin.from("staff_profiles").insert({ user_id: invited.user.id, full_name: fullName, role, active: true });
+    const { error: insertError } = await admin.rpc("admin_insert_staff_profile", {
+      p_actor_user_id: callerData.user.id,
+      p_target_user_id: invited.user.id,
+      p_full_name: fullName,
+      p_role: role,
+      p_active: true,
+    });
     if (insertError) {
       await admin.auth.admin.deleteUser(invited.user.id);
       return response({ error: `Invitation rolled back because staff access could not be created: ${insertError.message}` }, 500);
@@ -111,7 +117,13 @@ Deno.serve(async (req) => {
       if ((count ?? 0) <= 1) return response({ error: "The last active super admin cannot be demoted or deactivated." }, 409);
     }
 
-    const { error: updateProfileError } = await admin.from("staff_profiles").update({ full_name: fullName, role, active }).eq("user_id", userId);
+    const { error: updateProfileError } = await admin.rpc("admin_update_staff_profile", {
+      p_actor_user_id: callerData.user.id,
+      p_target_user_id: userId,
+      p_full_name: fullName,
+      p_role: role,
+      p_active: active,
+    });
     if (updateProfileError) return response({ error: updateProfileError.message }, 500);
 
     const { error: updateAuthError } = await admin.auth.admin.updateUserById(userId, {
@@ -119,7 +131,13 @@ Deno.serve(async (req) => {
       ban_duration: active ? "none" : "876000h",
     });
     if (updateAuthError) {
-      await admin.from("staff_profiles").update({ full_name: target.full_name, role: target.role, active: target.active }).eq("user_id", userId);
+      await admin.rpc("admin_update_staff_profile", {
+        p_actor_user_id: callerData.user.id,
+        p_target_user_id: userId,
+        p_full_name: target.full_name,
+        p_role: target.role,
+        p_active: target.active,
+      });
       return response({ error: `Staff update rolled back because Auth could not be updated: ${updateAuthError.message}` }, 500);
     }
     return response({ ok: true });
