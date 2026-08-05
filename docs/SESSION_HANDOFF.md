@@ -11,13 +11,15 @@ If you're picking this up cold: this is a Carrier/Midea AC dealer's storefront +
 ```
 git log origin/main --oneline -5
 ```
-As of this writing, `main` is at `33e0e2f` (merged #31, session log + J: partition note) — check it's still current before acting on anything below. All work in this project has gone through PR branches (`claude/...` or `codex/...`) merged to `main`; there is no long-lived feature branch.
+As of this writing, `main` is at `47fe3d0` (merged #35, corrected FB ad discount images) — check it's still current before acting on anything below. All work in this project has gone through PR branches (`claude/...` or `codex/...`) merged to `main`; there is no long-lived feature branch.
 
 **⚠ Local working directory has moved.** The laptop checkout is no longer at `C:\projects\RED SEA AC` — it moved to the **J: partition**. If you're picking this up on Desktop: confirm the new path there before doing anything, don't assume the old `C:\projects\RED SEA AC` path is still valid or still current, and `git pull` (or re-clone, if the old folder wasn't carried over) before continuing work. Every reference to `C:\projects\RED SEA AC` elsewhere in this doc is the *old* path — kept as-is below since the commands/fixes documented under it (execution policy, `allow-scripts`) still apply, just at the new location.
 
 ## 2. What's already done (merged to `main`)
 
 In order, most recent first:
+- **#35** `fix(hero): correct discount percentage on FB ad carousel images` — the 4 images from #22 had "10% to 25%" baked into the artwork; corrected to "8% to 15%" to match the live campaign and the first carousel slide's wording. Images only, no code. Mohamed reviewed against rendered previews before merging.
+- **#33** `docs: log first live deploy attempt and the migration-drift finding` — plus a follow-up commit recording the resolution: migration history drift (6 phantom entries from the pre-handoff era) fixed, both #25/#26's fixes actually deployed live via `supabase db push`, and all 3 Edge Functions redeployed through PR #27's pipeline for the first time. See the rewritten §3 Supabase bullet.
 - **#31** `docs: log PR #30 merge, flag local folder moved to J: partition` — session log entry + the J: partition warning now in §1.
 - **#30** `docs: close out credential-file check, add local Windows setup notes` — closed the `.branch2_*_tmp` item in §3 (confirmed not present on the laptop) and documented the Chocolatey/execution-policy/`allow-scripts` local setup steps in §5.
 - **#28** `chore: gitignore the local delivery-docs draft` — see §4 below, the two-versions handover-doc situation.
@@ -35,6 +37,7 @@ In order, most recent first:
 ## 3. What's still open — sorted by who can actually do it
 
 ### Needs local/laptop access (probably why you're reading this on Desktop)
+- ~~4 home-page promo images showing wrong discount percentages~~ — **resolved 2026-08-04, PR #35, merged.** The 4 FB ad carousel images added in PR #22 had "10% to 25%" baked into the artwork, which didn't match the live campaign (~9%) or the "8% to 15%" wording already used on the first carousel slide. Mohamed manually edited each image (crop + redraw the number region in matching font/color/gradient) to read "8% to 15%," reviewed the rendered previews himself before committing, then pushed and merged. CI green (86/86 tests), image assets only, no code changes. Closed, don't re-flag it.
 - ~~A credential file, something like `.branch2_*_tmp`, reported in `C:\projects\RED SEA AC`~~ — **checked 2026-08-04, does not exist.** `Get-ChildItem -Force -Recurse -Filter ".branch2_*"` on that machine turned up nothing. Dead end / stale report from the earlier "Codex" session; no credential to rotate. Closed, don't re-flag it.
 - Whatever local files a prior "Codex" session produced at that same path, including a second copy of the Arabic delivery-docs package (see §4).
 
@@ -71,6 +74,9 @@ In order, most recent first:
 ## Session log
 
 *(Newest entry on top. Whoever picks up next: read everything above, do your work, then add an entry here before committing and handing off again.)*
+
+### 2026-08-04 — Claude Code (cloud), home-page image fix merged
+Mohamed replaced the 4 FB ad carousel images with wrong discount percentages, working directly on Desktop, and opened PR #35 himself. Cloud session subscribed, confirmed CI green (86/86 tests, images-only diff), and noted he'd already visually approved the corrected text against rendered previews before merging — no further verification needed from this side. He merged it directly. `main` is now at `47fe3d0`. This was quick, self-contained work; no open follow-up from it.
 
 ### 2026-08-04 — Claude Code (cloud) + Mohamed (Desktop), migration drift resolved and deploy completed
 Picking up from the failed deploy attempt below: Mohamed installed the Supabase CLI on his laptop (via Scoop — `npm install -g supabase` doesn't work, Supabase blocks that), ran `supabase login` + `supabase link`, then worked through the drift interactively together — repairing the 6 phantom old migrations as `reverted`, confirming `20260726200000` was already live before repairing it `applied`, and explicitly *not* repair-marking the two real pending ones. Ran `supabase db push` for real, which applied `20260804180000` and `20260804190000` — both are now genuinely live, not just marked as such. Re-ran the `Deploy Supabase` GitHub Actions workflow afterward and it went fully green: `db push` no-op, all 3 Edge Functions redeployed. See the rewritten §3 Supabase bullet for the full detail. This closes out the deploy-drift item entirely — PR #27's pipeline is now proven working.
